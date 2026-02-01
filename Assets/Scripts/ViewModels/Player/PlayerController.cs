@@ -144,17 +144,21 @@ namespace Assets.Scripts.ViewModels.Player
 
                 if (hit.collider != null)
                 {
-                    _isMining = true;
-                    _col.isTrigger = true;
+                    MineableTile tile = hit.collider.GetComponent<MineableTile>();
 
-                    transform.DOMove(hit.collider.transform.position, _miningSpeed).OnComplete(() =>
+                    if (!tile.Data.Indesctructible)
                     {
-                        MineableTile tile = hit.collider.GetComponent<MineableTile>();
-                        tile.OnMined();
-                        _isMining = false;
-                        _col.isTrigger = false;
-                        _rb.linearVelocityY = 0f;
-                    });
+                        _isMining = true;
+                        _col.isTrigger = true;
+
+                        transform.DOMove(hit.collider.transform.position, _miningSpeed).OnComplete(() =>
+                        {
+                            tile.OnMined();
+                            _isMining = false;
+                            _col.isTrigger = false;
+                            _rb.linearVelocityY = 0f;
+                        });
+                    }
                 }
 
                 return;
