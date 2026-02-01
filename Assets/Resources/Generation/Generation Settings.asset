@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6926eb99a9dcd4c81059cf8d6ad1e3, type: 3}
+  m_Name: Generation Settings
+  m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Mineables.GenerationSettingsSO
+  <MinMaxGridLength>k__BackingField: {x: 50, y: 100}
+  <MinMaxGridDepth>k__BackingField: {x: 50, y: 100}
+  <MineablesPrefabs>k__BackingField:
+    _serializedList:
+    - Key: {fileID: 11400000, guid: c16c13f2dc74be643ae1db96a7fb84e9, type: 2}
+      Value:
+        <MinMaxDepth>k__BackingField: {x: 0, y: 100}
+        <Rarity>k__BackingField: 85
+    - Key: {fileID: 11400000, guid: 400a50db0e939c74bb3bd53a9598f4d2, type: 2}
+      Value:
+        <MinMaxDepth>k__BackingField: {x: 10, y: 100}
+        <Rarity>k__BackingField: 1
+    - Key: {fileID: 11400000, guid: a830560846d40b44981f7552fad70120, type: 2}
+      Value:
+        <MinMaxDepth>k__BackingField: {x: 30, y: 100}
+        <Rarity>k__BackingField: 1

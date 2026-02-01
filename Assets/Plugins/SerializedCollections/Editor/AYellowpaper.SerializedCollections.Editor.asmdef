@@ -1,16 +1,10 @@
 {
-    "name": "Assets.Scripts.ViewModels",
-    "rootNamespace": "",
+    "name": "AYellowpaper.SerializedCollections.Editor",
     "references": [
-        "GUID:c3458773c94a39141a09d7dfecbd1344",
-        "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:d525ad6bd40672747bde77962f1c401e"
     ],
     "includePlatforms": [
-        "Editor",
-        "WebGL",
-        "WindowsStandalone32",
-        "WindowsStandalone64"
+        "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
