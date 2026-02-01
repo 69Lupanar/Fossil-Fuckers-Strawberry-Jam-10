@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 3851744523463248425}
   - component: {fileID: 6617388296180528634}
   - component: {fileID: 48864419917399830}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mineable Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7556854721599212644}
@@ -148,7 +148,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: cff2e918a9389cc4bb790e69a51c5c66, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

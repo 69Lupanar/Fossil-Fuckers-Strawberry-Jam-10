@@ -13,5 +13,11 @@ namespace Assets.Scripts.Models.Mineables
         /// </summary>
         [field: SerializeField]
         public Sprite[] Sprites { get; private set; }
+
+        /// <summary>
+        /// true si l'objet ne peut pas être détruit au minage
+        /// </summary>
+        [field: SerializeField]
+        public bool Indesctructible { get; private set; }
     }
 }

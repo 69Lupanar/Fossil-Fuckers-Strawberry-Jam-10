@@ -28,3 +28,7 @@ MonoBehaviour:
       Value:
         <MinMaxDepth>k__BackingField: {x: 30, y: 100}
         <Rarity>k__BackingField: 1
+    - Key: {fileID: 11400000, guid: 1c4e3c56e2e610e4fa356fbab832fbfa, type: 2}
+      Value:
+        <MinMaxDepth>k__BackingField: {x: 15, y: 100}
+        <Rarity>k__BackingField: 2

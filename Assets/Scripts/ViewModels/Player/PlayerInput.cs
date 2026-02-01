@@ -29,6 +29,11 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         public bool Clicked { get; private set; }
 
+        /// <summary>
+        /// true si le joueur maintient le bouton de minage
+        /// </summary>
+        public bool MiningIsPressed { get; private set; }
+
         #endregion
 
         #region variables d'instance
@@ -42,7 +47,7 @@ namespace Assets.Scripts.ViewModels.Player
         /// <summary>
         /// Init
         /// </summary>
-        void Start()
+        void Awake()
         {
             _inputActions = new PlayerInputActions();
         }
@@ -55,6 +60,7 @@ namespace Assets.Scripts.ViewModels.Player
             HorizontalAxis = _inputActions.Player.Move.ReadValue<float>();
             Interacted = _inputActions.Player.Interact.triggered;
             Clicked = _inputActions.Player.Click.triggered;
+            MiningIsPressed = _inputActions.Player.Mine.IsPressed();
 
             if (_inputActions.Player.Jump.WasPressedThisFrame())
             {

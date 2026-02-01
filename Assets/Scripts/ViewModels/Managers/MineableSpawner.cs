@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Models.EventArgs;
 using Assets.Scripts.Models.Mineables;
 using Assets.Scripts.ViewModels.Mineables;
 using AYellowpaper.SerializedCollections;
@@ -13,7 +14,21 @@ namespace Assets.Scripts.ViewModels.Managers
     /// </summary>
     public class MineableSpawner : MonoBehaviour
     {
-        #region Variables d'instance
+        #region Evénements
+
+        /// <summary>
+        /// Appelée une fois la génération terminée
+        /// </summary>
+        public System.EventHandler<GenerationEventArgs> OnGenerationCompleted { get; set; }
+
+        #endregion
+
+        #region Variables Unity
+
+        /// <summary>
+        /// true pour générer un nouveau niveau au lancement de la scène
+        /// </summary>
+        [SerializeField] private bool _generateOnStart;
 
         /// <summary>
         /// Paramètres de génération
@@ -26,14 +41,18 @@ namespace Assets.Scripts.ViewModels.Managers
         [SerializeField] private Transform _mineableItemPrefab;
 
         /// <summary>
-        /// Point de départ de l'instanciation
+        /// Le conteneur des cases
         /// </summary>
-        [SerializeField] private Transform _spawnPoint;
+        [SerializeField] private Transform _tilesParent;
 
         /// <summary>
         /// Espacement entre les objets à instancier
         /// </summary>
         [SerializeField] private float _spawnSpacing = 1.5f;
+
+        #endregion
+
+        #region Variables d'instance
 
         /// <summary>
         /// Les dimensions de la grille
@@ -58,18 +77,35 @@ namespace Assets.Scripts.ViewModels.Managers
 
         #endregion
 
+        #region Méthodes Unity
+
+        /// <summary>
+        /// Init
+        /// </summary>
+        private void Start()
+        {
+            if (_generateOnStart)
+            {
+                Generate();
+            }
+        }
+
+        #endregion
+
         #region Méthodes publiques
 
         /// <summary>
         /// Génère un nouveau niveau
         /// </summary>
         [ContextMenu("Generate")]
-        public void Generate()
+        private void Generate()
         {
             Clear();
-            GenerateGrid();
+            CreateGrid();
             PopulateGrid(_settings);
             InstantiateGrid();
+
+            OnGenerationCompleted?.Invoke(this, new GenerationEventArgs(_gridSize, _spawnSpacing));
         }
 
         [ContextMenu("Clear")]
@@ -82,10 +118,14 @@ namespace Assets.Scripts.ViewModels.Managers
             }
         }
 
+        #endregion
+
+        #region Méthodes privées
+
         /// <summary>
         /// Génère une nouvelle grille
         /// </summary>
-        private void GenerateGrid()
+        private void CreateGrid()
         {
             _gridSize = new(Random.Range(_settings.MinMaxGridLength.x, _settings.MinMaxGridLength.y),
                            Random.Range(_settings.MinMaxGridDepth.x, _settings.MinMaxGridDepth.y));
@@ -116,6 +156,8 @@ namespace Assets.Scripts.ViewModels.Managers
             }
 
             #endregion
+
+            #region Génère les cases de base pouvant être minées
 
             count = 0;
 
@@ -151,6 +193,12 @@ namespace Assets.Scripts.ViewModels.Managers
 
                 count += _gridSize.x;
             }
+
+            #endregion
+
+            #region Génère les structures spéciales (base, caves, corridors, lacs, etc.)
+
+            #endregion
         }
 
         /// <summary>
@@ -161,7 +209,7 @@ namespace Assets.Scripts.ViewModels.Managers
             for (int i = 0; i < _idsGrid.Length; ++i)
             {
                 string key = _idsGrid[i];
-                Vector3 pos = new Vector3(i % _gridSize.x, -i / _gridSize.x) * _spawnSpacing + _spawnPoint.position;
+                Vector3 pos = new Vector3(i % _gridSize.x, -i / _gridSize.x) * _spawnSpacing;
 
                 if (_poolsPerID.ContainsKey(key))
                 {
@@ -175,7 +223,7 @@ namespace Assets.Scripts.ViewModels.Managers
 
         private MineableTile CreateTile()
         {
-            return Instantiate(_mineableItemPrefab, _spawnPoint).GetComponent<MineableTile>();
+            return Instantiate(_mineableItemPrefab, _tilesParent).GetComponent<MineableTile>();
         }
 
         private void GetTile(MineableTile tile)

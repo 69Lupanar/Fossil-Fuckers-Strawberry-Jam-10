@@ -132,12 +132,21 @@ namespace Assets.Scripts.ViewModels.Player
                 },
                 {
                     ""name"": ""Click"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""e4fa814f-85bc-4b70-9161-f400ee944d26"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Mine"",
+                    ""type"": ""Button"",
+                    ""id"": ""54c30fd2-37e9-468b-b651-74aeaa491808"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -347,6 +356,39 @@ namespace Assets.Scripts.ViewModels.Player
                     ""processors"": """",
                     ""groups"": ""XR"",
                     ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9f405565-1fe2-472a-b57e-80a3dd9c33e1"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be41c219-54ca-4a86-a646-f3f425e8abd8"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""385b502c-76db-4865-8049-db012b58a7fc"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Mine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -939,6 +981,7 @@ namespace Assets.Scripts.ViewModels.Player
             m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Click = m_Player.FindAction("Click", throwIfNotFound: true);
+            m_Player_Mine = m_Player.FindAction("Mine", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1037,6 +1080,7 @@ namespace Assets.Scripts.ViewModels.Player
         private readonly InputAction m_Player_Interact;
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Click;
+        private readonly InputAction m_Player_Mine;
         /// <summary>
         /// Provides access to input actions defined in input action map "Player".
         /// </summary>
@@ -1068,6 +1112,10 @@ namespace Assets.Scripts.ViewModels.Player
             /// Provides access to the underlying input action "Player/Click".
             /// </summary>
             public InputAction @Click => m_Wrapper.m_Player_Click;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Mine".
+            /// </summary>
+            public InputAction @Mine => m_Wrapper.m_Player_Mine;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1109,6 +1157,9 @@ namespace Assets.Scripts.ViewModels.Player
                 @Click.started += instance.OnClick;
                 @Click.performed += instance.OnClick;
                 @Click.canceled += instance.OnClick;
+                @Mine.started += instance.OnMine;
+                @Mine.performed += instance.OnMine;
+                @Mine.canceled += instance.OnMine;
             }
 
             /// <summary>
@@ -1135,6 +1186,9 @@ namespace Assets.Scripts.ViewModels.Player
                 @Click.started -= instance.OnClick;
                 @Click.performed -= instance.OnClick;
                 @Click.canceled -= instance.OnClick;
+                @Mine.started -= instance.OnMine;
+                @Mine.performed -= instance.OnMine;
+                @Mine.canceled -= instance.OnMine;
             }
 
             /// <summary>
@@ -1470,6 +1524,13 @@ namespace Assets.Scripts.ViewModels.Player
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnClick(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Mine" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnMine(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
