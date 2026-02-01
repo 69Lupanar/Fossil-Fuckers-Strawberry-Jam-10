@@ -196,7 +196,7 @@ namespace Assets.Scripts.ViewModels.Managers
 
             #endregion
 
-            #region Génère les structures spéciales (base, caves, corridors, lacs, etc.)
+            #region Génère les structures spéciales (base, caves, corridors, lacs, PNJs, etc.)
 
             #endregion
         }

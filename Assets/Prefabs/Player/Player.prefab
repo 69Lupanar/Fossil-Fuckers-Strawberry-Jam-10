@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5305350213370765656}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,11 +113,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assets.Scripts.ViewModels::PlayerController
   _renderer: {fileID: 4463477328988611732}
+  _col: {fileID: 234374300519914395}
   _rb: {fileID: 7632856314478347205}
+  _groundCheck: {fileID: 7971470172966842682}
   _input: {fileID: 5305350213370765656}
   _moveSpeed: 5
-  _jumpForce: 5
+  _jumpForce: 6
   _nbMaxJumps: 2
+  _groundCheckRadius: 0.1
+  _miningSpeed: 1
+  _groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 192
+  _miningLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &5305350213370765656
 MonoBehaviour:
   m_ObjectHideFlags: 0

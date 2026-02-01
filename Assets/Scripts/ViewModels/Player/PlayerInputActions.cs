@@ -147,6 +147,15 @@ namespace Assets.Scripts.ViewModels.Player
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MiningDirection"",
+                    ""type"": ""Value"",
+                    ""id"": ""e1192413-8f83-4578-8cb8-865f52be3a1a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -391,6 +400,105 @@ namespace Assets.Scripts.ViewModels.Player
                     ""action"": ""Mine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""dec29fa0-09d7-4559-bed9-0771d68cfdcb"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MiningDirection"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""130d25ed-c685-4b51-b738-7c21eefd2d76"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MiningDirection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""83555285-e236-4100-a7f0-5b5f612f13dd"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MiningDirection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""ff2d7ec9-761d-413a-9802-dc44724f9af0"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MiningDirection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""45cb1a87-b9a5-410f-b6c7-4a6d80035329"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MiningDirection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""39d88e67-9aed-4584-a22e-80e66c6f60f4"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MiningDirection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""e468a999-1e6c-414b-ae08-d3f4ce8fa6e2"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MiningDirection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""f68ae563-5508-4954-9488-710a48b6eac1"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MiningDirection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""d265fa5a-ba23-4a8d-a282-7bab169a1654"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MiningDirection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -982,6 +1090,7 @@ namespace Assets.Scripts.ViewModels.Player
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Click = m_Player.FindAction("Click", throwIfNotFound: true);
             m_Player_Mine = m_Player.FindAction("Mine", throwIfNotFound: true);
+            m_Player_MiningDirection = m_Player.FindAction("MiningDirection", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1081,6 +1190,7 @@ namespace Assets.Scripts.ViewModels.Player
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Click;
         private readonly InputAction m_Player_Mine;
+        private readonly InputAction m_Player_MiningDirection;
         /// <summary>
         /// Provides access to input actions defined in input action map "Player".
         /// </summary>
@@ -1116,6 +1226,10 @@ namespace Assets.Scripts.ViewModels.Player
             /// Provides access to the underlying input action "Player/Mine".
             /// </summary>
             public InputAction @Mine => m_Wrapper.m_Player_Mine;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/MiningDirection".
+            /// </summary>
+            public InputAction @MiningDirection => m_Wrapper.m_Player_MiningDirection;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1160,6 +1274,9 @@ namespace Assets.Scripts.ViewModels.Player
                 @Mine.started += instance.OnMine;
                 @Mine.performed += instance.OnMine;
                 @Mine.canceled += instance.OnMine;
+                @MiningDirection.started += instance.OnMiningDirection;
+                @MiningDirection.performed += instance.OnMiningDirection;
+                @MiningDirection.canceled += instance.OnMiningDirection;
             }
 
             /// <summary>
@@ -1189,6 +1306,9 @@ namespace Assets.Scripts.ViewModels.Player
                 @Mine.started -= instance.OnMine;
                 @Mine.performed -= instance.OnMine;
                 @Mine.canceled -= instance.OnMine;
+                @MiningDirection.started -= instance.OnMiningDirection;
+                @MiningDirection.performed -= instance.OnMiningDirection;
+                @MiningDirection.canceled -= instance.OnMiningDirection;
             }
 
             /// <summary>
@@ -1531,6 +1651,13 @@ namespace Assets.Scripts.ViewModels.Player
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnMine(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "MiningDirection" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnMiningDirection(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

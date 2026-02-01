@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 3851744523463248425}
   - component: {fileID: 6617388296180528634}
   - component: {fileID: 48864419917399830}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Mineable Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -433,7 +433,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 7.5
+  orthographic size: 8.4375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -896,11 +896,6 @@ Transform:
   - {fileID: 26787315}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1249802592 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7971470172966842682, guid: 349cf2df8a796cc48a122108b24c952c, type: 3}
-  m_PrefabInstance: {fileID: 8622508510301249953}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1429158973
 GameObject:
   m_ObjectHideFlags: 0
@@ -1319,26 +1314,6 @@ PrefabInstance:
     - target: {fileID: 1698448674851862312, guid: 349cf2df8a796cc48a122108b24c952c, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1698448674851862312, guid: 349cf2df8a796cc48a122108b24c952c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1698448674851862312, guid: 349cf2df8a796cc48a122108b24c952c, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4414997125695491704, guid: 349cf2df8a796cc48a122108b24c952c, type: 3}
-      propertyPath: _groundCheck
-      value: 
-      objectReference: {fileID: 1249802592}
-    - target: {fileID: 4414997125695491704, guid: 349cf2df8a796cc48a122108b24c952c, type: 3}
-      propertyPath: _groundCheckRadius
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4414997125695491704, guid: 349cf2df8a796cc48a122108b24c952c, type: 3}
-      propertyPath: _groundLayerMask.m_Bits
-      value: 64
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

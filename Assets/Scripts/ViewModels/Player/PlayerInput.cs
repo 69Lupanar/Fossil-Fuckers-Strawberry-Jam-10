@@ -10,6 +10,11 @@ namespace Assets.Scripts.ViewModels.Player
         #region Propriétés
 
         /// <summary>
+        /// Obtient la direction du minage du joueur
+        /// </summary>
+        public Vector2 MiningDirection { get; private set; }
+
+        /// <summary>
         /// Obtient la direction du mouvement du joueur
         /// </summary>
         public float HorizontalAxis { get; private set; }
@@ -32,7 +37,7 @@ namespace Assets.Scripts.ViewModels.Player
         /// <summary>
         /// true si le joueur maintient le bouton de minage
         /// </summary>
-        public bool MiningIsPressed { get; private set; }
+        public bool MiningIsPressed { get; set; }
 
         #endregion
 
@@ -50,6 +55,8 @@ namespace Assets.Scripts.ViewModels.Player
         void Awake()
         {
             _inputActions = new PlayerInputActions();
+            _inputActions.Player.Mine.performed += ctx => MiningIsPressed = true;
+            _inputActions.Player.Mine.canceled += ctx => MiningIsPressed = false;
         }
 
         /// <summary>
@@ -57,10 +64,10 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         private void Update()
         {
+            MiningDirection = _inputActions.Player.MiningDirection.ReadValue<Vector2>();
             HorizontalAxis = _inputActions.Player.Move.ReadValue<float>();
             Interacted = _inputActions.Player.Interact.triggered;
             Clicked = _inputActions.Player.Click.triggered;
-            MiningIsPressed = _inputActions.Player.Mine.IsPressed();
 
             if (_inputActions.Player.Jump.WasPressedThisFrame())
             {
