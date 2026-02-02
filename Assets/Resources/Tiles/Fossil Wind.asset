@@ -10,7 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8932f4d6bafae3d4e9a011efe0d6eb9f, type: 3}
-  m_Name: Fossil
+  m_Name: Fossil Wind
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Mineables.MineableItemSO
   <Sprites>k__BackingField:
-  - {fileID: 8020143640844766479, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  - {fileID: -722192776, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  <Indesctructible>k__BackingField: 0
+  <Loot>k__BackingField:
+  - {fileID: 11400000, guid: 808165a256156084fb38f11273802aeb, type: 2}
+  - {fileID: 11400000, guid: 95d95d982073f6949b4c2b54e2bcb302, type: 2}

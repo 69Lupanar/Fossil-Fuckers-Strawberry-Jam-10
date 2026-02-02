@@ -27,6 +27,6 @@ namespace Assets.Scripts.Models.Mineables
         /// </summary>
         [field: SerializedDictionary("IDs", "Mineables Prefabs")]
         [field: SerializeField]
-        public SerializedDictionary<MineableItemSO, MineableItemSpawnSettings> MineablesPrefabs { get; private set; }
+        public SerializedDictionary<MineableTileSO, MineableItemSpawnSettings> MineablesPrefabs { get; private set; }
     }
 }

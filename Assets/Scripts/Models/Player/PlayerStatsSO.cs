@@ -34,6 +34,12 @@ public class PlayerStatsSO : ScriptableObject
     public float MiningSpeed { get; set; } = .75f;
 
     /// <summary>
+    /// Le pourcentage de qualité de minage
+    /// </summary>
+    [field: SerializeField]
+    public float MiningQualityPercentage { get; set; } = 50f;
+
+    /// <summary>
     /// La santé max du joueur
     /// </summary>
     [field: SerializeField]

@@ -1,6 +1,7 @@
+using Assets.Scripts.ViewModels.Player;
 using UnityEngine;
 
-namespace Assets.Scripts.ViewModels.Player
+namespace Assets.Scripts.ViewModels.Managers
 {
     /// <summary>
     /// Chargé d'améliorer les stats du joueur
@@ -35,8 +36,9 @@ namespace Assets.Scripts.ViewModels.Player
         /// Le niveau du joueur dans chacune de ses statistiques.
         /// Au début du jeu, il commence au niveau 0
         /// </summary>
-        private int[] _playerLevelsPerStat = new int[7]
+        private int[] _playerLevelsPerStat = new int[8]
         {
+            0,
             0,
             0,
             0,
@@ -105,11 +107,19 @@ namespace Assets.Scripts.ViewModels.Player
         }
 
         /// <summary>
+        /// Augmente la qualité de minage
+        /// </summary>
+        public void UpgradeMiningQualityPercentage()
+        {
+            _player.Stats.MiningQualityPercentage = _upgradeStats[++_playerLevelsPerStat[4]].MiningQualityPercentage;
+        }
+
+        /// <summary>
         /// Augmente la santé max
         /// </summary>
         public void UpgradeMaxHealth()
         {
-            _player.Stats.MaxHealth = _upgradeStats[++_playerLevelsPerStat[4]].MaxHealth;
+            _player.Stats.MaxHealth = _upgradeStats[++_playerLevelsPerStat[5]].MaxHealth;
         }
 
         /// <summary>
@@ -117,7 +127,7 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         public void UpgradeMaxEnergy()
         {
-            _player.Stats.MaxEnergy = _upgradeStats[++_playerLevelsPerStat[5]].MaxEnergy;
+            _player.Stats.MaxEnergy = _upgradeStats[++_playerLevelsPerStat[6]].MaxEnergy;
         }
 
         /// <summary>
@@ -125,7 +135,7 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         public void UpgradeMaxHeatThresholds()
         {
-            _player.Stats.MaxHeatThresholds = _upgradeStats[++_playerLevelsPerStat[6]].MaxHeatThresholds;
+            _player.Stats.MaxHeatThresholds = _upgradeStats[++_playerLevelsPerStat[7]].MaxHeatThresholds;
         }
 
         #endregion

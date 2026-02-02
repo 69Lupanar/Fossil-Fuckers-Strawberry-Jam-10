@@ -19,7 +19,7 @@ namespace Assets.Scripts.ViewModels.Mineables
         /// <summary>
         /// L'objet minable représenté par cette instance
         /// </summary>
-        public MineableItemSO Data { get; set; }
+        public MineableTileSO Data { get; set; }
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace Assets.Scripts.ViewModels.Mineables
         /// Assigne les données à la case
         /// </summary>
         /// <param name="data">L'objet minable représenté par cette instance</param>
-        public void SetData(MineableItemSO data)
+        public void SetData(MineableTileSO data)
         {
             Data = data;
             _renderer.sprite = data.Sprites[Random.Range(0, data.Sprites.Length)];

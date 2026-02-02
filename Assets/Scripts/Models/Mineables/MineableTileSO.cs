@@ -1,3 +1,4 @@
+using Assets.Scripts.Models.Loot;
 using UnityEngine;
 
 namespace Assets.Scripts.Models.Mineables
@@ -5,11 +6,11 @@ namespace Assets.Scripts.Models.Mineables
     /// <summary>
     /// Classe de base pour implémenter les objets minables
     /// </summary>
-    [CreateAssetMenu(fileName = "Mineable Item", menuName = "Scriptable Objects/Mineable Item")]
-    public class MineableItemSO : ScriptableObject
+    [CreateAssetMenu(fileName = "Mineable Tile", menuName = "Scriptable Objects/Mineable Tile")]
+    public class MineableTileSO : ScriptableObject
     {
         /// <summary>
-        /// Liste des sprites possibles pour la case (choisis aléatoirement)
+        /// Liste des sprites possibles pour la case (choisi aléatoirement)
         /// </summary>
         [field: SerializeField]
         public Sprite[] Sprites { get; private set; }
@@ -19,5 +20,11 @@ namespace Assets.Scripts.Models.Mineables
         /// </summary>
         [field: SerializeField]
         public bool Indesctructible { get; private set; }
+
+        /// <summary>
+        /// L'objet obtenu après minage de la case (choisi aléatoirement)
+        /// </summary>
+        [field: SerializeField]
+        public LootSO[] Loot { get; private set; }
     }
 }

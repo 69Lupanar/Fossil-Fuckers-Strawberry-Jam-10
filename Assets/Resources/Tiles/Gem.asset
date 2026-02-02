@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: Gem
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Mineables.MineableItemSO
   <Sprites>k__BackingField:
-  - {fileID: -722192776, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  - {fileID: -1404828795, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  <Indesctructible>k__BackingField: 0
+  <Loot>k__BackingField:
+  - {fileID: 11400000, guid: 4fa97e3a8235dd54881a770204520300, type: 2}
