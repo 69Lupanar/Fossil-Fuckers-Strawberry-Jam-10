@@ -9,6 +9,15 @@ namespace Assets.Scripts.ViewModels.Player
     /// </summary>
     public class PlayerController : MonoBehaviour
     {
+        #region Propriétés
+
+        /// <summary>
+        /// Les stats du joueur
+        /// </summary>
+        public PlayerStatsSO Stats { get; set; }
+
+        #endregion
+
         #region Variables Unity
 
         /// <summary>
@@ -37,29 +46,9 @@ namespace Assets.Scripts.ViewModels.Player
         [SerializeField] private PlayerInput _input;
 
         /// <summary>
-        /// La vitesse de déplacement du joueur
-        /// </summary>
-        [SerializeField] private float _moveSpeed = 5f;
-
-        /// <summary>
-        /// La vitesse de saut du joueur
-        /// </summary>
-        [SerializeField] private float _jumpForce = 5f;
-
-        /// <summary>
-        /// Le nombre de sauts max du joueur
-        /// </summary>
-        [SerializeField] private int _nbMaxJumps = 2;
-
-        /// <summary>
         /// Le rayon de détection du sol
         /// </summary>
         [SerializeField] private float _groundCheckRadius = .25f;
-
-        /// <summary>
-        /// La vitesse de minage
-        /// </summary>
-        [SerializeField] private float _miningSpeed = 1f;
 
         /// <summary>
         /// Le layer des objets représentant le sol
@@ -151,7 +140,7 @@ namespace Assets.Scripts.ViewModels.Player
                         _isMining = true;
                         _col.isTrigger = true;
 
-                        transform.DOMove(hit.collider.transform.position, _miningSpeed).OnComplete(() =>
+                        transform.DOMove(hit.collider.transform.position, Stats.MiningSpeed).OnComplete(() =>
                         {
                             tile.OnMined();
                             _isMining = false;
@@ -164,12 +153,12 @@ namespace Assets.Scripts.ViewModels.Player
                 return;
             }
 
-            _rb.linearVelocityX = _input.HorizontalAxis * _moveSpeed;
+            _rb.linearVelocityX = _input.HorizontalAxis * Stats.MoveSpeed;
             bool grounded = Physics2D.CircleCast(_groundCheck.position, _groundCheckRadius, Vector3.down, 0f, _groundLayerMask);
 
             if (grounded && Mathf.Approximately(_rb.linearVelocityY, 0f))
             {
-                _curNbJumpsLeft = _nbMaxJumps;
+                _curNbJumpsLeft = Stats.NbMaxJumps;
             }
 
             if (_input.Jumped)
@@ -178,7 +167,7 @@ namespace Assets.Scripts.ViewModels.Player
                 {
                     --_curNbJumpsLeft;
                     _rb.linearVelocityY = Mathf.Max(_rb.linearVelocityY, 0f);
-                    _rb.AddForceY(_jumpForce, ForceMode2D.Impulse);
+                    _rb.AddForceY(Stats.JumpForce, ForceMode2D.Impulse);
                 }
 
                 _input.Jumped = false;

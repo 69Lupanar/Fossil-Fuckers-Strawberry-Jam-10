@@ -1009,6 +1009,7 @@ Transform:
   m_Children:
   - {fileID: 1045913014}
   - {fileID: 1473394281}
+  - {fileID: 1714537599}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1608090658
@@ -1044,6 +1045,55 @@ Transform:
   - {fileID: 517540523}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1714537598
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1714537599}
+  - component: {fileID: 1714537600}
+  m_Layer: 0
+  m_Name: PlayerUpgradeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1714537599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714537598}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1480321074}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1714537600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714537598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7352575f047a34f46ad249efa34c957a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets.Scripts.ViewModels::PlayerUpgradeManager
+  _player: {fileID: 8622508510301249956}
+  _defaultStats: {fileID: 11400000, guid: 9eb03b79968dd3c49b3dcb5330258eb9, type: 2}
+  _upgradeStats:
+  - {fileID: 11400000, guid: d6ea024a886c68740bdf90f4490ce2ea, type: 2}
+  - {fileID: 11400000, guid: 36197bb3fe21aa64f87f7a441b3e8114, type: 2}
 --- !u!1001 &1793850551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1315,6 +1365,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4414997125695491704, guid: 349cf2df8a796cc48a122108b24c952c, type: 3}
+      propertyPath: _defaultStats
+      value: 
+      objectReference: {fileID: 11400000, guid: 9eb03b79968dd3c49b3dcb5330258eb9, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1325,6 +1379,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1170311805754107692, guid: 349cf2df8a796cc48a122108b24c952c, type: 3}
   m_PrefabInstance: {fileID: 8622508510301249953}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8622508510301249956 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4414997125695491704, guid: 349cf2df8a796cc48a122108b24c952c, type: 3}
+  m_PrefabInstance: {fileID: 8622508510301249953}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db29b1b5ab8e7464aaed0d4897d8a406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets.Scripts.ViewModels::PlayerController
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
