@@ -38,7 +38,15 @@ MonoBehaviour:
         <Rarity>k__BackingField: 0.5
     - Key: {fileID: 11400000, guid: a830560846d40b44981f7552fad70120, type: 2}
       Value:
-        <MinMaxDepth>k__BackingField: {x: 30, y: 100}
+        <MinMaxDepth>k__BackingField: {x: 2, y: 25}
+        <Rarity>k__BackingField: 1
+    - Key: {fileID: 11400000, guid: fd782dd80c4fadc4996d64f81fa74fa5, type: 2}
+      Value:
+        <MinMaxDepth>k__BackingField: {x: 25, y: 50}
+        <Rarity>k__BackingField: 1
+    - Key: {fileID: 11400000, guid: e00a5746a34e74942949cc959d70c2a9, type: 2}
+      Value:
+        <MinMaxDepth>k__BackingField: {x: 50, y: 100}
         <Rarity>k__BackingField: 1
     - Key: {fileID: 11400000, guid: 1c4e3c56e2e610e4fa356fbab832fbfa, type: 2}
       Value:
