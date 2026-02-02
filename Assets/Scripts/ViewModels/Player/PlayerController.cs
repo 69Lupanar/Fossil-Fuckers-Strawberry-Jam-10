@@ -1,3 +1,5 @@
+using System;
+using Assets.Scripts.Models.Loot;
 using Assets.Scripts.ViewModels.Mineables;
 using DG.Tweening;
 using UnityEngine;
@@ -9,6 +11,15 @@ namespace Assets.Scripts.ViewModels.Player
     /// </summary>
     public class PlayerController : MonoBehaviour
     {
+        #region Evénements
+
+        /// <summary>
+        /// Appelée quand une case est minée
+        /// </summary>
+        public Action<LootSO> OnTileMined { get; set; }
+
+        #endregion
+
         #region Propriétés
 
         /// <summary>
@@ -135,21 +146,25 @@ namespace Assets.Scripts.ViewModels.Player
                 {
                     MineableTile tile = hit.collider.GetComponent<MineableTile>();
 
-                    if (!tile.Data.Indesctructible)
+                    if (!tile.Tile.Indesctructible)
                     {
                         _isMining = true;
                         _col.isTrigger = true;
 
                         transform.DOMove(hit.collider.transform.position, Stats.MiningSpeed).OnComplete(() =>
                         {
-                            tile.OnMined();
+                            // On récupère l'objet miné et on l'ajoute à l'inventaire.
+
+                            LootSO loot = tile.OnMined();
+                            OnTileMined?.Invoke(loot);
+
                             _isMining = false;
                             _col.isTrigger = false;
                             _rb.linearVelocityY = 0f;
+
                         });
                     }
                 }
-
                 return;
             }
 

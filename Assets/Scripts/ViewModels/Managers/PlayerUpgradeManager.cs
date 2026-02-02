@@ -36,8 +36,9 @@ namespace Assets.Scripts.ViewModels.Managers
         /// Le niveau du joueur dans chacune de ses statistiques.
         /// Au début du jeu, il commence au niveau 0
         /// </summary>
-        private int[] _playerLevelsPerStat = new int[8]
+        private int[] _playerLevelsPerStat = new int[9]
         {
+            0,
             0,
             0,
             0,
@@ -55,7 +56,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <summary>
         /// init
         /// </summary>
-        private void Start()
+        private void Awake()
         {
             _player.Stats = _defaultStats.Clone();
         }
@@ -136,6 +137,14 @@ namespace Assets.Scripts.ViewModels.Managers
         public void UpgradeMaxHeatThresholds()
         {
             _player.Stats.MaxHeatThresholds = _upgradeStats[++_playerLevelsPerStat[7]].MaxHeatThresholds;
+        }
+
+        /// <summary>
+        /// Augmente la taille max de l'inventaire du joueur
+        /// </summary>
+        public void UpgradeMaxInventorySize()
+        {
+            _player.Stats.MaxInventorySize = _upgradeStats[++_playerLevelsPerStat[8]].MaxInventorySize;
         }
 
         #endregion

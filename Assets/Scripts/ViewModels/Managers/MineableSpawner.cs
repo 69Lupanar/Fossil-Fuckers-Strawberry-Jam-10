@@ -114,7 +114,7 @@ namespace Assets.Scripts.ViewModels.Managers
             while (_activeTiles.Count > 0)
             {
                 MineableTile tile = _activeTiles[0];
-                _poolsPerID[tile.Data.name].Release(tile);
+                _poolsPerID[tile.Tile.name].Release(tile);
             }
         }
 

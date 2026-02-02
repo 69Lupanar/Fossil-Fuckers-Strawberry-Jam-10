@@ -23,19 +23,19 @@ MonoBehaviour:
     - Key: {fileID: 11400000, guid: e820c34ddbcb8c94198ad11b18b59828, type: 2}
       Value:
         <MinMaxDepth>k__BackingField: {x: 10, y: 100}
-        <Rarity>k__BackingField: 1
+        <Rarity>k__BackingField: 0.5
     - Key: {fileID: 11400000, guid: f3a28c3bad3edd147a369e2f3d2364bf, type: 2}
       Value:
         <MinMaxDepth>k__BackingField: {x: 10, y: 100}
-        <Rarity>k__BackingField: 1
+        <Rarity>k__BackingField: 0.5
     - Key: {fileID: 11400000, guid: 400a50db0e939c74bb3bd53a9598f4d2, type: 2}
       Value:
         <MinMaxDepth>k__BackingField: {x: 10, y: 100}
-        <Rarity>k__BackingField: 1
+        <Rarity>k__BackingField: 0.5
     - Key: {fileID: 11400000, guid: 7ebe4e146c2197540aa45adc6951b116, type: 2}
       Value:
         <MinMaxDepth>k__BackingField: {x: 10, y: 100}
-        <Rarity>k__BackingField: 1
+        <Rarity>k__BackingField: 0.5
     - Key: {fileID: 11400000, guid: a830560846d40b44981f7552fad70120, type: 2}
       Value:
         <MinMaxDepth>k__BackingField: {x: 30, y: 100}

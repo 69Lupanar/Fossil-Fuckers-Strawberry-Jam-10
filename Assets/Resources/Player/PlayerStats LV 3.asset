@@ -16,9 +16,11 @@ MonoBehaviour:
   <JumpForce>k__BackingField: 6
   <NbMaxJumps>k__BackingField: 2
   <MiningSpeed>k__BackingField: 0.33
+  <MiningQualityPercentage>k__BackingField: 50
   <MaxHealth>k__BackingField: 1.75
-  <MaxEnergy>k__BackingField: 1.75
+  <MaxEnergy>k__BackingField: 3
   <MaxHeatThresholds>k__BackingField:
   - 1
   - 1.25
   - 1.5
+  <MaxInventorySize>k__BackingField: 24

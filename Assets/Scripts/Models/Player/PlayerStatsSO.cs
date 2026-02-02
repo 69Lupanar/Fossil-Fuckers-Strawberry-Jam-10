@@ -59,6 +59,13 @@ public class PlayerStatsSO : ScriptableObject
     [field: SerializeField]
     public float[] MaxHeatThresholds { get; set; } = new float[3] { .5f, .75f, 1f };
 
+    /// <summary>
+    /// Le nombre max d'objets que le joueur peut transporter
+    /// avant de devoir retourner à la base
+    /// </summary>
+    [field: SerializeField]
+    public int MaxInventorySize { get; set; } = 8;
+
     #endregion
 
     #region Méthodes publiques

@@ -25,6 +25,6 @@ namespace Assets.Scripts.Models.Mineables
         /// L'objet obtenu après minage de la case (choisi aléatoirement)
         /// </summary>
         [field: SerializeField]
-        public LootSO[] Loot { get; private set; }
+        public LootSO[] PossibleLoots { get; private set; }
     }
 }

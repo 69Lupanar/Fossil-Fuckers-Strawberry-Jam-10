@@ -15,3 +15,5 @@ MonoBehaviour:
   <Sprites>k__BackingField:
   - {fileID: -1132627178, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
   - {fileID: 1822571515, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  <Indesctructible>k__BackingField: 0
+  <PossibleLoots>k__BackingField: []

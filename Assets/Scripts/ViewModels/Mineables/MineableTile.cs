@@ -1,3 +1,4 @@
+using Assets.Scripts.Models.Loot;
 using Assets.Scripts.Models.Mineables;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace Assets.Scripts.ViewModels.Mineables
         /// <summary>
         /// L'objet minable représenté par cette instance
         /// </summary>
-        public MineableTileSO Data { get; set; }
+        public MineableTileSO Tile { get; set; }
 
         #endregion
 
@@ -31,16 +32,22 @@ namespace Assets.Scripts.ViewModels.Mineables
         /// <param name="data">L'objet minable représenté par cette instance</param>
         public void SetData(MineableTileSO data)
         {
-            Data = data;
+            Tile = data;
             _renderer.sprite = data.Sprites[Random.Range(0, data.Sprites.Length)];
         }
 
         /// <summary>
         /// Appelée quand cet objet est renvoyé à l'ObjectPool
         /// </summary>
-        public void OnMined()
+        /// <returns>L'objet miné</returns>
+        public LootSO OnMined()
         {
             gameObject.SetActive(false);
+
+            // On sélectionne un objet au hasard dans la liste des loots possibles
+
+            LootSO loot = (Tile.PossibleLoots == null || Tile.PossibleLoots.Length == 0) ? null : Tile.PossibleLoots[UnityEngine.Random.Range(0, Tile.PossibleLoots.Length)];
+            return loot;
         }
 
         #endregion
