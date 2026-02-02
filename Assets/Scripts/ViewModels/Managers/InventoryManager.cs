@@ -67,16 +67,24 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <summary>
         /// init
         /// </summary>
-        private void Start()
+        private void Awake()
         {
             _player.OnTileMined += OnTileMined;
-            Inventory = new LootSO[_player.Stats.MaxInventorySize];
-            _nbFreeSlots = _player.Stats.MaxInventorySize;
         }
 
         #endregion
 
         #region Méthodes publiques
+
+        /// <summary>
+        /// Initialise l'inventaire
+        /// </summary>
+        /// <returns></returns>
+        public void InitializeInventory()
+        {
+            Inventory = new LootSO[_player.Stats.MaxInventorySize];
+            _nbFreeSlots = _player.Stats.MaxInventorySize;
+        }
 
         /// <summary>
         /// Ajoute l'objet renseigné à l'inventaire

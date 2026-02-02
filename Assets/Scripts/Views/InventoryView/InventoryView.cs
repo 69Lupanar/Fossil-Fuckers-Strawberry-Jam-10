@@ -1,5 +1,6 @@
 using Assets.Scripts.Models.Loot;
 using Assets.Scripts.ViewModels.Managers;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,12 @@ public class InventoryView : MonoBehaviour
     /// </summary>
     [SerializeField]
     private InventoryManager _manager;
+
+    /// <summary>
+    /// Le label affichant la capacité de l'inventaire
+    /// </summary>
+    [SerializeField]
+    private TextMeshProUGUI _sizeLabel;
 
     /// <summary>
     /// Le bouton des onglets
@@ -47,7 +54,7 @@ public class InventoryView : MonoBehaviour
     /// <summary>
     /// Le nombre d'onglets disponibles, changeant en fonction de la taille de l'inventaire
     /// </summary>
-    private int _nbTabs;
+    private int _nbTabs = 1;
 
     /// <summary>
     /// L'onglet actuel
@@ -65,8 +72,14 @@ public class InventoryView : MonoBehaviour
     {
         _manager.OnLootAdded += OnLootAdded;
         _manager.OnInventorySizeIncreased += OnInventorySizeIncreased;
+    }
+
+    private void Start()
+    {
+        _manager.InitializeInventory();
         _previousBtn.interactable = false;
         _nextBtn.interactable = false;
+        _sizeLabel.SetText($"({_curTab + 1}/{_nbTabs})");
     }
 
     #endregion
@@ -81,6 +94,7 @@ public class InventoryView : MonoBehaviour
     {
         _nbTabs = newSize / _slotsImgs.Length;
         _nextBtn.interactable = true;
+        _sizeLabel.SetText($"({_curTab + 1}/{_nbTabs})");
     }
 
     /// <summary>
