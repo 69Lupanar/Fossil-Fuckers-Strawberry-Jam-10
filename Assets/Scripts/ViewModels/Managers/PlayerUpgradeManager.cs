@@ -14,7 +14,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// Le joueur
         /// </summary>
         [SerializeField]
-        private PlayerController _player;
+        private PlayerStatsManager _player;
 
         /// <summary>
         /// Les stats de départ du joueur

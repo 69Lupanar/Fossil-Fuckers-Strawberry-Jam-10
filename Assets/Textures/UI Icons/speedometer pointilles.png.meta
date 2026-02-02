@@ -1,0 +1,2028 @@
+fileFormatVersion: 2
+guid: 121efaf0436193743ad036f65581c0aa
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5435629029914727629
+    second: speedometer pointilles_0
+  - first:
+      213: 518734092376385741
+    second: speedometer pointilles_1
+  - first:
+      213: 8901685732040253548
+    second: speedometer pointilles_2
+  - first:
+      213: -5410810197344511796
+    second: speedometer pointilles_3
+  - first:
+      213: -7575745289578251966
+    second: speedometer pointilles_4
+  - first:
+      213: 2808608013951068663
+    second: speedometer pointilles_5
+  - first:
+      213: -8166649996151318092
+    second: speedometer pointilles_6
+  - first:
+      213: -4921781622109230251
+    second: speedometer pointilles_7
+  - first:
+      213: -8346071431014293520
+    second: speedometer pointilles_8
+  - first:
+      213: 9063546398158506463
+    second: speedometer pointilles_9
+  - first:
+      213: -8046377170104660951
+    second: speedometer pointilles_10
+  - first:
+      213: 7513792405974671766
+    second: speedometer pointilles_11
+  - first:
+      213: -2239196255755835970
+    second: speedometer pointilles_12
+  - first:
+      213: -6487211915826243876
+    second: speedometer pointilles_13
+  - first:
+      213: 2799037163699858734
+    second: speedometer pointilles_14
+  - first:
+      213: 6998069521568584028
+    second: speedometer pointilles_15
+  - first:
+      213: 7043073952641037620
+    second: speedometer pointilles_16
+  - first:
+      213: -8197630454999776458
+    second: speedometer pointilles_17
+  - first:
+      213: -6172265091781051413
+    second: speedometer pointilles_18
+  - first:
+      213: -3258634346554660320
+    second: speedometer pointilles_19
+  - first:
+      213: -304996484559771563
+    second: speedometer pointilles_20
+  - first:
+      213: -6720269952621017101
+    second: speedometer pointilles_21
+  - first:
+      213: 3104844580118999863
+    second: speedometer pointilles_22
+  - first:
+      213: -9219352030241667566
+    second: speedometer pointilles_23
+  - first:
+      213: 8766058317422406315
+    second: speedometer pointilles_24
+  - first:
+      213: 571444578385849078
+    second: speedometer pointilles_25
+  - first:
+      213: -2449784414402238721
+    second: speedometer pointilles_26
+  - first:
+      213: 2866059566491958737
+    second: speedometer pointilles_27
+  - first:
+      213: 8333020174330448549
+    second: speedometer pointilles_28
+  - first:
+      213: 482629717778856118
+    second: speedometer pointilles_29
+  - first:
+      213: 6156494927438307839
+    second: speedometer pointilles_30
+  - first:
+      213: -4615353685416747086
+    second: speedometer pointilles_31
+  - first:
+      213: -6489118078436610068
+    second: speedometer pointilles_32
+  - first:
+      213: -7485876590900983018
+    second: speedometer pointilles_33
+  - first:
+      213: 6051977531753555030
+    second: speedometer pointilles_34
+  - first:
+      213: 5563110637171328119
+    second: speedometer pointilles_35
+  - first:
+      213: 3002831711912547165
+    second: speedometer pointilles_36
+  - first:
+      213: 161710394958571972
+    second: speedometer pointilles_37
+  - first:
+      213: -6073329650032081377
+    second: speedometer pointilles_38
+  - first:
+      213: -767949071181057579
+    second: speedometer pointilles_39
+  - first:
+      213: 4708682066885521786
+    second: speedometer pointilles_40
+  - first:
+      213: -6430076841339832215
+    second: speedometer pointilles_41
+  - first:
+      213: -7306908567755727494
+    second: speedometer pointilles_42
+  - first:
+      213: 9043288839980930949
+    second: speedometer pointilles_43
+  - first:
+      213: 3531842132479672675
+    second: speedometer pointilles_44
+  - first:
+      213: 4186177631465012991
+    second: speedometer pointilles_45
+  - first:
+      213: -3530519443756329768
+    second: speedometer pointilles_46
+  - first:
+      213: 3892251529890657125
+    second: speedometer pointilles_47
+  - first:
+      213: 8662750347441487589
+    second: speedometer pointilles_48
+  - first:
+      213: -829130865751021422
+    second: speedometer pointilles_49
+  - first:
+      213: -7049801398764765751
+    second: speedometer pointilles_50
+  - first:
+      213: 2613692855086182499
+    second: speedometer pointilles_51
+  - first:
+      213: -7492842173827090824
+    second: speedometer pointilles_52
+  - first:
+      213: 4595158730118633247
+    second: speedometer pointilles_53
+  - first:
+      213: -339712189291201325
+    second: speedometer pointilles_54
+  - first:
+      213: -8996938060658443811
+    second: speedometer pointilles_55
+  - first:
+      213: 1189199540657159931
+    second: speedometer pointilles_56
+  - first:
+      213: -8380836393582263756
+    second: speedometer pointilles_57
+  - first:
+      213: -5735055529410276505
+    second: speedometer pointilles_58
+  - first:
+      213: -8066842945127220119
+    second: speedometer pointilles_59
+  - first:
+      213: -5506937123743083323
+    second: speedometer pointilles_60
+  - first:
+      213: 1467909806167898185
+    second: speedometer pointilles_61
+  - first:
+      213: 7644020989138310421
+    second: speedometer pointilles_62
+  - first:
+      213: -1701056353102712798
+    second: speedometer pointilles_63
+  - first:
+      213: 7400831202569417990
+    second: speedometer pointilles_64
+  - first:
+      213: -2702453177730496896
+    second: speedometer pointilles_65
+  - first:
+      213: -4849120566046609688
+    second: speedometer pointilles_66
+  - first:
+      213: -8893267625605795315
+    second: speedometer pointilles_67
+  - first:
+      213: 1566951384396586426
+    second: speedometer pointilles_68
+  - first:
+      213: -6499289937620651734
+    second: speedometer pointilles_69
+  - first:
+      213: 319022435342840512
+    second: speedometer pointilles_70
+  - first:
+      213: 7974498088580106794
+    second: speedometer pointilles_71
+  - first:
+      213: 957206498485758231
+    second: speedometer pointilles_72
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: speedometer pointilles_0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 46
+        width: 773
+        height: 1302
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33ba12d4234c094b0800000000000000
+      internalID: -5435629029914727629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_1
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 1351
+        width: 49
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc8aafc98e9e23700800000000000000
+      internalID: 518734092376385741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_2
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 1270
+        width: 1180
+        height: 379
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c602c689204298b70800000000000000
+      internalID: 8901685732040253548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_3
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 1271
+        width: 29
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc818301bc0f8e4b0800000000000000
+      internalID: -5410810197344511796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_4
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 1309
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24979d11ccb8dd690800000000000000
+      internalID: -7575745289578251966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_5
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 1292
+        width: 82
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f96ed8ab1e2af620800000000000000
+      internalID: 2808608013951068663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_6
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 1379
+        width: 24
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b99476e81b3aae80800000000000000
+      internalID: -8166649996151318092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_7
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 1408
+        width: 22
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55b222001b152bbb0800000000000000
+      internalID: -4921781622109230251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_8
+      rect:
+        serializedVersion: 2
+        x: 509
+        y: 1435
+        width: 22
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ff5b5cb04ccc2c80800000000000000
+      internalID: -8346071431014293520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_9
+      rect:
+        serializedVersion: 2
+        x: 558
+        y: 1458
+        width: 19
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd9428bad6f28cd70800000000000000
+      internalID: 9063546398158506463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_10
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 1451
+        width: 33
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92c49176896855090800000000000000
+      internalID: -8046377170104660951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_11
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 1493
+        width: 14
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 691e52a226a564860800000000000000
+      internalID: 7513792405974671766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_12
+      rect:
+        serializedVersion: 2
+        x: 712
+        y: 1505
+        width: 12
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb5e9418ed6cce0e0800000000000000
+      internalID: -2239196255755835970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_13
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 1513
+        width: 10
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd6de7e122bc8f5a0800000000000000
+      internalID: -6487211915826243876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_14
+      rect:
+        serializedVersion: 2
+        x: 859
+        y: 1458
+        width: 32
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2d627f687d28d620800000000000000
+      internalID: 2799037163699858734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_15
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 1513
+        width: 10
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c51559a07232e1160800000000000000
+      internalID: 6998069521568584028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_16
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 1505
+        width: 12
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 435b9f1b1760eb160800000000000000
+      internalID: 7043073952641037620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_17
+      rect:
+        serializedVersion: 2
+        x: 1025
+        y: 1493
+        width: 15
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63380d9b88a2c3e80800000000000000
+      internalID: -8197630454999776458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_18
+      rect:
+        serializedVersion: 2
+        x: 1075
+        y: 1478
+        width: 16
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bebb8d0e995b75aa0800000000000000
+      internalID: -6172265091781051413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_19
+      rect:
+        serializedVersion: 2
+        x: 1108
+        y: 1432
+        width: 36
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02ae8b8a35107c2d0800000000000000
+      internalID: -3258634346554660320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_20
+      rect:
+        serializedVersion: 2
+        x: 1169
+        y: 1435
+        width: 20
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5586210305f64cbf0800000000000000
+      internalID: -304996484559771563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_21
+      rect:
+        serializedVersion: 2
+        x: 1213
+        y: 1408
+        width: 23
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f70b47651eccb2a0800000000000000
+      internalID: -6720269952621017101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_22
+      rect:
+        serializedVersion: 2
+        x: 1254
+        y: 1373
+        width: 26
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7333ac802bf961b20800000000000000
+      internalID: 3104844580118999863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_23
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 1260
+        width: 86
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2164b2abc284e0080800000000000000
+      internalID: -9219352030241667566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_24
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 1345
+        width: 25
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: baa225a589b47a970800000000000000
+      internalID: 8766058317422406315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_25
+      rect:
+        serializedVersion: 2
+        x: 1365
+        y: 1432
+        width: 30
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fae28ff0dd2ee700800000000000000
+      internalID: 571444578385849078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_26
+      rect:
+        serializedVersion: 2
+        x: 1367
+        y: 1271
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff6244bfd0e900ed0800000000000000
+      internalID: -2449784414402238721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_27
+      rect:
+        serializedVersion: 2
+        x: 1396
+        y: 1400
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ddfcdd9df946c720800000000000000
+      internalID: 2866059566491958737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_28
+      rect:
+        serializedVersion: 2
+        x: 1428
+        y: 1383
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5aa4125c2b5d4a370800000000000000
+      internalID: 8333020174330448549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_29
+      rect:
+        serializedVersion: 2
+        x: 1445
+        y: 876
+        width: 204
+        height: 502
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b87146db25a2b600800000000000000
+      internalID: 482629717778856118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_30
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 1229
+        width: 31
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff1647b9483407550800000000000000
+      internalID: 6156494927438307839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_31
+      rect:
+        serializedVersion: 2
+        x: 1398
+        y: 1229
+        width: 30
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bfd1fbb648f2ffb0800000000000000
+      internalID: -4615353685416747086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_32
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 1180
+        width: 33
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cef683d0d7502f5a0800000000000000
+      internalID: -6489118078436610068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_33
+      rect:
+        serializedVersion: 2
+        x: 1426
+        y: 1186
+        width: 31
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61b4fe607e2dc1890800000000000000
+      internalID: -7485876590900983018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_34
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 1125
+        width: 59
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 654e0d81081fcf350800000000000000
+      internalID: 6051977531753555030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_35
+      rect:
+        serializedVersion: 2
+        x: 1451
+        y: 1140
+        width: 32
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7744bce56a3243d40800000000000000
+      internalID: 5563110637171328119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_36
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 1093
+        width: 33
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5353d448833ca920800000000000000
+      internalID: 3002831711912547165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_37
+      rect:
+        serializedVersion: 2
+        x: 1446
+        y: 1080
+        width: 60
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c96ef75fb28e3200800000000000000
+      internalID: 161710394958571972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_38
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 1044
+        width: 33
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f168df57cd237bba0800000000000000
+      internalID: -6073329650032081377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_39
+      rect:
+        serializedVersion: 2
+        x: 1489
+        y: 1044
+        width: 33
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d179a67362b755f0800000000000000
+      internalID: -767949071181057579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_40
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 994
+        width: 34
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a71b6f46469985140800000000000000
+      internalID: 4708682066885521786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_41
+      rect:
+        serializedVersion: 2
+        x: 1503
+        y: 994
+        width: 34
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96839794e27c3c6a0800000000000000
+      internalID: -6430076841339832215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_42
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 943
+        width: 34
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7d59ac0f55a89a90800000000000000
+      internalID: -7306908567755727494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_43
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 944
+        width: 34
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 587515c5947308d70800000000000000
+      internalID: 9043288839980930949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_44
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 877
+        width: 94
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 361853df4bf930130800000000000000
+      internalID: 3531842132479672675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_45
+      rect:
+        serializedVersion: 2
+        x: 1518
+        y: 892
+        width: 34
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffe7822606a481a30800000000000000
+      internalID: 4186177631465012991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_46
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 823
+        width: 61
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d45b4a7543110fc0800000000000000
+      internalID: -3530519443756329768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_47
+      rect:
+        serializedVersion: 2
+        x: 1439
+        y: 325
+        width: 210
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5637a97f42e040630800000000000000
+      internalID: 3892251529890657125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_48
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 786
+        width: 34
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ee34253b85483870800000000000000
+      internalID: 8662750347441487589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_49
+      rect:
+        serializedVersion: 2
+        x: 1517
+        y: 786
+        width: 35
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 298299aded55e74f0800000000000000
+      internalID: -829130865751021422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_50
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 733
+        width: 35
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cdf291baf21a2e90800000000000000
+      internalID: -7049801398764765751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_51
+      rect:
+        serializedVersion: 2
+        x: 1511
+        y: 733
+        width: 34
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3607363cdc3b54420800000000000000
+      internalID: 2613692855086182499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_52
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 680
+        width: 34
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87678feddb3140890800000000000000
+      internalID: -7492842173827090824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_53
+      rect:
+        serializedVersion: 2
+        x: 1501
+        y: 680
+        width: 34
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f179143d48845cf30800000000000000
+      internalID: 4595158730118633247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_54
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 624
+        width: 61
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dc7d6f4099194bf0800000000000000
+      internalID: -339712189291201325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_55
+      rect:
+        serializedVersion: 2
+        x: 1487
+        y: 628
+        width: 33
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd9f24c6084742380800000000000000
+      internalID: -8996938060658443811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_56
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 577
+        width: 33
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfe7deb7ea2e08010800000000000000
+      internalID: 1189199540657159931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_57
+      rect:
+        serializedVersion: 2
+        x: 569
+        y: 442
+        width: 559
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4320ddf14b941bb80800000000000000
+      internalID: -8380836393582263756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_58
+      rect:
+        serializedVersion: 2
+        x: 1443
+        y: 574
+        width: 60
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7635c52b16df860b0800000000000000
+      internalID: -5735055529410276505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_59
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 528
+        width: 32
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96c73d4d411dc0090800000000000000
+      internalID: -8066842945127220119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_60
+      rect:
+        serializedVersion: 2
+        x: 1447
+        y: 528
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c4d1eaecdd6393b0800000000000000
+      internalID: -5506937123743083323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_61
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 481
+        width: 32
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94833fef0301f5410800000000000000
+      internalID: 1467909806167898185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_62
+      rect:
+        serializedVersion: 2
+        x: 1418
+        y: 481
+        width: 35
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51518310794051a60800000000000000
+      internalID: 7644020989138310421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_63
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 436
+        width: 30
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 220346a6242a468e0800000000000000
+      internalID: -1701056353102712798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_64
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 385
+        width: 88
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 605f6c774c805b660800000000000000
+      internalID: 7400831202569417990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_65
+      rect:
+        serializedVersion: 2
+        x: 1393
+        y: 436
+        width: 30
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0868f3f2725fe7ad0800000000000000
+      internalID: -2702453177730496896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_66
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 407
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ee20c3798674bcb0800000000000000
+      internalID: -4849120566046609688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_67
+      rect:
+        serializedVersion: 2
+        x: 875
+        y: 49
+        width: 543
+        height: 370
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d02f84b8634c49480800000000000000
+      internalID: -8893267625605795315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_68
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 269
+        width: 29
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abdd3476bfdeeb510800000000000000
+      internalID: 1566951384396586426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_69
+      rect:
+        serializedVersion: 2
+        x: 1421
+        y: 284
+        width: 32
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a21b9d78c32edc5a0800000000000000
+      internalID: -6499289937620651734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_70
+      rect:
+        serializedVersion: 2
+        x: 1396
+        y: 265
+        width: 12
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c27df5f6356d6400800000000000000
+      internalID: 319022435342840512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_71
+      rect:
+        serializedVersion: 2
+        x: 1388
+        y: 258
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2a49d7c2cb1bae60800000000000000
+      internalID: 7974498088580106794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speedometer pointilles_72
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 213
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71960f62d3ea84d00800000000000000
+      internalID: 957206498485758231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      speedometer pointilles_0: -5435629029914727629
+      speedometer pointilles_1: 518734092376385741
+      speedometer pointilles_10: -8046377170104660951
+      speedometer pointilles_11: 7513792405974671766
+      speedometer pointilles_12: -2239196255755835970
+      speedometer pointilles_13: -6487211915826243876
+      speedometer pointilles_14: 2799037163699858734
+      speedometer pointilles_15: 6998069521568584028
+      speedometer pointilles_16: 7043073952641037620
+      speedometer pointilles_17: -8197630454999776458
+      speedometer pointilles_18: -6172265091781051413
+      speedometer pointilles_19: -3258634346554660320
+      speedometer pointilles_2: 8901685732040253548
+      speedometer pointilles_20: -304996484559771563
+      speedometer pointilles_21: -6720269952621017101
+      speedometer pointilles_22: 3104844580118999863
+      speedometer pointilles_23: -9219352030241667566
+      speedometer pointilles_24: 8766058317422406315
+      speedometer pointilles_25: 571444578385849078
+      speedometer pointilles_26: -2449784414402238721
+      speedometer pointilles_27: 2866059566491958737
+      speedometer pointilles_28: 8333020174330448549
+      speedometer pointilles_29: 482629717778856118
+      speedometer pointilles_3: -5410810197344511796
+      speedometer pointilles_30: 6156494927438307839
+      speedometer pointilles_31: -4615353685416747086
+      speedometer pointilles_32: -6489118078436610068
+      speedometer pointilles_33: -7485876590900983018
+      speedometer pointilles_34: 6051977531753555030
+      speedometer pointilles_35: 5563110637171328119
+      speedometer pointilles_36: 3002831711912547165
+      speedometer pointilles_37: 161710394958571972
+      speedometer pointilles_38: -6073329650032081377
+      speedometer pointilles_39: -767949071181057579
+      speedometer pointilles_4: -7575745289578251966
+      speedometer pointilles_40: 4708682066885521786
+      speedometer pointilles_41: -6430076841339832215
+      speedometer pointilles_42: -7306908567755727494
+      speedometer pointilles_43: 9043288839980930949
+      speedometer pointilles_44: 3531842132479672675
+      speedometer pointilles_45: 4186177631465012991
+      speedometer pointilles_46: -3530519443756329768
+      speedometer pointilles_47: 3892251529890657125
+      speedometer pointilles_48: 8662750347441487589
+      speedometer pointilles_49: -829130865751021422
+      speedometer pointilles_5: 2808608013951068663
+      speedometer pointilles_50: -7049801398764765751
+      speedometer pointilles_51: 2613692855086182499
+      speedometer pointilles_52: -7492842173827090824
+      speedometer pointilles_53: 4595158730118633247
+      speedometer pointilles_54: -339712189291201325
+      speedometer pointilles_55: -8996938060658443811
+      speedometer pointilles_56: 1189199540657159931
+      speedometer pointilles_57: -8380836393582263756
+      speedometer pointilles_58: -5735055529410276505
+      speedometer pointilles_59: -8066842945127220119
+      speedometer pointilles_6: -8166649996151318092
+      speedometer pointilles_60: -5506937123743083323
+      speedometer pointilles_61: 1467909806167898185
+      speedometer pointilles_62: 7644020989138310421
+      speedometer pointilles_63: -1701056353102712798
+      speedometer pointilles_64: 7400831202569417990
+      speedometer pointilles_65: -2702453177730496896
+      speedometer pointilles_66: -4849120566046609688
+      speedometer pointilles_67: -8893267625605795315
+      speedometer pointilles_68: 1566951384396586426
+      speedometer pointilles_69: -6499289937620651734
+      speedometer pointilles_7: -4921781622109230251
+      speedometer pointilles_70: 319022435342840512
+      speedometer pointilles_71: 7974498088580106794
+      speedometer pointilles_72: 957206498485758231
+      speedometer pointilles_8: -8346071431014293520
+      speedometer pointilles_9: 9063546398158506463
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

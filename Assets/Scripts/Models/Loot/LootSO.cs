@@ -17,6 +17,6 @@ namespace Assets.Scripts.Models.Loot
         /// L'EXP obtenue après minage de la case
         /// </summary>
         [field: SerializeField]
-        public float EXP { get; private set; }
+        public int EXP { get; private set; }
     }
 }

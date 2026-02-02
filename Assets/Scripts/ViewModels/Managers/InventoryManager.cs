@@ -46,10 +46,16 @@ namespace Assets.Scripts.ViewModels.Managers
         #region Variables Unity
 
         /// <summary>
-        /// Lee joueur
+        /// Le joueur
         /// </summary>
         [SerializeField]
-        private PlayerController _player;
+        private PlayerStatsManager _playerStats;
+
+        /// <summary>
+        /// ee joueur
+        /// </summary>
+        [SerializeField]
+        private PlayerController _playerController;
 
         #endregion
 
@@ -69,7 +75,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         private void Awake()
         {
-            _player.OnTileMined += OnTileMined;
+            _playerController.OnTileMined += OnTileMined;
         }
 
         #endregion
@@ -82,8 +88,8 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <returns></returns>
         public void InitializeInventory()
         {
-            Inventory = new LootSO[_player.Stats.MaxInventorySize];
-            _nbFreeSlots = _player.Stats.MaxInventorySize;
+            Inventory = new LootSO[_playerStats.MaxInventorySize];
+            _nbFreeSlots = _playerStats.MaxInventorySize;
         }
 
         /// <summary>
@@ -141,11 +147,11 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public void UpdateInventorySize()
         {
-            LootSO[] newInventory = new LootSO[_player.Stats.MaxInventorySize];
+            LootSO[] newInventory = new LootSO[_playerStats.MaxInventorySize];
             Array.Copy(Inventory, newInventory, Inventory.Length);
             Inventory = newInventory;
-            _nbFreeSlots = _player.Stats.MaxInventorySize;
-            OnInventorySizeIncreased?.Invoke(_player.Stats.MaxInventorySize);
+            _nbFreeSlots = _playerStats.MaxInventorySize;
+            OnInventorySizeIncreased?.Invoke(_playerStats.MaxInventorySize);
         }
 
         #endregion
@@ -160,6 +166,8 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <exception cref="NotImplementedException"></exception>
         private void OnTileMined(LootSO loot)
         {
+            _playerStats.GainEXP(loot.EXP);
+
             switch (loot)
             {
                 case FossilLootSO fossil:

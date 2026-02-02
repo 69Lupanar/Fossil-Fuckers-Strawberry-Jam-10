@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db29b1b5ab8e7464aaed0d4897d8a406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets.Scripts.ViewModels::PlayerController
+  _playerStats: {fileID: 0}
   _renderer: {fileID: 4463477328988611732}
   _col: {fileID: 4295062890615577238}
   _rb: {fileID: 7632856314478347205}

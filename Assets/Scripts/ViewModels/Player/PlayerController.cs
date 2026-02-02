@@ -20,16 +20,12 @@ namespace Assets.Scripts.ViewModels.Player
 
         #endregion
 
-        #region Propriétés
+        #region Variables Unity
 
         /// <summary>
         /// Les stats du joueur
         /// </summary>
-        public PlayerStatsSO Stats { get; set; }
-
-        #endregion
-
-        #region Variables Unity
+        [SerializeField] private PlayerStatsManager _playerStats;
 
         /// <summary>
         /// Le sprite du joueur
@@ -151,29 +147,28 @@ namespace Assets.Scripts.ViewModels.Player
                         _isMining = true;
                         _col.isTrigger = true;
 
-                        transform.DOMove(hit.collider.transform.position, Stats.MiningSpeed).OnComplete(() =>
+                        transform.DOMove(hit.collider.transform.position, _playerStats.MiningSpeed).OnComplete(() =>
                         {
-                            // On récupère l'objet miné et on l'ajoute à l'inventaire.
-
-                            LootSO loot = tile.OnMined();
-                            OnTileMined?.Invoke(loot);
-
                             _isMining = false;
                             _col.isTrigger = false;
                             _rb.linearVelocityY = 0f;
 
+                            // On récupère l'objet miné et on l'ajoute à l'inventaire.
+
+                            LootSO loot = tile.OnMined();
+                            OnTileMined?.Invoke(loot);
                         });
                     }
                 }
                 return;
             }
 
-            _rb.linearVelocityX = _input.HorizontalAxis * Stats.MoveSpeed;
+            _rb.linearVelocityX = _input.HorizontalAxis * _playerStats.MoveSpeed;
             bool grounded = Physics2D.CircleCast(_groundCheck.position, _groundCheckRadius, Vector3.down, 0f, _groundLayerMask);
 
             if (grounded && Mathf.Approximately(_rb.linearVelocityY, 0f))
             {
-                _curNbJumpsLeft = Stats.NbMaxJumps;
+                _curNbJumpsLeft = _playerStats.NbMaxJumps;
             }
 
             if (_input.Jumped)
@@ -182,7 +177,7 @@ namespace Assets.Scripts.ViewModels.Player
                 {
                     --_curNbJumpsLeft;
                     _rb.linearVelocityY = Mathf.Max(_rb.linearVelocityY, 0f);
-                    _rb.AddForceY(Stats.JumpForce, ForceMode2D.Impulse);
+                    _rb.AddForceY(_playerStats.JumpForce, ForceMode2D.Impulse);
                 }
 
                 _input.Jumped = false;
