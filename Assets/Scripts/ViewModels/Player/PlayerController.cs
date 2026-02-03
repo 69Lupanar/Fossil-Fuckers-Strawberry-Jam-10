@@ -2,6 +2,8 @@ using System;
 using Assets.Scripts.Models.Loot;
 using Assets.Scripts.ViewModels.Mineables;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using UnityEngine;
 
 namespace Assets.Scripts.ViewModels.Player
@@ -17,6 +19,15 @@ namespace Assets.Scripts.ViewModels.Player
         /// Appelée quand une case est minée
         /// </summary>
         public Action<LootSO> OnTileMined { get; set; }
+
+        #endregion
+
+        #region Propriétés
+
+        /// <summary>
+        /// true si le joueur est en train de miner
+        /// </summary>
+        public bool IsMining { get; private set; }
 
         #endregion
 
@@ -41,6 +52,11 @@ namespace Assets.Scripts.ViewModels.Player
         /// Le Rigidbody
         /// </summary>
         [SerializeField] private Rigidbody2D _rb;
+
+        /// <summary>
+        /// Point de départ du joueur
+        /// </summary>
+        [SerializeField] private Transform _spawnPoint;
 
         /// <summary>
         /// Utilisé pour la détection du sol
@@ -77,13 +93,22 @@ namespace Assets.Scripts.ViewModels.Player
         private int _curNbJumpsLeft;
 
         /// <summary>
-        /// true si le joueur est en train de miner
+        /// Le tween d'animation de minage
         /// </summary>
-        private bool _isMining;
+        private TweenerCore<Vector3, Vector3, VectorOptions> _miningTween;
 
         #endregion
 
         #region Méthodes Unity
+
+        /// <summary>
+        /// init
+        /// </summary>
+        private void Awake()
+        {
+            _playerStats.OnDeath += OnDeath;
+            _playerStats.OnRestored += OnRestored;
+        }
 
         /// <summary>
         /// Init
@@ -91,7 +116,7 @@ namespace Assets.Scripts.ViewModels.Player
         private void Start()
         {
             _input.EnablePlayerInput(true);
-            _isMining = false;
+            IsMining = false;
         }
 
         /// <summary>
@@ -99,6 +124,11 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         private void Update()
         {
+            if (_playerStats.IsDead)
+            {
+                return;
+            }
+
             if (_input.HorizontalAxis > 0f)
             {
                 _renderer.flipX = false;
@@ -114,7 +144,12 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         private void FixedUpdate()
         {
-            if (_isMining)
+            if (_playerStats.IsDead)
+            {
+                return;
+            }
+
+            if (IsMining)
             {
                 return;
             }
@@ -144,12 +179,12 @@ namespace Assets.Scripts.ViewModels.Player
 
                     if (!tile.Tile.Indesctructible)
                     {
-                        _isMining = true;
+                        IsMining = true;
                         _col.isTrigger = true;
 
-                        transform.DOMove(hit.collider.transform.position, _playerStats.MiningSpeed).OnComplete(() =>
+                        _miningTween = transform.DOMove(hit.collider.transform.position, _playerStats.MiningSpeed).OnComplete(() =>
                         {
-                            _isMining = false;
+                            IsMining = false;
                             _col.isTrigger = false;
                             _rb.linearVelocityY = 0f;
 
@@ -183,6 +218,30 @@ namespace Assets.Scripts.ViewModels.Player
 
                 _input.Jumped = false;
             }
+        }
+
+        #endregion
+
+        #region Méthodes privées
+
+        /// <summary>
+        /// Appelé quand la santé du joueur tombe à 0
+        /// </summary>
+        private void OnDeath()
+        {
+            IsMining = false;
+            _miningTween?.Kill(false);
+            _rb.linearVelocity = Vector2.zero;
+        }
+
+        /// <summary>
+        /// Appelé quand les stats du joueur sont restaurées
+        /// </summary>
+        private void OnRestored()
+        {
+            _col.isTrigger = false;
+            _renderer.flipX = false;
+            transform.position = _spawnPoint.position;
         }
 
         #endregion

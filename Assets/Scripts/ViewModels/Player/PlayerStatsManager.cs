@@ -1,3 +1,5 @@
+using System;
+using Assets.Scripts.Models.EventArgs;
 using UnityEngine;
 
 namespace Assets.Scripts.ViewModels.Player
@@ -7,6 +9,45 @@ namespace Assets.Scripts.ViewModels.Player
     /// </summary>
     public class PlayerStatsManager : MonoBehaviour
     {
+        #region Evénements
+
+        /// <summary>
+        /// Appelée quand le joueur gagne ou perd de l'expérience
+        /// </summary>
+        public EventHandler<EXPChangedEventArgs> OnCurEXPChanged { get; set; }
+
+        /// <summary>
+        /// Appelée quand la santé du joueur atteint un niveau critique
+        /// </summary>
+        public Action OnCriticalHealthReached { get; set; }
+
+        /// <summary>
+        /// Appelée quand l'énergie du joueur atteint un niveau critique
+        /// </summary>
+        public Action OnCriticalEnergyReached { get; set; }
+
+        /// <summary>
+        /// Appelée quand la chaleur du joueur atteint un niveau critique
+        /// </summary>
+        public Action OnCriticalHeatReached { get; set; }
+
+        /// <summary>
+        /// Appelée quand le joueur atteint un nouveau palier de chaleur
+        /// </summary>
+        public Action<int> OnNewHeatThresholdReached { get; set; }
+
+        /// <summary>
+        /// Appelée quand les stats du joueur sont restaurées
+        /// </summary>
+        public Action OnRestored { get; set; }
+
+        /// <summary>
+        /// Appelée quand le joueur n'a plus de vie
+        /// </summary>
+        public Action OnDeath { get; set; }
+
+        #endregion
+
         #region Propriétés
 
         /// <summary>
@@ -88,6 +129,26 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         public int CurEXPPoints { get; private set; }
 
+        /// <summary>
+        /// true si la santé du joueur a atteint un niveau critique
+        /// </summary>
+        public bool CriticalHealthReached { get; private set; }
+
+        /// <summary>
+        /// true si l'énergie du joueur a atteint un niveau critique
+        /// </summary>
+        public bool CriticalEnergyReached { get; private set; }
+
+        /// <summary>
+        /// true si la chaleur du joueur a atteint un niveau critique
+        /// </summary>
+        public bool CriticalHeatReached { get; private set; }
+
+        /// <summary>
+        /// true si le joueur n'a plus de vie
+        /// </summary>
+        public bool IsDead { get; private set; }
+
         #endregion
 
         #region Variables Unity
@@ -99,10 +160,16 @@ namespace Assets.Scripts.ViewModels.Player
         private Transform _player;
 
         /// <summary>
-        /// Energie consomméee en marchant
+        /// Le contrôleur du joueur
         /// </summary>
         [SerializeField]
-        private float _movingEnergyConsumption = .001f;
+        private PlayerController _controller;
+
+        /// <summary>
+        /// Dégâts infligés par surchauffe
+        /// </summary>
+        [SerializeField]
+        private Vector2 _minMaxOverheatDmg = new(.05f, .1f);
 
         /// <summary>
         /// Energie consomméee par bloc miné
@@ -128,6 +195,12 @@ namespace Assets.Scripts.ViewModels.Player
         [SerializeField]
         private float _spawnSpacing = 2f;
 
+        /// <summary>
+        /// Le %age de santé/énergie restant à partir duquel les clignotants s'activent
+        /// </summary>
+        [SerializeField]
+        private float _thresholdBeforeCriticalLevel = 20f;
+
         #endregion
 
         #region Variables d'instance
@@ -138,23 +211,99 @@ namespace Assets.Scripts.ViewModels.Player
         private float _curMiningHeatIncrease;
 
         /// <summary>
+        /// Le niveau de santé à la dernière frame
+        /// </summary>
+        private float _previousHealthLevel;
+
+        /// <summary>
+        /// Le niveau d'énergie à la dernière frame
+        /// </summary>
+        private float _previousEnergyLevel;
+
+        /// <summary>
         /// Le dernier palier de chaleur qu'à atteint le joueur.
         /// Une fois un palier atteint, il perd la couche de vêtements correspondant.
         /// Le palier ne peut être ramené à 0 qu'en terminant la journée à la base.
         /// </summary>
-        private int _lastHeatThreshold;
+        private int _lastHeatLevel;
 
         #endregion
 
         #region Méthodes Unity
 
         /// <summary>
+        /// init
+        /// </summary>
+        private void Start()
+        {
+            RestoreStats();
+        }
+
+        /// <summary>
         /// màj à chaque frame
         /// </summary>
         private void Update()
         {
+            if (IsDead)
+            {
+                return;
+            }
+
+            // Augmente la chaleur si le joueur creuse
+
+            if (_controller.IsMining)
+            {
+                _curMiningHeatIncrease += Time.deltaTime * _miningHeatIncrease;
+                CurEnergy -= Time.deltaTime * _miningEnergyConsumption;
+            }
+            else
+            {
+                _curMiningHeatIncrease -= Time.deltaTime * _miningHeatIncrease;
+                _curMiningHeatIncrease = Mathf.Max(0f, _curMiningHeatIncrease);
+            }
+
             CurDepth = -Mathf.Min(0, Mathf.RoundToInt(_player.position.y / _spawnSpacing) - 1);
             CurHeat = CurDepth * _heatIncreasePerDepth + _curMiningHeatIncrease;
+
+
+            CriticalHealthReached = CurHealth < MaxHealth * _thresholdBeforeCriticalLevel / 100f;
+            CriticalEnergyReached = CurEnergy < MaxHealth * _thresholdBeforeCriticalLevel / 100f;
+            CriticalHeatReached = CurHeat > Stats.MaxHeatThresholds[^2];
+
+            if (CriticalHealthReached && _previousHealthLevel > CurHealth)
+            {
+                OnCriticalHealthReached?.Invoke();
+            }
+
+            if (CriticalEnergyReached && _previousEnergyLevel > CurEnergy)
+            {
+                OnCriticalEnergyReached?.Invoke();
+            }
+
+            // Assigne le dernier palier de chaleur atteint
+            // pour retirer les vêtements du joueur
+
+            for (int i = 0; i < MaxHeatThresholds.Length - 1; ++i)
+            {
+                if (_lastHeatLevel < i && CurHeat > MaxHeatThresholds[i])
+                {
+                    ++_lastHeatLevel;
+                    OnNewHeatThresholdReached?.Invoke(_lastHeatLevel);
+                }
+            }
+
+            if (CriticalHeatReached)
+            {
+                // Réduit la santé si la chaleur est trop forte.
+                // Cette réduction est plus forte lorsqu'on atteint le dernier palier
+
+                float heatDmg = Mathf.Lerp(_minMaxOverheatDmg.x, _minMaxOverheatDmg.y, Mathf.InverseLerp(Stats.MaxHeatThresholds[^2], Stats.MaxHeatThresholds[^1], CurHeat));
+                TakeDamage(Time.deltaTime * heatDmg);
+                OnCriticalHeatReached?.Invoke();
+            }
+
+            _previousEnergyLevel = CurEnergy;
+            _previousHealthLevel = CurHealth;
         }
 
         #endregion
@@ -169,8 +318,16 @@ namespace Assets.Scripts.ViewModels.Player
             CurHealth = MaxHealth;
             CurEnergy = MaxEnergy;
             CurHeat = 0f;
-            _lastHeatThreshold = 0;
+            _previousHealthLevel = 0;
+            _previousEnergyLevel = 0;
+            _lastHeatLevel = -1;
             CurDepth = 0;
+            CriticalHealthReached = false;
+            CriticalEnergyReached = false;
+            CriticalHeatReached = false;
+            IsDead = false;
+
+            OnRestored?.Invoke();
         }
 
         /// <summary>
@@ -180,6 +337,7 @@ namespace Assets.Scripts.ViewModels.Player
         public void GainEXP(int amount)
         {
             CurEXPPoints += amount;
+            OnCurEXPChanged?.Invoke(this, new EXPChangedEventArgs(CurEXPPoints, amount));
         }
 
         /// <summary>
@@ -189,6 +347,28 @@ namespace Assets.Scripts.ViewModels.Player
         public void LoseEXP(int amount)
         {
             CurEXPPoints -= amount;
+            OnCurEXPChanged?.Invoke(this, new EXPChangedEventArgs(CurEXPPoints, amount));
+        }
+
+        /// <summary>
+        /// Inflige des dégâts au joueur
+        /// </summary>
+        /// <param name="dmg">Le montant</param>
+        public void TakeDamage(float dmg)
+        {
+            if (IsDead)
+            {
+                return;
+            }
+
+            CurHealth -= dmg;
+
+            if (CurHealth <= 0f)
+            {
+                CurHealth = 0f;
+                IsDead = true;
+                OnDeath?.Invoke();
+            }
         }
 
         #endregion

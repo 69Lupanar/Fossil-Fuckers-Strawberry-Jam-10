@@ -23,6 +23,11 @@ namespace Assets.Scripts.ViewModels.Managers
         public Action<LootSO> OnLootAdded { get; set; }
 
         /// <summary>
+        /// Appelée quand une gemme est trouvée
+        /// </summary>
+        public Action<LootSO> OnGemFound { get; set; }
+
+        /// <summary>
         /// Appelée quand l'inventaire est plein et ne peut plus ajouter d'objet
         /// </summary>
         public Action OnInventoryFull { get; set; }
@@ -52,7 +57,7 @@ namespace Assets.Scripts.ViewModels.Managers
         private PlayerStatsManager _playerStats;
 
         /// <summary>
-        /// ee joueur
+        /// Le joueur
         /// </summary>
         [SerializeField]
         private PlayerController _playerController;
@@ -102,7 +107,6 @@ namespace Assets.Scripts.ViewModels.Managers
 
             if (_nbFreeSlots == 0)
             {
-                print("Inventaire plein, objet " + loot.name + " abandonné.");
                 OnLootDiscarded?.Invoke(loot);
                 return;
             }
@@ -117,11 +121,9 @@ namespace Assets.Scripts.ViewModels.Managers
                     Inventory[i] = loot;
                     OnLootAdded?.Invoke(loot);
 
-                    print("objet ajouté: " + loot.name);
-
                     if (_nbFreeSlots == 0)
                     {
-                        print("inventaire plein");
+                        OnInventoryFull?.Invoke();
                     }
 
                     break;
@@ -154,6 +156,20 @@ namespace Assets.Scripts.ViewModels.Managers
             OnInventorySizeIncreased?.Invoke(_playerStats.MaxInventorySize);
         }
 
+        /// <summary>
+        /// Vide l'inventaire
+        /// </summary>
+        public void Clear()
+        {
+            for (int i = 0; i < Inventory.Length; ++i)
+            {
+                if (Inventory[i] != null)
+                {
+                    Inventory[i] = null;
+                }
+            }
+        }
+
         #endregion
 
         #region Méthodes privées
@@ -172,6 +188,9 @@ namespace Assets.Scripts.ViewModels.Managers
             {
                 case FossilLootSO fossil:
                     AddLoot(fossil);
+                    break;
+                case GemLootSO gem:
+                    OnGemFound?.Invoke(gem);
                     break;
             }
         }
