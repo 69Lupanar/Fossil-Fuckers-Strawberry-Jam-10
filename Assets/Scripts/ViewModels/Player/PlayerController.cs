@@ -176,7 +176,8 @@ namespace Assets.Scripts.ViewModels.Player
                 if (_curNbJumpsLeft > 0)
                 {
                     --_curNbJumpsLeft;
-                    _rb.linearVelocityY = Mathf.Max(_rb.linearVelocityY, 0f);
+                    _rb.linearVelocityY = 0f;
+                    //_rb.linearVelocityY = Mathf.Max(_rb.linearVelocityY, 0f); // Donne trop de puissance au saut si le joueur appuie rapidement 2x de suite
                     _rb.AddForceY(_playerStats.JumpForce, ForceMode2D.Impulse);
                 }
 

@@ -10,6 +10,11 @@ namespace Assets.Scripts.ViewModels.Player
         #region Propriétés
 
         /// <summary>
+        /// Les stats du joueur
+        /// </summary>
+        public PlayerStatsSO Stats { get; set; }
+
+        /// <summary>
         /// La vitesse de déplacement du joueur
         /// </summary>
         public float MoveSpeed => Stats.MoveSpeed;
@@ -57,33 +62,80 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         public int MaxInventorySize => Stats.MaxInventorySize;
 
+        /// <summary>
+        /// Santé actuelle du joueur
+        /// </summary>
+        public float CurHealth { get; private set; }
+
+        /// <summary>
+        /// Energie actuelle du joueur
+        /// </summary>
+        public float CurEnergy { get; private set; }
+
+        /// <summary>
+        /// Chaleur actuelle du joueur
+        /// </summary>
+        public float CurHeat { get; private set; }
+
+        /// <summary>
+        /// Le montant d'EXP du joueur.
+        /// Peut être utilisé pour l'achat ou la construction d'objets ou d'améliorations.
+        /// </summary>
+        public int CurDepth { get; private set; }
+
+        /// <summary>
+        /// La distance où se trouve le joueur par rapport à la surface
+        /// </summary>
+        public int CurEXPPoints { get; private set; }
+
         #endregion
 
         #region Variables Unity
 
         /// <summary>
-        /// Les stats du joueur
+        /// La transform du joueur
         /// </summary>
-        public PlayerStatsSO Stats { get; set; }
+        [SerializeField]
+        private Transform _player;
+
+        /// <summary>
+        /// Energie consomméee en marchant
+        /// </summary>
+        [SerializeField]
+        private float _movingEnergyConsumption = .001f;
+
+        /// <summary>
+        /// Energie consomméee par bloc miné
+        /// </summary>
+        [SerializeField]
+        private float _miningEnergyConsumption = .01f;
+
+        /// <summary>
+        /// Niveau de chaleur minimum par niveau de profondeur du joueur
+        /// </summary>
+        [SerializeField]
+        private float _heatIncreasePerDepth = .05f;
+
+        /// <summary>
+        /// Niveau de chaleur généré par le minage d'un bloc
+        /// </summary>
+        [SerializeField]
+        private float _miningHeatIncrease = .05f;
+
+        /// <summary>
+        /// Utilisé pour le calcul de la profondeur
+        /// </summary>
+        [SerializeField]
+        private float _spawnSpacing = 2f;
 
         #endregion
 
         #region Variables d'instance
 
         /// <summary>
-        /// Santé actuelle du joueur
+        /// Chaleur actuelle du joueur générée par le minage
         /// </summary>
-        private float _curHealth;
-
-        /// <summary>
-        /// Energie actuelle du joueur
-        /// </summary>
-        private float _curEnergy;
-
-        /// <summary>
-        /// Chaleur actuelle du joueur
-        /// </summary>
-        private float _curHeat;
+        private float _curMiningHeatIncrease;
 
         /// <summary>
         /// Le dernier palier de chaleur qu'à atteint le joueur.
@@ -92,16 +144,18 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         private int _lastHeatThreshold;
 
-        /// <summary>
-        /// Le montant d'EXP du joueur.
-        /// Peut être utilisé pour l'achat ou la construction d'objets ou d'améliorations.
-        /// </summary>
-        private int _curEXPPoints;
+        #endregion
+
+        #region Méthodes Unity
 
         /// <summary>
-        /// La distance où se trouve le joueur par rapport à la surface
+        /// màj à chaque frame
         /// </summary>
-        private int _curDepth;
+        private void Update()
+        {
+            CurDepth = -Mathf.Min(0, Mathf.RoundToInt(_player.position.y / _spawnSpacing) - 1);
+            CurHeat = CurDepth * _heatIncreasePerDepth + _curMiningHeatIncrease;
+        }
 
         #endregion
 
@@ -112,11 +166,11 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         public void RestoreStats()
         {
-            _curHealth = MaxHealth;
-            _curEnergy = MaxEnergy;
-            _curHeat = 0f;
+            CurHealth = MaxHealth;
+            CurEnergy = MaxEnergy;
+            CurHeat = 0f;
             _lastHeatThreshold = 0;
-            _curDepth = 0;
+            CurDepth = 0;
         }
 
         /// <summary>
@@ -125,7 +179,7 @@ namespace Assets.Scripts.ViewModels.Player
         /// <param name="amount">Le montant gagné</param>
         public void GainEXP(int amount)
         {
-            _curEXPPoints += amount;
+            CurEXPPoints += amount;
         }
 
         /// <summary>
@@ -134,7 +188,7 @@ namespace Assets.Scripts.ViewModels.Player
         /// <param name="amount">Le montant perdu</param>
         public void LoseEXP(int amount)
         {
-            _curEXPPoints -= amount;
+            CurEXPPoints -= amount;
         }
 
         #endregion

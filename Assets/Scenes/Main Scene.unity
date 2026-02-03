@@ -235,7 +235,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 35361604}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 602687408}
+        m_TargetAssemblyTypeName: Assets.Scripts.Views.Inventory.InventoryView, Assets.Scripts.Views
+        m_MethodName: OnNextBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &35361604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2582,6 +2594,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f10f934df81845a44a923285ae97790b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets.Scripts.ViewModels::Player
+  _player: {fileID: 8622508510301249954}
+  _movingEnergyConsumption: 0.001
+  _miningEnergyConsumption: 0.01
+  _heatIncreasePerDepth: 0.05
+  _miningHeatIncrease: 0.05
+  _spawnSpacing: 2
 --- !u!114 &852986447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2605,8 +2623,9 @@ MonoBehaviour:
   _heatPointer: {fileID: 726536666}
   _normalColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   _alertColor: {r: 1, g: 0, b: 0, a: 1}
-  _minMaxSideGaugeRot: {x: 100, y: -100}
+  _minMaxSideGaugeRot: {x: 105, y: -90}
   _minMaxHeatGaugeRot: {x: 130, y: -130}
+  _iconFlickeringSpeed: 2
 --- !u!1 &897366703
 GameObject:
   m_ObjectHideFlags: 0
@@ -4587,7 +4606,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1898579637}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 602687408}
+        m_TargetAssemblyTypeName: Assets.Scripts.Views.Inventory.InventoryView, Assets.Scripts.Views
+        m_MethodName: OnPreviousBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1898579637
 MonoBehaviour:
   m_ObjectHideFlags: 0

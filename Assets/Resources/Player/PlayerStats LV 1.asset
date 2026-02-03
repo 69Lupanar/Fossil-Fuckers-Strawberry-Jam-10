@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: PlayerStats LV 1
   m_EditorClassIdentifier: Assets.Scripts.Models::PlayerStatsSO
   <MoveSpeed>k__BackingField: 7
-  <JumpForce>k__BackingField: 6
+  <JumpForce>k__BackingField: 7
   <NbMaxJumps>k__BackingField: 2
   <MiningSpeed>k__BackingField: 0.75
+  <MiningQualityPercentage>k__BackingField: 50
   <MaxHealth>k__BackingField: 1
   <MaxEnergy>k__BackingField: 1
   <MaxHeatThresholds>k__BackingField:
   - 0.5
   - 0.75
   - 1
+  <MaxInventorySize>k__BackingField: 8

@@ -86,6 +86,34 @@ namespace Assets.Scripts.Views.Inventory
 
         #endregion
 
+        #region Méthodes publiques
+
+        /// <summary>
+        /// Appelée par le bouton previous
+        /// </summary>
+        public void OnPreviousBtn()
+        {
+            --_curTab;
+            _nextBtn.interactable = true;
+            _previousBtn.interactable = _curTab > 0;
+            _sizeLabel.SetText($"({_curTab + 1}/{_nbTabs})");
+            DisplayItemsInCurTab();
+        }
+
+        /// <summary>
+        /// Appelée par le bouton next
+        /// </summary>
+        public void OnNextBtn()
+        {
+            ++_curTab;
+            _previousBtn.interactable = true;
+            _nextBtn.interactable = _curTab < _nbTabs - 1;
+            _sizeLabel.SetText($"({_curTab + 1}/{_nbTabs})");
+            DisplayItemsInCurTab();
+        }
+
+        #endregion
+
         #region Méthodes privées
 
         /// <summary>
@@ -103,6 +131,14 @@ namespace Assets.Scripts.Views.Inventory
         /// Appelée quand
         /// </summary>
         private void OnLootAdded(LootSO _)
+        {
+            DisplayItemsInCurTab();
+        }
+
+        /// <summary>
+        /// Affiche les éléments de l'onglet actif
+        /// </summary>
+        private void DisplayItemsInCurTab()
         {
             int nbVisibleSlots = _slotsImgs.Length;
             Vector2Int range = new(_curTab * nbVisibleSlots, _curTab * nbVisibleSlots + nbVisibleSlots);

@@ -1,4 +1,5 @@
 using Assets.Scripts.ViewModels.Player;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -89,6 +90,67 @@ namespace Assets.Scripts.Views.Player
         /// </summary>
         [SerializeField]
         private Vector2 _minMaxHeatGaugeRot;
+
+        /// <summary>
+        /// Vitesse de clignotement des icônes
+        /// </summary>
+        [SerializeField]
+        private float _iconFlickeringSpeed = 1f;
+
+        #endregion
+
+        #region Méthodes Unity
+
+        /// <summary>
+        /// Awake
+        /// </summary>
+        private void Awake()
+        {
+            InitMeters();
+        }
+
+        private void Update()
+        {
+            UpdateDepthMeter();
+            UpdateHeatMeter();
+        }
+
+        #endregion
+
+        #region Méthodes privées
+
+        /// <summary>
+        /// Initialise les jauges
+        /// </summary>
+        private void InitMeters()
+        {
+            _depthLabel.SetText("0");
+            _heatPointer.eulerAngles = new Vector3(0f, 0f, _minMaxHeatGaugeRot.x);
+            _healthPointer.localEulerAngles = new Vector3(0f, 0f, _minMaxSideGaugeRot.x);
+            _energyPointer.localEulerAngles = new Vector3(0f, 0f, _minMaxSideGaugeRot.x);
+        }
+
+        /// <summary>
+        /// Màj la jauge de profondeur
+        /// </summary>
+        private void UpdateDepthMeter()
+        {
+            _depthLabel.SetText(_manager.CurDepth.ToString());
+        }
+
+        /// <summary>
+        /// Màj la jauge de chaleur
+        /// </summary>
+        private void UpdateHeatMeter()
+        {
+            Vector3 euler = _healthPointer.eulerAngles;
+            euler.z = Mathf.Lerp(_minMaxHeatGaugeRot.x, _minMaxHeatGaugeRot.y, _manager.CurHeat / _manager.Stats.MaxHeatThresholds[^1]);
+            _heatPointer.DORotate(euler, .5f);
+
+            _heatIcon.color = _manager.CurHeat > _manager.Stats.MaxHeatThresholds[^2] ?
+                                Color.Lerp(_normalColor, _alertColor, Mathf.PingPong(Time.time * _iconFlickeringSpeed, 1f)) :
+                                _normalColor;
+        }
 
         #endregion
     }
