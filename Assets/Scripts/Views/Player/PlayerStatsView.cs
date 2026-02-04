@@ -251,9 +251,7 @@ namespace Assets.Scripts.Views.Player
         /// <param name="newThreshold">Le nouveau palier</param>
         private void UpdatePlayerSprite(int newThreshold)
         {
-            // Le dernier palier ne compte pas, c'est la limite.
-
-            if (newThreshold < _playerSpritePerHeatThreshold.Length - 1)
+            if (newThreshold < _playerSpritePerHeatThreshold.Length)
             {
                 _playerSpriteRenderer.sprite = _playerSpritePerHeatThreshold[newThreshold];
             }

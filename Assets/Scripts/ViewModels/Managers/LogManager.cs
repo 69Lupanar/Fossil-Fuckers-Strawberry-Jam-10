@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Assets.Scripts.Models.Logs;
 using Assets.Scripts.Models.Loot;
 using Assets.Scripts.ViewModels.Player;
@@ -18,15 +17,6 @@ namespace Assets.Scripts.ViewModels.Managers
         /// Appelée quand un log est ajouté
         /// </summary>
         public Action<Log> OnLogAdded { get; set; }
-
-        #endregion
-
-        #region Propriétés
-
-        /// <summary>
-        /// La liste des message à afficher
-        /// </summary>
-        public Queue<Log> Logs { get; private set; }
 
         #endregion
 
@@ -70,14 +60,6 @@ namespace Assets.Scripts.ViewModels.Managers
             _inventoryManager.OnLootDiscarded += OnLootDiscarded;
         }
 
-        /// <summary>
-        /// Init
-        /// </summary>
-        private void Start()
-        {
-            Logs = new Queue<Log>();
-        }
-
         #endregion
 
         #region Méthodes publiques
@@ -89,9 +71,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <param name="message"></param>
         public void AddLog(Sprite sprite, string message)
         {
-            Log log = new(sprite, message);
-            Logs.Enqueue(log);
-            OnLogAdded?.Invoke(log);
+            OnLogAdded?.Invoke(new Log(sprite, message));
         }
 
         #endregion

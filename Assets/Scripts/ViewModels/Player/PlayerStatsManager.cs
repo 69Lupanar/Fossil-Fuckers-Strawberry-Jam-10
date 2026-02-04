@@ -211,16 +211,6 @@ namespace Assets.Scripts.ViewModels.Player
         private float _curMiningHeatIncrease;
 
         /// <summary>
-        /// Le niveau de santé à la dernière frame
-        /// </summary>
-        private float _previousHealthLevel;
-
-        /// <summary>
-        /// Le niveau d'énergie à la dernière frame
-        /// </summary>
-        private float _previousEnergyLevel;
-
-        /// <summary>
         /// Le dernier palier de chaleur qu'à atteint le joueur.
         /// Une fois un palier atteint, il perd la couche de vêtements correspondant.
         /// Le palier ne peut être ramené à 0 qu'en terminant la journée à la base.
@@ -265,17 +255,20 @@ namespace Assets.Scripts.ViewModels.Player
             CurDepth = -Mathf.Min(0, Mathf.RoundToInt(_player.position.y / _spawnSpacing) - 1);
             CurHeat = CurDepth * _heatIncreasePerDepth + _curMiningHeatIncrease;
 
+            bool previousCriticalHealthReached = CriticalHealthReached;
+            bool previousCriticalEnergyReached = CriticalEnergyReached;
+            bool previousCriticalHeatReached = CriticalHeatReached;
 
             CriticalHealthReached = CurHealth < MaxHealth * _thresholdBeforeCriticalLevel / 100f;
             CriticalEnergyReached = CurEnergy < MaxHealth * _thresholdBeforeCriticalLevel / 100f;
             CriticalHeatReached = CurHeat > Stats.MaxHeatThresholds[^2];
 
-            if (CriticalHealthReached && _previousHealthLevel > CurHealth)
+            if (CriticalHealthReached && !previousCriticalHealthReached)
             {
                 OnCriticalHealthReached?.Invoke();
             }
 
-            if (CriticalEnergyReached && _previousEnergyLevel > CurEnergy)
+            if (CriticalEnergyReached && !previousCriticalEnergyReached)
             {
                 OnCriticalEnergyReached?.Invoke();
             }
@@ -299,11 +292,12 @@ namespace Assets.Scripts.ViewModels.Player
 
                 float heatDmg = Mathf.Lerp(_minMaxOverheatDmg.x, _minMaxOverheatDmg.y, Mathf.InverseLerp(Stats.MaxHeatThresholds[^2], Stats.MaxHeatThresholds[^1], CurHeat));
                 TakeDamage(Time.deltaTime * heatDmg);
-                OnCriticalHeatReached?.Invoke();
-            }
 
-            _previousEnergyLevel = CurEnergy;
-            _previousHealthLevel = CurHealth;
+                if (!previousCriticalHeatReached)
+                {
+                    OnCriticalHeatReached?.Invoke();
+                }
+            }
         }
 
         #endregion
@@ -318,8 +312,6 @@ namespace Assets.Scripts.ViewModels.Player
             CurHealth = MaxHealth;
             CurEnergy = MaxEnergy;
             CurHeat = 0f;
-            _previousHealthLevel = 0;
-            _previousEnergyLevel = 0;
             _lastHeatLevel = -1;
             CurDepth = 0;
             CriticalHealthReached = false;

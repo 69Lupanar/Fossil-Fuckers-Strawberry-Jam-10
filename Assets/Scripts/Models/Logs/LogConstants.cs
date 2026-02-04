@@ -31,7 +31,7 @@ namespace Assets.Scripts.Models.Logs
         public const string OVERHEAT_MSG = "Overheating!";
         public static readonly string[] HEAT_THRESHOLDS_MSG = new string[3]
         {
-            "You start removing some of your clothes...",
+            "The heat forces you to remove some of your clothes...",
             "You blush at the thought of being caught by a stranger like this...",
             "The heat is unbearable..."
         };

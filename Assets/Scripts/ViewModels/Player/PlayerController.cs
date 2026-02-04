@@ -124,7 +124,7 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         private void Update()
         {
-            if (_playerStats.IsDead)
+            if (_playerStats.IsDead || IsMining)
             {
                 return;
             }
@@ -230,6 +230,7 @@ namespace Assets.Scripts.ViewModels.Player
         private void OnDeath()
         {
             IsMining = false;
+            _col.isTrigger = false;
             _miningTween?.Kill(false);
             _rb.linearVelocity = Vector2.zero;
         }
@@ -239,7 +240,6 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         private void OnRestored()
         {
-            _col.isTrigger = false;
             _renderer.flipX = false;
             transform.position = _spawnPoint.position;
         }
