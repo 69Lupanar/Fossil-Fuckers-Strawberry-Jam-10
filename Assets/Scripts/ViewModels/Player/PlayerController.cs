@@ -18,7 +18,7 @@ namespace Assets.Scripts.ViewModels.Player
         /// <summary>
         /// Appelée quand une case est minée
         /// </summary>
-        public Action<LootSO> OnTileMined { get; set; }
+        public Action<LootSO, int> OnTileMined { get; set; }
 
         #endregion
 
@@ -182,7 +182,7 @@ namespace Assets.Scripts.ViewModels.Player
                             // On récupère l'objet miné et on l'ajoute à l'inventaire.
 
                             LootSO loot = tile.OnMined();
-                            OnTileMined?.Invoke(loot);
+                            OnTileMined?.Invoke(loot, _playerStats.MiningQualityPercentage);
                         });
                     }
                 }

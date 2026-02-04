@@ -37,7 +37,7 @@ public class PlayerStatsSO : ScriptableObject
     /// Le pourcentage de qualité de minage
     /// </summary>
     [field: SerializeField]
-    public float MiningQualityPercentage { get; set; } = 50f;
+    public int MiningQualityPercentage { get; set; } = 50;
 
     /// <summary>
     /// La santé max du joueur

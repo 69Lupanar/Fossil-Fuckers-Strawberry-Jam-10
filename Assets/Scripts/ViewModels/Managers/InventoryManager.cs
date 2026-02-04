@@ -184,17 +184,18 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <summary>
         /// Appelée quand une case est minée
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <exception cref="NotImplementedException"></exception>
-        private void OnTileMined(LootSO loot)
+        /// <param name="loot">L'objet miné</param>
+        /// <param name="miningQuality">La qualité de minage</param>
+        private void OnTileMined(LootSO loot, int miningQuality)
         {
             _playerStats.GainEXP(loot.EXP);
 
             switch (loot)
             {
                 case FossilLootSO fossil:
-                    AddLoot(fossil);
+                    FossilLootSO clone = fossil.Clone();
+                    clone.Quality = UnityEngine.Random.Range(miningQuality / 2, miningQuality);
+                    AddLoot(clone);
                     break;
                 case GemLootSO gem:
                     OnGemFound?.Invoke(gem);

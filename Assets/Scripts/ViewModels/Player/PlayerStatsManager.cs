@@ -78,7 +78,7 @@ namespace Assets.Scripts.ViewModels.Player
         /// <summary>
         /// Le pourcentage de qualité de minage
         /// </summary>
-        public float MiningQualityPercentage => Stats.MiningQualityPercentage;
+        public int MiningQualityPercentage => Stats.MiningQualityPercentage;
 
         /// <summary>
         /// La santé max du joueur

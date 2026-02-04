@@ -11,12 +11,12 @@ namespace Assets.Scripts.Models.Loot
         /// L'icône de l'objet
         /// </summary>
         [field: SerializeField]
-        public Sprite Sprite { get; private set; }
+        public Sprite Sprite { get; protected set; }
 
         /// <summary>
         /// L'EXP obtenue après minage de la case
         /// </summary>
         [field: SerializeField]
-        public int EXP { get; private set; }
+        public int EXP { get; protected set; }
     }
 }
