@@ -37,6 +37,11 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public Action<LootSO> OnLootDiscarded { get; set; }
 
+        /// <summary>
+        /// Appelée quand l'inventaire est vidé
+        /// </summary>
+        public Action OnClear { get; set; }
+
         #endregion
 
         #region Propriétés
@@ -168,6 +173,8 @@ namespace Assets.Scripts.ViewModels.Managers
                     Inventory[i] = null;
                 }
             }
+
+            OnClear?.Invoke();
         }
 
         #endregion

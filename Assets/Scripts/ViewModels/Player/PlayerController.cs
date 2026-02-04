@@ -54,11 +54,6 @@ namespace Assets.Scripts.ViewModels.Player
         [SerializeField] private Rigidbody2D _rb;
 
         /// <summary>
-        /// Point de départ du joueur
-        /// </summary>
-        [SerializeField] private Transform _spawnPoint;
-
-        /// <summary>
         /// Utilisé pour la détection du sol
         /// </summary>
         [SerializeField] private Transform _groundCheck;
@@ -88,6 +83,11 @@ namespace Assets.Scripts.ViewModels.Player
         #region Variables d'instance
 
         /// <summary>
+        /// true si le contrôleur est désactivé
+        /// </summary>
+        private bool _disabled;
+
+        /// <summary>
         /// Le nombre de sauts restants
         /// </summary>
         private int _curNbJumpsLeft;
@@ -100,15 +100,6 @@ namespace Assets.Scripts.ViewModels.Player
         #endregion
 
         #region Méthodes Unity
-
-        /// <summary>
-        /// init
-        /// </summary>
-        private void Awake()
-        {
-            _playerStats.OnDeath += OnDeath;
-            _playerStats.OnRestored += OnRestored;
-        }
 
         /// <summary>
         /// Init
@@ -222,13 +213,14 @@ namespace Assets.Scripts.ViewModels.Player
 
         #endregion
 
-        #region Méthodes privées
+        #region Méthodes pubiques
 
         /// <summary>
         /// Appelé quand la santé du joueur tombe à 0
         /// </summary>
-        private void OnDeath()
+        public void Disable()
         {
+            _input.EnablePlayerInput(false);
             IsMining = false;
             _col.isTrigger = false;
             _miningTween?.Kill(false);
@@ -238,10 +230,10 @@ namespace Assets.Scripts.ViewModels.Player
         /// <summary>
         /// Appelé quand les stats du joueur sont restaurées
         /// </summary>
-        private void OnRestored()
+        public void Enable()
         {
+            _input.EnablePlayerInput(true);
             _renderer.flipX = false;
-            transform.position = _spawnPoint.position;
         }
 
         #endregion

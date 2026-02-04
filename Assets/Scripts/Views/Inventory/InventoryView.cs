@@ -1,3 +1,4 @@
+using System;
 using Assets.Scripts.Models.Loot;
 using Assets.Scripts.ViewModels.Managers;
 using TMPro;
@@ -74,6 +75,7 @@ namespace Assets.Scripts.Views.Inventory
         {
             _manager.OnLootAdded += OnLootAdded;
             _manager.OnInventorySizeIncreased += OnInventorySizeIncreased;
+            _manager.OnClear += OnClear;
         }
 
         private void Start()
@@ -115,6 +117,18 @@ namespace Assets.Scripts.Views.Inventory
         #endregion
 
         #region Méthodes privées
+
+        /// <summary>
+        /// Appelée quand l'inventaire est vidé
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        private void OnClear()
+        {
+            for (int i = 0; i < _slotsImgs.Length; ++i)
+            {
+                _slotsImgs[i].gameObject.SetActive(false);
+            }
+        }
 
         /// <summary>
         /// Appelée quand la taille de l'inventaire augmente

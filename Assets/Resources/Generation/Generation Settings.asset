@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Mineables.GenerationSettingsSO
   <MinMaxGridLength>k__BackingField: {x: 50, y: 100}
   <MinMaxGridDepth>k__BackingField: {x: 50, y: 100}
+  <BaseGroundTile>k__BackingField: {fileID: 11400000, guid: 1c4e3c56e2e610e4fa356fbab832fbfa, type: 2}
+  <BaseGroundLength>k__BackingField: 9
   <MineablesPrefabs>k__BackingField:
     _serializedList:
     - Key: {fileID: 11400000, guid: c16c13f2dc74be643ae1db96a7fb84e9, type: 2}

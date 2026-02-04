@@ -22,6 +22,18 @@ namespace Assets.Scripts.Models.Mineables
         public Vector2Int MinMaxGridDepth { get; private set; }
 
         /// <summary>
+        /// Le type de case servant de sol à la base
+        /// </summary>
+        [field: SerializeField]
+        public MineableTileSO BaseGroundTile { get; private set; }
+
+        /// <summary>
+        /// La longueur du sol de la base
+        /// </summary>
+        [field: SerializeField]
+        public int BaseGroundLength { get; private set; }
+
+        /// <summary>
         /// Liste d'objets minables à instancier.
         /// Si le total des probabilités est en dessous de 100%, le reste représentera des cases vides
         /// </summary>

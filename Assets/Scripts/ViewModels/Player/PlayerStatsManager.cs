@@ -244,16 +244,18 @@ namespace Assets.Scripts.ViewModels.Player
             if (_controller.IsMining)
             {
                 _curMiningHeatIncrease += Time.deltaTime * _miningHeatIncrease;
-                CurEnergy -= Time.deltaTime * _miningEnergyConsumption;
+                LoseEnergy(Time.deltaTime * _miningEnergyConsumption);
             }
             else
             {
                 _curMiningHeatIncrease -= Time.deltaTime * _miningHeatIncrease;
-                _curMiningHeatIncrease = Mathf.Max(0f, _curMiningHeatIncrease);
             }
 
             CurDepth = -Mathf.Min(0, Mathf.RoundToInt(_player.position.y / _spawnSpacing) - 1);
+            _curMiningHeatIncrease = Mathf.Clamp(_curMiningHeatIncrease, 0f, MaxHeatThresholds[^1] - CurDepth * _heatIncreasePerDepth);
             CurHeat = CurDepth * _heatIncreasePerDepth + _curMiningHeatIncrease;
+
+            // Indique si les jauges ont atteint un niveau critique
 
             bool previousCriticalHealthReached = CriticalHealthReached;
             bool previousCriticalEnergyReached = CriticalEnergyReached;
@@ -291,7 +293,7 @@ namespace Assets.Scripts.ViewModels.Player
                 // Cette réduction est plus forte lorsqu'on atteint le dernier palier
 
                 float heatDmg = Mathf.Lerp(_minMaxOverheatDmg.x, _minMaxOverheatDmg.y, Mathf.InverseLerp(Stats.MaxHeatThresholds[^2], Stats.MaxHeatThresholds[^1], CurHeat));
-                TakeDamage(Time.deltaTime * heatDmg);
+                LoseHealth(Time.deltaTime * heatDmg);
 
                 if (!previousCriticalHeatReached)
                 {
@@ -312,7 +314,9 @@ namespace Assets.Scripts.ViewModels.Player
             CurHealth = MaxHealth;
             CurEnergy = MaxEnergy;
             CurHeat = 0f;
+            CurEXPPoints = 0;
             _lastHeatLevel = -1;
+            _curMiningHeatIncrease = 0f;
             CurDepth = 0;
             CriticalHealthReached = false;
             CriticalEnergyReached = false;
@@ -343,21 +347,60 @@ namespace Assets.Scripts.ViewModels.Player
         }
 
         /// <summary>
+        /// Restaure la santé du joueur
+        /// </summary>
+        /// <param name="amount">Le montant</param>
+        public void GainHealth(float amount)
+        {
+            CurHealth = Mathf.Min(MaxHealth, CurHealth + amount);
+        }
+
+        /// <summary>
         /// Inflige des dégâts au joueur
         /// </summary>
-        /// <param name="dmg">Le montant</param>
-        public void TakeDamage(float dmg)
+        /// <param name="amount">Le montant</param>
+        public void LoseHealth(float amount)
         {
             if (IsDead)
             {
                 return;
             }
 
-            CurHealth -= dmg;
+            CurHealth -= amount;
 
             if (CurHealth <= 0f)
             {
                 CurHealth = 0f;
+                IsDead = true;
+                OnDeath?.Invoke();
+            }
+        }
+
+        /// <summary>
+        /// Restaure l'énergie du joueur
+        /// </summary>
+        /// <param name="amount">Le montant</param>
+        public void GainEnergy(float amount)
+        {
+            CurEnergy = Mathf.Min(MaxEnergy, CurEnergy + amount);
+        }
+
+        /// <summary>
+        /// Fait perdre de l'énergie au joueur
+        /// </summary>
+        /// <param name="amount">Le montant</param>
+        public void LoseEnergy(float amount)
+        {
+            if (IsDead)
+            {
+                return;
+            }
+
+            CurEnergy -= amount;
+
+            if (CurEnergy <= 0f)
+            {
+                CurEnergy = 0f;
                 IsDead = true;
                 OnDeath?.Invoke();
             }

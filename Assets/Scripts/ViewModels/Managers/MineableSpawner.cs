@@ -198,6 +198,15 @@ namespace Assets.Scripts.ViewModels.Managers
 
             #region Génère les structures spéciales (base, caves, corridors, lacs, PNJs, etc.)
 
+            #region Sol de la base
+
+            for (int i = 0; i < settings.BaseGroundLength; ++i)
+            {
+                _idsGrid[i] = settings.BaseGroundTile.name;
+            }
+
+            #endregion
+
             #endregion
         }
 
