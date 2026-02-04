@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Loot.FossilLootSO
   <Sprite>k__BackingField: {fileID: 1334091500, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
   <EXP>k__BackingField: 15
+  <Lustosaur>k__BackingField: {fileID: 11400000, guid: 420631c40b818694aa161b0eb590c3c1, type: 2}

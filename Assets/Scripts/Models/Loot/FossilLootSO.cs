@@ -1,3 +1,4 @@
+using Assets.Scripts.Models.Dinos;
 using UnityEngine;
 
 namespace Assets.Scripts.Models.Loot
@@ -15,6 +16,12 @@ namespace Assets.Scripts.Models.Loot
         /// </summary>
         public int Quality { get; set; }
 
+        /// <summary>
+        /// Le luxurosaure associé à ce fossile
+        /// </summary>
+        [field: SerializeField]
+        public LustosaurSO Lustosaur { get; private set; }
+
         #endregion
 
         #region Méthodes publiques
@@ -28,6 +35,7 @@ namespace Assets.Scripts.Models.Loot
             FossilLootSO clone = ScriptableObject.CreateInstance<FossilLootSO>();
             clone.Sprite = Sprite;
             clone.EXP = EXP;
+            clone.Lustosaur = Lustosaur;
             return clone;
         }
 
