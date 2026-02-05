@@ -5048,6 +5048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assets.Scripts.Views::BaseMenuView
   _manager: {fileID: 574469023}
+  _cloningView: {fileID: 1591627178}
   _gameManager: {fileID: 485394136}
   _baseMenuCanvas: {fileID: 1107365865}
   _cloningMenuCanvas: {fileID: 551866677}
@@ -5056,20 +5057,6 @@ MonoBehaviour:
   _baseMenuBtnsParent: {fileID: 702140586}
   _blackFadeImg: {fileID: 804549117}
   _fadeSpeed: 0.5
-  _draggableImg: {fileID: 1716620957}
-  _inventoryGrid: {fileID: 1280688592}
-  _fusionSlotsDropZones:
-  - {fileID: 1779766598}
-  - {fileID: 1060060516}
-  - {fileID: 2094676906}
-  _questionMarks:
-  - {fileID: 927851255}
-  - {fileID: 209666778}
-  - {fileID: 266281361}
-  _fusionSlotsHandlers:
-  - {fileID: 63019339}
-  - {fileID: 1203726698}
-  - {fileID: 1020968164}
 --- !u!114 &574469023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5082,8 +5069,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98040d2fd67d694bae16e5ccb208840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets.Scripts.ViewModels::BaseMenuManager
-  _inventoryManager: {fileID: 602687407}
-  _inventoryCapacity: 64
   _teamStandbyCapacity: 20
 --- !u!1001 &575292254
 PrefabInstance:
@@ -14427,6 +14412,7 @@ Transform:
   - {fileID: 517317939}
   - {fileID: 485394135}
   - {fileID: 574469021}
+  - {fileID: 1591627177}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1485084585
@@ -15595,6 +15581,80 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6598400749749397699, guid: 3e00d99c5d8c4f643951f30137854162, type: 3}
   m_PrefabInstance: {fileID: 5578285403780227441}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1591627176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1591627177}
+  - component: {fileID: 1591627179}
+  - component: {fileID: 1591627178}
+  m_Layer: 0
+  m_Name: CloningMenuManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1591627177
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591627176}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1480321074}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1591627178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591627176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e5d9a81f4fc9545a622bccc2da7521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets.Scripts.Views::CloningMenuView
+  _manager: {fileID: 1591627179}
+  _draggableImg: {fileID: 1716620957}
+  _inventoryGrid: {fileID: 1280688592}
+  _fusionSlotsDropZones:
+  - {fileID: 1779766598}
+  - {fileID: 1060060516}
+  - {fileID: 2094676906}
+  _questionMarks:
+  - {fileID: 927851255}
+  - {fileID: 209666778}
+  - {fileID: 266281361}
+  _fusionSlotsHandlers:
+  - {fileID: 63019339}
+  - {fileID: 1203726698}
+  - {fileID: 1020968164}
+--- !u!114 &1591627179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591627176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06c2fe15e36bcda49af9e8be3da25a3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets.Scripts.ViewModels::CloningMenuManager
+  _inventoryManager: {fileID: 602687407}
+  _inventoryCapacity: 64
 --- !u!1 &1605910487
 GameObject:
   m_ObjectHideFlags: 0
