@@ -76,7 +76,7 @@ namespace Assets.Scripts.Models.Dinos
 
             CurEXP += amount;
 
-            if (CurEXP > ExpUntilNextLevel)
+            while (CurEXP > ExpUntilNextLevel)
             {
                 GainLevel();
             }
@@ -89,8 +89,13 @@ namespace Assets.Scripts.Models.Dinos
         {
             if (CurLevel < DinoConstants.MAX_LEVEL)
             {
+                CurEXP -= ExpUntilNextLevel;
                 ++CurLevel;
-                CurEXP -= CurLevel == DinoConstants.MAX_LEVEL ? CurEXP : ExpUntilNextLevel;
+            }
+
+            if (CurLevel == DinoConstants.MAX_LEVEL)
+            {
+                CurEXP = 0;
             }
         }
 

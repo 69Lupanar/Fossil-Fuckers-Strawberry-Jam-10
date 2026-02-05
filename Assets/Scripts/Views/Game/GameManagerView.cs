@@ -87,7 +87,7 @@ namespace Assets.Scripts.Views.Game
 
                 _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
                 {
-                    _baseMenuCanvas.enabled = true;
+                    OpenBaseMenu();
                     _blackFadeImg.DOFade(0f, _fadeSpeed);
                 });
             }
@@ -104,6 +104,15 @@ namespace Assets.Scripts.Views.Game
                 _manager.ResetPlayer();
                 _blackFadeImg.DOFade(0f, _fadeSpeed);
             });
+        }
+
+        /// <summary>
+        /// Ouvre le menu de la base
+        /// </summary>
+        private void OpenBaseMenu()
+        {
+            _manager.TransferInventoryToBase();
+            _baseMenuCanvas.enabled = true;
         }
 
         #endregion

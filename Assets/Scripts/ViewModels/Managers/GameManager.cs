@@ -12,6 +12,12 @@ namespace Assets.Scripts.ViewModels.Managers
         #region Variables Unity
 
         /// <summary>
+        /// Le BaseMenuManager
+        /// </summary>
+        [SerializeField]
+        private BaseMenuManager _baseMenuManager;
+
+        /// <summary>
         /// L'InventoryManager
         /// </summary>
         [SerializeField]
@@ -88,6 +94,15 @@ namespace Assets.Scripts.ViewModels.Managers
         public void RespawnPlayer()
         {
             _controller.transform.position = _spawnPoint.position;
+        }
+
+        /// <summary>
+        /// Transfère tous les objets de l'inventaire du joueur
+        /// vers celui de la base
+        /// </summary>
+        public void TransferInventoryToBase()
+        {
+
         }
 
         #endregion
