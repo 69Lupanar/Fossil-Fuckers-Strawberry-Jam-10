@@ -33,6 +33,7 @@ namespace Assets.Scripts.Models.Loot
         public FossilLootSO Clone()
         {
             FossilLootSO clone = ScriptableObject.CreateInstance<FossilLootSO>();
+            clone.name = name;
             clone.Sprite = Sprite;
             clone.EXP = EXP;
             clone.Lustosaur = Lustosaur;

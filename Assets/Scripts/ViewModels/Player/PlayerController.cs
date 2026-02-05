@@ -44,11 +44,6 @@ namespace Assets.Scripts.ViewModels.Player
         [SerializeField] private SpriteRenderer _renderer;
 
         /// <summary>
-        /// Le collider du joueur
-        /// </summary>
-        [SerializeField] private Collider2D _col;
-
-        /// <summary>
         /// Le Rigidbody
         /// </summary>
         [SerializeField] private Rigidbody2D _rb;
@@ -83,9 +78,9 @@ namespace Assets.Scripts.ViewModels.Player
         #region Variables d'instance
 
         /// <summary>
-        /// true si le contrôleur est désactivé
+        /// Le collider du joueur
         /// </summary>
-        private bool _disabled;
+        private Collider2D _col;
 
         /// <summary>
         /// Le nombre de sauts restants
@@ -106,6 +101,7 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         private void Start()
         {
+            _col = GetComponent<Collider2D>();
             _input.EnablePlayerInput(true);
             IsMining = false;
         }
@@ -120,6 +116,14 @@ namespace Assets.Scripts.ViewModels.Player
                 return;
             }
 
+            CheckSpriteDirection();
+        }
+
+        /// <summary>
+        /// Vérifie la direction dans laquelle doit se tourner le sprite
+        /// </summary>
+        private void CheckSpriteDirection()
+        {
             if (_input.HorizontalAxis > 0f)
             {
                 _renderer.flipX = false;
@@ -178,6 +182,7 @@ namespace Assets.Scripts.ViewModels.Player
                             IsMining = false;
                             _col.isTrigger = false;
                             _rb.linearVelocityY = 0f;
+                            CheckSpriteDirection();
 
                             // On récupère l'objet miné et on l'ajoute à l'inventaire.
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6724344698863306315}
   - component: {fileID: 7359140728349226390}
   - component: {fileID: 6161980328428691859}
+  - component: {fileID: 3478405762758296866}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -75,6 +76,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3478405762758296866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6574062658255387870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 592377051c10ea342b40fa9ee43afd0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets.Scripts.Views::DraggableItem
 --- !u!1 &9215781215336427374
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,6 +99,7 @@ GameObject:
   - component: {fileID: 2978204409865718334}
   - component: {fileID: 8754843018554298377}
   - component: {fileID: 1571074241390769807}
+  - component: {fileID: 1081981239822869314}
   m_Layer: 5
   m_Name: BaseInventorySlot
   m_TagString: Untagged
@@ -151,3 +165,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1081981239822869314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9215781215336427374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 592377051c10ea342b40fa9ee43afd0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets.Scripts.Views::Assets.Scripts.Views.Base.PointerCallbackReceiver

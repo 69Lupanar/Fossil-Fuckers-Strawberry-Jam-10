@@ -1,5 +1,6 @@
 using Assets.Scripts.ViewModels.Managers;
 using Assets.Scripts.ViewModels.Player;
+using Assets.Scripts.Views.Base;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,12 @@ namespace Assets.Scripts.Views.Game
     public class GameManagerView : MonoBehaviour
     {
         #region Variables Unity
+
+        /// <summary>
+        /// Le BaseMenuView
+        /// </summary>
+        [SerializeField]
+        private BaseMenuView _baseMenuView;
 
         /// <summary>
         /// Le GameManager
@@ -30,12 +37,6 @@ namespace Assets.Scripts.Views.Game
         /// </summary>
         [SerializeField]
         private Collider2DTrigger _playerTrigger;
-
-        /// <summary>
-        /// Le canvas du menu de la base
-        /// </summary>
-        [SerializeField]
-        private Canvas _baseMenuCanvas;
 
         /// <summary>
         /// Fondu en noir
@@ -87,7 +88,7 @@ namespace Assets.Scripts.Views.Game
 
                 _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
                 {
-                    OpenBaseMenu();
+                    _baseMenuView.OpenBaseMenu();
                     _blackFadeImg.DOFade(0f, _fadeSpeed);
                 });
             }
@@ -104,15 +105,6 @@ namespace Assets.Scripts.Views.Game
                 _manager.ResetPlayer();
                 _blackFadeImg.DOFade(0f, _fadeSpeed);
             });
-        }
-
-        /// <summary>
-        /// Ouvre le menu de la base
-        /// </summary>
-        private void OpenBaseMenu()
-        {
-            _manager.TransferInventoryToBase();
-            _baseMenuCanvas.enabled = true;
         }
 
         #endregion
