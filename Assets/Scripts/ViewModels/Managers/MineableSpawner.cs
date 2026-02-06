@@ -4,6 +4,7 @@ using Assets.Scripts.Models.EventArgs;
 using Assets.Scripts.Models.Mineables;
 using Assets.Scripts.ViewModels.Mineables;
 using AYellowpaper.SerializedCollections;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -144,7 +145,7 @@ namespace Assets.Scripts.ViewModels.Managers
             float maxAlea = 0;
             string[] names = settings.MineablesPrefabs.Keys.Select(item => item.name).ToArray();
             Vector2Int[] depths = settings.MineablesPrefabs.Values.Select(setting => setting.MinMaxDepth).ToArray();
-            Vector2[] chanceIntervals = new Vector2[names.Length];
+            NativeArray<Vector2> chanceIntervals = new(names.Length, Allocator.Temp);
 
             int count = 0;
 

@@ -9,6 +9,8 @@ namespace Assets.Scripts.Models.Dinos
     [Serializable]
     public struct FightingStats
     {
+        #region Propriétés
+
         /// <summary>
         /// La santé du luxurosaure
         /// </summary>
@@ -38,5 +40,47 @@ namespace Assets.Scripts.Models.Dinos
         /// </summary>
         [field: SerializeField]
         public int Evasion { get; private set; }
+
+        #endregion
+
+        #region Constructeur
+
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="health">La santé du luxurosaure</param>
+        /// <param name="attack">L'attaque du luxurosaure</param>
+        /// <param name="defense">La défense du luxurosaure</param>
+        /// <param name="criticalHitRate">Le taux de coups critiques du luxurosaure</param>
+        /// <param name="evasion">Le taux d'esquive du luxurosaure</param>
+        public FightingStats(int health, int attack, int defense, int criticalHitRate, int evasion)
+        {
+            Health = health;
+            Attack = attack;
+            Defense = defense;
+            CriticalHitRate = criticalHitRate;
+            Evasion = evasion;
+        }
+
+        #endregion
+
+        #region Méthodes publiques
+
+        /// <summary>
+        /// Opérateur -
+        /// </summary>
+        public static FightingStats operator -(FightingStats a, FightingStats b)
+        {
+            return new FightingStats
+                (
+                a.Health - b.Health,
+                a.Attack - b.Attack,
+                a.Defense - b.Defense,
+                a.CriticalHitRate - b.CriticalHitRate,
+                a.Evasion - b.Evasion
+                );
+        }
+
+        #endregion
     }
 }

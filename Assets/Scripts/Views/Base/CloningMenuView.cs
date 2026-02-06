@@ -1,5 +1,10 @@
+using Assets.Scripts.Models;
+using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.Models.Loot;
 using Assets.Scripts.ViewModels.Managers;
+using AYellowpaper.SerializedCollections;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +30,12 @@ namespace Assets.Scripts.Views.Base
         private Transform _draggableImg;
 
         /// <summary>
+        /// Vitesse d'animation des popups
+        /// </summary>
+        [SerializeField]
+        private float _popupAnimSpeed = .5f;
+
+        /// <summary>
         /// Le conteneur des btns du menu de la base
         /// </summary>
         [SerializeField]
@@ -48,6 +59,44 @@ namespace Assets.Scripts.Views.Base
         [SerializeField]
         private PointerCallbackReceiver[] _fusionSlotsHandlers;
 
+        /// <summary>
+        /// Le popup de succès après une fusion réussie
+        /// </summary>
+        [SerializeField]
+        private CanvasGroup _successPopup;
+
+        /// <summary>
+        /// Le popup d'échec après une fusion échouée
+        /// </summary>
+        [SerializeField]
+        private CanvasGroup _failurePopup;
+
+        /// <summary>
+        /// Le label du nom du luxurosaure fusionné
+        /// </summary>
+        [SerializeField]
+        private TextMeshProUGUI _lustosaurNameLabel;
+
+        /// <summary>
+        /// Le label du message d'erreur de la fusion
+        /// </summary>
+        [SerializeField]
+        private TextMeshProUGUI _fusionFailErrorLabel;
+
+        /// <summary>
+        /// L'icône du luxurosaure fusionné
+        /// </summary>
+        [SerializeField]
+        private Image _lustosaurIcon;
+
+        /// <summary>
+        /// La couleur du label du nom
+        /// en fonction de l'attribut du luxurosaire
+        /// </summary>
+        [field: SerializedDictionary("Attribute", "Color")]
+        [field: SerializeField]
+        public SerializedDictionary<ElementalAttribute, Color> _textColorPerAttribute { get; private set; }
+
         #endregion
 
         #region Variables d'instance
@@ -63,11 +112,6 @@ namespace Assets.Scripts.Views.Base
         private Vector3 _curHoveredItemStartPos;
 
         /// <summary>
-        /// Les objets dans chaque emplacement de fusion
-        /// </summary>
-        private LootSO[] _itemsInFusionSlots;
-
-        /// <summary>
         /// La position de la souris à la frame précédente
         /// </summary>
         private Vector3 _previousMousePos;
@@ -81,6 +125,12 @@ namespace Assets.Scripts.Views.Base
         /// </summary>
         private void Start()
         {
+            _successPopup.alpha = 0f;
+            _successPopup.blocksRaycasts = false;
+            _successPopup.interactable = false;
+            _failurePopup.alpha = 0f;
+            _failurePopup.blocksRaycasts = false;
+            _failurePopup.interactable = false;
             InitializePointerHandlers();
         }
 
@@ -103,7 +153,7 @@ namespace Assets.Scripts.Views.Base
                 {
                     int index = _curHoveredItemID - _inventoryGrid.childCount;
                     _fusionSlotsHandlers[index].GetComponent<Image>().enabled = false;
-                    _draggableImg.GetComponent<Image>().sprite = _itemsInFusionSlots[index].Sprite;
+                    _draggableImg.GetComponent<Image>().sprite = _manager.ItemsInFusionSlots[index].Sprite;
                 }
             }
 
@@ -148,22 +198,64 @@ namespace Assets.Scripts.Views.Base
         }
 
         /// <summary>
-        /// Nettoyage
+        /// Lance une tentative de fusion
         /// </summary>
-        public void Cleanup()
+        public void TryFusion()
         {
-            // Avant de fermer la fenêtre, on renvoie tous les objets
-            // des emplacements de fusion à l'inventaire
-
-            for (int i = 0; i < _itemsInFusionSlots.Length; ++i)
+            if (_manager.TryFusion(out LustosaurSO lustosaur, out string errorMsg))
             {
-                if (_itemsInFusionSlots[i] != null)
-                {
-                    _manager.Inventory.Add(_itemsInFusionSlots[i]);
-                }
+                ShowSuccessPopup(lustosaur);
 
-                _itemsInFusionSlots[i] = null;
+                // Nettoie la table de fusion
+
+                _manager.CleanupFusionSlots();
+                DisplayItems();
             }
+            else
+            {
+                ShowFailurePopup(errorMsg);
+            }
+        }
+
+        /// <summary>
+        /// Ajoute le luxurosaure créé à l'équipe
+        /// </summary>
+        public void AddCreatedLustosaurToTeam()
+        {
+            _manager.AddCreatedLustosaurToTeam();
+        }
+
+        /// <summary>
+        /// Affiche un popup de succès après une fusion réussie
+        /// </summary>
+        public void HideSuccessPopup()
+        {
+            _successPopup.blocksRaycasts = false;
+            _successPopup.interactable = false;
+            _successPopup.DOFade(0f, _popupAnimSpeed);
+        }
+
+        /// <summary>
+        /// Affiche un popup d'échec après une fusion échouée
+        /// </summary>
+        public void HideFailurePopup()
+        {
+            _failurePopup.blocksRaycasts = false;
+            _failurePopup.interactable = false;
+            _failurePopup.DOFade(0f, _popupAnimSpeed);
+        }
+
+        /// <summary>
+        /// Nettoyage à la fermeture de la fenêtre
+        /// </summary>
+        public void CleanupOnWindowClosed()
+        {
+            _successPopup.blocksRaycasts = false;
+            _successPopup.alpha = 0f;
+            _failurePopup.blocksRaycasts = false;
+            _failurePopup.alpha = 0f;
+
+            _manager.CleanupOnWindowClosed();
         }
 
         #endregion
@@ -175,8 +267,6 @@ namespace Assets.Scripts.Views.Base
         /// </summary>
         private void InitializePointerHandlers()
         {
-            _itemsInFusionSlots = new LootSO[_fusionSlotsDropZones.Length];
-
             for (int i = 0; i < _inventoryGrid.childCount; ++i)
             {
                 PointerCallbackReceiver draggableItem = _inventoryGrid.GetChild(i).GetChild(0).GetComponent<PointerCallbackReceiver>();
@@ -211,12 +301,12 @@ namespace Assets.Scripts.Views.Base
 
             for (int i = 0; i < _fusionSlotsHandlers.Length; ++i)
             {
-                _fusionSlotsHandlers[i].gameObject.SetActive(_itemsInFusionSlots[i] != null);
-                _questionMarks[i].SetActive(_itemsInFusionSlots[i] == null);
+                _fusionSlotsHandlers[i].gameObject.SetActive(_manager.ItemsInFusionSlots[i] != null);
+                _questionMarks[i].SetActive(_manager.ItemsInFusionSlots[i] == null);
 
-                if (_itemsInFusionSlots[i] != null)
+                if (_manager.ItemsInFusionSlots[i] != null)
                 {
-                    _fusionSlotsHandlers[i].GetComponent<Image>().sprite = _itemsInFusionSlots[i].Sprite;
+                    _fusionSlotsHandlers[i].GetComponent<Image>().sprite = _manager.ItemsInFusionSlots[i].Sprite;
                 }
             }
         }
@@ -274,17 +364,17 @@ namespace Assets.Scripts.Views.Base
 
                     LootSO draggedLoot = _manager.Inventory[_curHoveredItemID];
 
-                    if (_itemsInFusionSlots[targetFusionSlotIndex] != draggedLoot)
+                    if (_manager.ItemsInFusionSlots[targetFusionSlotIndex] != draggedLoot)
                     {
                         // Si oui, on échange leur place.
                         // Sinon, on se contente d'ajouter l'objet déplacé.
 
-                        if (_itemsInFusionSlots[targetFusionSlotIndex] != null)
+                        if (_manager.ItemsInFusionSlots[targetFusionSlotIndex] != null)
                         {
-                            _manager.Inventory.Add(_itemsInFusionSlots[targetFusionSlotIndex]);
+                            _manager.Inventory.Add(_manager.ItemsInFusionSlots[targetFusionSlotIndex]);
                         }
 
-                        _itemsInFusionSlots[targetFusionSlotIndex] = draggedLoot;
+                        _manager.ItemsInFusionSlots[targetFusionSlotIndex] = draggedLoot;
                         _manager.Inventory.Remove(draggedLoot);
                     }
                 }
@@ -300,8 +390,8 @@ namespace Assets.Scripts.Views.Base
                 {
                     // Si c'est l'inventaire, on le retire de la fusion et on le renvoie à l'inventaire
 
-                    LootSO draggedLoot = _itemsInFusionSlots[curFusionSlotIndex];
-                    _itemsInFusionSlots[curFusionSlotIndex] = null;
+                    LootSO draggedLoot = _manager.ItemsInFusionSlots[curFusionSlotIndex];
+                    _manager.ItemsInFusionSlots[curFusionSlotIndex] = null;
                     _manager.Inventory.Add(draggedLoot);
                 }
                 else
@@ -324,12 +414,39 @@ namespace Assets.Scripts.Views.Base
                     {
                         // Si ce n'est pas le même emplacement, on échange leur place
 
-                        (_itemsInFusionSlots[targetFusionSlotIndex], _itemsInFusionSlots[curFusionSlotIndex]) = (_itemsInFusionSlots[curFusionSlotIndex], _itemsInFusionSlots[targetFusionSlotIndex]);
+                        (_manager.ItemsInFusionSlots[targetFusionSlotIndex], _manager.ItemsInFusionSlots[curFusionSlotIndex]) = (_manager.ItemsInFusionSlots[curFusionSlotIndex], _manager.ItemsInFusionSlots[targetFusionSlotIndex]);
                     }
                 }
             }
 
             DisplayItems();
+        }
+
+        /// <summary>
+        /// Affiche un popup de succès après une fusion réussie
+        /// </summary>
+        /// <param name="lustosaur">Le luxurosaure créé</param>
+        private void ShowSuccessPopup(LustosaurSO lustosaur)
+        {
+            _lustosaurIcon.sprite = lustosaur.Sprite;
+            Color col = _textColorPerAttribute[lustosaur.Attribute];
+            _lustosaurNameLabel.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(col)}>{lustosaur.name}</color>");
+
+            _successPopup.blocksRaycasts = true;
+            _successPopup.interactable = true;
+            _successPopup.DOFade(1f, _popupAnimSpeed);
+        }
+
+        /// <summary>
+        /// Affiche un popup d'échec après une fusion échouée
+        /// </summary>
+        /// <param name="errorMsg">Message d'erreur à afficher</param>
+        private void ShowFailurePopup(string errorMsg)
+        {
+            _fusionFailErrorLabel.SetText(errorMsg);
+            _failurePopup.blocksRaycasts = true;
+            _failurePopup.interactable = true;
+            _failurePopup.DOFade(1f, _popupAnimSpeed);
         }
 
         #endregion

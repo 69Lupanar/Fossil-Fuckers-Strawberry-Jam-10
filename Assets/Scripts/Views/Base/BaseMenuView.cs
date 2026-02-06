@@ -178,7 +178,7 @@ namespace Assets.Scripts.Views.Base
             _teamMenuCanvas.enabled = false;
             _sleepMenuCanvas.enabled = false;
 
-            _cloningView.Cleanup();
+            _cloningView.CleanupOnWindowClosed();
         }
 
         #endregion

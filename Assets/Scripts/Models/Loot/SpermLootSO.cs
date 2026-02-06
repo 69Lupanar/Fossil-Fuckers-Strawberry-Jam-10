@@ -4,10 +4,10 @@ using UnityEngine;
 namespace Assets.Scripts.Models.Loot
 {
     /// <summary>
-    /// Données de l'objet "Fossile"
+    /// Données de l'objet "Sperme"
     /// </summary>
-    [CreateAssetMenu(fileName = "Fossil", menuName = "Scriptable Objects/Loot/Fossil")]
-    public class FossilLootSO : LootSO
+    [CreateAssetMenu(fileName = "Lustosaur Sperm Extract", menuName = "Scriptable Objects/Loot/Lustosaur Sperm Extract")]
+    public class SpermLootSO : LootSO
     {
         #region Variables Unity
 
@@ -25,9 +25,9 @@ namespace Assets.Scripts.Models.Loot
         /// Clone l'objet
         /// </summary>
         /// <returns>Une copie de l'objet</returns>
-        public FossilLootSO Clone()
+        public SpermLootSO Clone()
         {
-            FossilLootSO clone = ScriptableObject.CreateInstance<FossilLootSO>();
+            SpermLootSO clone = ScriptableObject.CreateInstance<SpermLootSO>();
             clone.name = name;
             clone.Sprite = Sprite;
             clone.EXP = EXP;

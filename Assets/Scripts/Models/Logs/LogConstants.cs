@@ -12,6 +12,15 @@ namespace Assets.Scripts.Models.Logs
         public const string FOUND_GEM_MSG = "Found a {0}! +{1} EXP!";
         public const string INVENTORY_FULL_MSG = "Inventory full.";
 
+        // Lustosaurs
+
+        public const string LUSTOSAUR_CREATED_MSG = "{0} successfully cloned!";
+
+        // Fusion
+
+        public const string FUSION_NOT_ENOUGH_MATERIALS_MSG = "You must place all materials before you can start the cloning process.";
+        public const string FUSION_INCOMPATIBLE_MATERIALS_MSG = "The input ingredients have no associated Lustosaur.\n\nTry again with a different recipe!";
+
         // Upgrades
 
         public const string MAX_MOVE_SPEED_MSG = "Max move speed increased!";

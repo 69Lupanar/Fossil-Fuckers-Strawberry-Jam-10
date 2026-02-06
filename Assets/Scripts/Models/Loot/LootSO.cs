@@ -7,6 +7,18 @@ namespace Assets.Scripts.Models.Loot
     /// </summary>
     public abstract class LootSO : ScriptableObject
     {
+        #region Propriétés
+
+        /// <summary>
+        /// La qualité de l'objet miné
+        /// </summary>
+        public int Quality { get; set; }
+
+        #endregion
+
+
+        #region Variables Unity
+
         /// <summary>
         /// L'icône de l'objet
         /// </summary>
@@ -18,5 +30,7 @@ namespace Assets.Scripts.Models.Loot
         /// </summary>
         [field: SerializeField]
         public int EXP { get; protected set; }
+
+        #endregion
     }
 }

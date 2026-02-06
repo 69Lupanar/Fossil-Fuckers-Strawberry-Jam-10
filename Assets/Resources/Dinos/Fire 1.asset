@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Fire 1
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Dinos.LustosaurSO
   <Attribute>k__BackingField: 2
-  <Sprite>k__BackingField: {fileID: 0}
-  <FightingStats>k__BackingField:
+  <Sprite>k__BackingField: {fileID: -1591335095, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  <FightingStatsAtMaxQuality>k__BackingField:
     <Health>k__BackingField: 100
     <Attack>k__BackingField: 10
     <Defense>k__BackingField: 20
@@ -26,7 +26,6 @@ MonoBehaviour:
     <Defense>k__BackingField: 0
     <CriticalHitRate>k__BackingField: 10
     <Evasion>k__BackingField: 0
-  <TotalEXP>k__BackingField: 5000
   <EXPProgressCurve>k__BackingField:
     serializedVersion: 2
     m_Curve:

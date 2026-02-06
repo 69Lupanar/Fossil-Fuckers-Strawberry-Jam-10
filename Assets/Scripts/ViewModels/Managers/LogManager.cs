@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.Models.Logs;
 using Assets.Scripts.Models.Loot;
 using Assets.Scripts.ViewModels.Player;
@@ -35,6 +36,12 @@ namespace Assets.Scripts.ViewModels.Managers
         private InventoryManager _inventoryManager;
 
         /// <summary>
+        /// Le TeamMenuManager
+        /// </summary>
+        [SerializeField]
+        private TeamMenuManager _teamMenuManager;
+
+        /// <summary>
         /// L'icôned d'alerte
         /// </summary>
         [SerializeField]
@@ -58,6 +65,8 @@ namespace Assets.Scripts.ViewModels.Managers
             _inventoryManager.OnGemFound += OnGemFound;
             _inventoryManager.OnInventoryFull += OnInventoryFull;
             _inventoryManager.OnLootDiscarded += OnLootDiscarded;
+
+            _teamMenuManager.OnLustosaurCreated += OnLustosaurCreated;
         }
 
         #endregion
@@ -114,6 +123,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <summary>
         /// Appelée quand un objet est ajouté à l'inventaire
         /// </summary>
+        /// <param name="loot">L'objet ajouté</param>
         private void OnLootAdded(LootSO loot)
         {
             AddLog(loot.Sprite, string.Format(LogConstants.FOUND_ITEM_MSG, loot.name, loot.EXP));
@@ -122,6 +132,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <summary>
         /// Appelée quand une gemme est trouvée
         /// </summary>
+        /// <param name="loot">L'objet ajouté</param>
         private void OnGemFound(LootSO loot)
         {
             AddLog(loot.Sprite, string.Format(LogConstants.FOUND_GEM_MSG, loot.name, loot.EXP));
@@ -138,9 +149,19 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <summary>
         /// Appelée quand on échoue à ajouter un objet à l'inventaire car plus de place
         /// </summary>
+        /// <param name="loot">L'objet défaussé</param>
         private void OnLootDiscarded(LootSO loot)
         {
             AddLog(loot.Sprite, string.Format(LogConstants.DISCARDED_ITEM_MSG, loot.name));
+        }
+
+        /// <summary>
+        /// Appelée quand un Luxurosaure est créé
+        /// </summary>
+        /// <param name="lustosaur">Le luxurosaure créé</param>
+        private void OnLustosaurCreated(LustosaurSO lustosaur)
+        {
+            AddLog(lustosaur.Sprite, string.Format(LogConstants.LUSTOSAUR_CREATED_MSG, lustosaur.name));
         }
 
         #endregion
