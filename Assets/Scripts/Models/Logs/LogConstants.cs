@@ -23,15 +23,16 @@ namespace Assets.Scripts.Models.Logs
 
         // Upgrades
 
-        public const string MAX_MOVE_SPEED_MSG = "Max move speed increased!";
-        public const string MAX_JUMP_FORCE_MSG = "Max jump height increased!";
-        public const string MAX_NB_JUMPS_MSG = "Max nb jumps increased!";
-        public const string MAX_MINING_SPEED_MSG = "Max mining speed increased!";
-        public const string MAX_MINING_QUALITY_MSG = "Max mining quality increased!";
+        public const string MAX_MOVE_SPEED_UPGRADED_MSG = "Max move speed increased!";
+        public const string MAX_JUMP_FORCE_UPGRADED_MSG = "Max jump height increased!";
+        public const string MAX_NB_JUMPS_UPGRADED_MSG = "Max nb jumps increased!";
+        public const string MAX_MINING_SPEED_UPGRADED_MSG = "Max mining speed increased!";
+        public const string MAX_MINING_QUALITY_UPGRADED_MSG = "Max mining quality increased!";
         public const string MAX_HEALTH_UPGRADED_MSG = "Max health increased!";
         public const string MAX_ENERGY_UPGRADED_MSG = "Max energy increased!";
         public const string MAX_HEAT_UPGRADED_MSG = "Max heat tolerance increased!";
-        public const string MAX_INVENTORY_SIZE_MSG = "Max inventory size increased!";
+        public const string MAX_INVENTORY_SIZE_UPGRADED_MSG = "Max inventory size increased!";
+        public const string UPGRADE_ACQUIRED_MSG = "Upgrade '{0}' acquired!";
 
         // Alerts
 

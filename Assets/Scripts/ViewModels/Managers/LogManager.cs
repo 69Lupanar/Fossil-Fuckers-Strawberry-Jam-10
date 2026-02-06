@@ -2,6 +2,7 @@ using System;
 using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.Models.Logs;
 using Assets.Scripts.Models.Loot;
+using Assets.Scripts.Models.Player;
 using Assets.Scripts.ViewModels.Player;
 using UnityEngine;
 
@@ -42,6 +43,12 @@ namespace Assets.Scripts.ViewModels.Managers
         private TeamMenuManager _teamMenuManager;
 
         /// <summary>
+        /// Le PlayerUpgradeManager
+        /// </summary>
+        [SerializeField]
+        private PlayerUpgradeManager _playerUpgradeMaanger;
+
+        /// <summary>
         /// L'icôned d'alerte
         /// </summary>
         [SerializeField]
@@ -67,6 +74,8 @@ namespace Assets.Scripts.ViewModels.Managers
             _inventoryManager.OnLootDiscarded += OnLootDiscarded;
 
             _teamMenuManager.OnLustosaurCreated += OnLustosaurCreated;
+
+            _playerUpgradeMaanger.OnStatUpgraded += OnStatUpgraded;
         }
 
         #endregion
@@ -162,6 +171,49 @@ namespace Assets.Scripts.ViewModels.Managers
         private void OnLustosaurCreated(LustosaurSO lustosaur)
         {
             AddLog(lustosaur.Sprite, string.Format(LogConstants.LUSTOSAUR_CREATED_MSG, lustosaur.name));
+        }
+
+        /// <summary>
+        /// Appelée quand une stat du joueur est améliorée
+        /// </summary>
+        /// <param name="upgrade">L'amélioration</param>
+        private void OnStatUpgraded(PlayerUpgradeSO upgrade)
+        {
+            string msg = string.Empty;
+
+            switch (upgrade.UpgradeIndex)
+            {
+                case 0:
+                    msg = LogConstants.MAX_MOVE_SPEED_UPGRADED_MSG;
+                    break;
+                case 1:
+                    msg = LogConstants.MAX_JUMP_FORCE_UPGRADED_MSG;
+                    break;
+                case 2:
+                    msg = LogConstants.MAX_NB_JUMPS_UPGRADED_MSG;
+                    break;
+                case 3:
+                    msg = LogConstants.MAX_MINING_SPEED_UPGRADED_MSG;
+                    break;
+                case 4:
+                    msg = LogConstants.MAX_MINING_QUALITY_UPGRADED_MSG;
+                    break;
+                case 5:
+                    msg = LogConstants.MAX_HEALTH_UPGRADED_MSG;
+                    break;
+                case 6:
+                    msg = LogConstants.MAX_ENERGY_UPGRADED_MSG;
+                    break;
+                case 7:
+                    msg = LogConstants.MAX_HEAT_UPGRADED_MSG;
+                    break;
+                case 8:
+                    msg = LogConstants.MAX_INVENTORY_SIZE_UPGRADED_MSG;
+                    break;
+            }
+
+            AddLog(upgrade.Sprite, string.Format(LogConstants.UPGRADE_ACQUIRED_MSG, upgrade.name));
+            AddLog(upgrade.Sprite, msg);
         }
 
         #endregion

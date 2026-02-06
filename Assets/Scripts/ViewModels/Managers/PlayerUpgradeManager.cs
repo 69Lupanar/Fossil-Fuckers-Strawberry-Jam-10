@@ -1,4 +1,5 @@
-using Assets.Scripts.Models.Logs;
+using System;
+using Assets.Scripts.Models.Player;
 using Assets.Scripts.ViewModels.Player;
 using UnityEngine;
 
@@ -9,25 +10,31 @@ namespace Assets.Scripts.ViewModels.Managers
     /// </summary>
     public class PlayerUpgradeManager : MonoBehaviour
     {
+        #region Evénements
+
+        /// <summary>
+        /// Appelée quand une stat est améliorée
+        /// </summary>
+        public Action<PlayerUpgradeSO> OnStatUpgraded { get; set; }
+
+        #endregion
+
+        #region Propriétés
+
+        /// <summary>
+        /// La liste des améliorations de 1er niveau
+        /// </summary>
+        public PlayerUpgradeSO[] FirstStageUpgrades => _firstStageUpgrades;
+
+        #endregion
+
         #region Variables Unity
 
         /// <summary>
         /// Le joueur
         /// </summary>
         [SerializeField]
-        private PlayerStatsManager _player;
-
-        /// <summary>
-        /// Le LogManager
-        /// </summary>
-        [SerializeField]
-        private LogManager _logManager;
-
-        /// <summary>
-        /// L'icône d'amélioration
-        /// </summary>
-        [SerializeField]
-        private Sprite _upgradeIcon;
+        private PlayerStatsManager _playerStatsMaanger;
 
         /// <summary>
         /// Les stats de départ du joueur
@@ -40,6 +47,12 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         [SerializeField]
         private PlayerStatsSO[] _upgradeStats;
+
+        /// <summary>
+        /// La liste des améliorations de 1er niveau
+        /// </summary>
+        [SerializeField]
+        private PlayerUpgradeSO[] _firstStageUpgrades;
 
         #endregion
 
@@ -71,7 +84,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         private void Awake()
         {
-            _player.Stats = _defaultStats.Clone();
+            _playerStatsMaanger.Stats = _defaultStats.Clone();
         }
 
         #endregion
@@ -89,12 +102,52 @@ namespace Assets.Scripts.ViewModels.Managers
         }
 
         /// <summary>
+        /// Màj la stat via l'amélioration reseignée
+        /// </summary>
+        /// <param name="upgrade">L'amélioration</param>
+        public void UpgradeStat(PlayerUpgradeSO upgrade)
+        {
+            switch (upgrade.UpgradeIndex)
+            {
+                case 0:
+                    UpgradeMoveSpeed();
+                    break;
+                case 1:
+                    UpgradeJumpForce();
+                    break;
+                case 2:
+                    UpgradeNbMaxJumps();
+                    break;
+                case 3:
+                    UpgradeMiningSpeed();
+                    break;
+                case 4:
+                    UpgradeMiningQualityPercentage();
+                    break;
+                case 5:
+                    UpgradeMaxHealth();
+                    break;
+                case 6:
+                    UpgradeMaxEnergy();
+                    break;
+                case 7:
+                    UpgradeMaxHeatThresholds();
+                    break;
+                case 8:
+                    UpgradeMaxInventorySize();
+                    break;
+            }
+
+            _playerStatsMaanger.RestoreStats();
+            OnStatUpgraded?.Invoke(upgrade);
+        }
+
+        /// <summary>
         /// Augmente la vitesse de marche
         /// </summary>
         public void UpgradeMoveSpeed()
         {
-            _player.Stats.MoveSpeed = _upgradeStats[++_playerLevelsPerStat[0]].MoveSpeed;
-            _logManager.AddLog(_upgradeIcon, LogConstants.MAX_MOVE_SPEED_MSG);
+            _playerStatsMaanger.Stats.MoveSpeed = _upgradeStats[_playerLevelsPerStat[0]++].MoveSpeed;
         }
 
         /// <summary>
@@ -102,8 +155,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public void UpgradeJumpForce()
         {
-            _player.Stats.JumpForce = _upgradeStats[++_playerLevelsPerStat[1]].JumpForce;
-            _logManager.AddLog(_upgradeIcon, LogConstants.MAX_JUMP_FORCE_MSG);
+            _playerStatsMaanger.Stats.JumpForce = _upgradeStats[_playerLevelsPerStat[1]++].JumpForce;
         }
 
         /// <summary>
@@ -111,8 +163,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public void UpgradeNbMaxJumps()
         {
-            _player.Stats.NbMaxJumps = _upgradeStats[++_playerLevelsPerStat[2]].NbMaxJumps;
-            _logManager.AddLog(_upgradeIcon, LogConstants.MAX_NB_JUMPS_MSG);
+            _playerStatsMaanger.Stats.NbMaxJumps = _upgradeStats[_playerLevelsPerStat[2]++].NbMaxJumps;
         }
 
         /// <summary>
@@ -120,8 +171,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public void UpgradeMiningSpeed()
         {
-            _player.Stats.MiningSpeed = _upgradeStats[++_playerLevelsPerStat[3]].MiningSpeed;
-            _logManager.AddLog(_upgradeIcon, LogConstants.MAX_MINING_SPEED_MSG);
+            _playerStatsMaanger.Stats.MiningSpeed = _upgradeStats[_playerLevelsPerStat[3]++].MiningSpeed;
         }
 
         /// <summary>
@@ -129,8 +179,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public void UpgradeMiningQualityPercentage()
         {
-            _player.Stats.MiningQualityPercentage = _upgradeStats[++_playerLevelsPerStat[4]].MiningQualityPercentage;
-            _logManager.AddLog(_upgradeIcon, LogConstants.MAX_MINING_QUALITY_MSG);
+            _playerStatsMaanger.Stats.MiningQualityPercentage = _upgradeStats[_playerLevelsPerStat[4]++].MiningQualityPercentage;
         }
 
         /// <summary>
@@ -138,8 +187,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public void UpgradeMaxHealth()
         {
-            _player.Stats.MaxHealth = _upgradeStats[++_playerLevelsPerStat[5]].MaxHealth;
-            _logManager.AddLog(_upgradeIcon, LogConstants.MAX_HEALTH_UPGRADED_MSG);
+            _playerStatsMaanger.Stats.MaxHealth = _upgradeStats[_playerLevelsPerStat[5]++].MaxHealth;
         }
 
         /// <summary>
@@ -147,8 +195,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public void UpgradeMaxEnergy()
         {
-            _player.Stats.MaxEnergy = _upgradeStats[++_playerLevelsPerStat[6]].MaxEnergy;
-            _logManager.AddLog(_upgradeIcon, LogConstants.MAX_ENERGY_UPGRADED_MSG);
+            _playerStatsMaanger.Stats.MaxEnergy = _upgradeStats[_playerLevelsPerStat[6]++].MaxEnergy;
         }
 
         /// <summary>
@@ -156,8 +203,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public void UpgradeMaxHeatThresholds()
         {
-            _player.Stats.MaxHeatThresholds = _upgradeStats[++_playerLevelsPerStat[7]].MaxHeatThresholds;
-            _logManager.AddLog(_upgradeIcon, LogConstants.MAX_HEAT_UPGRADED_MSG);
+            _playerStatsMaanger.Stats.MaxHeatThresholds = _upgradeStats[_playerLevelsPerStat[7]++].MaxHeatThresholds;
         }
 
         /// <summary>
@@ -165,8 +211,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public void UpgradeMaxInventorySize()
         {
-            _player.Stats.MaxInventorySize = _upgradeStats[++_playerLevelsPerStat[8]].MaxInventorySize;
-            _logManager.AddLog(_upgradeIcon, LogConstants.MAX_INVENTORY_SIZE_MSG);
+            _playerStatsMaanger.Stats.MaxInventorySize = _upgradeStats[_playerLevelsPerStat[8]++].MaxInventorySize;
         }
 
         #endregion

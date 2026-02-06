@@ -314,7 +314,6 @@ namespace Assets.Scripts.ViewModels.Player
             CurHealth = MaxHealth;
             CurEnergy = MaxEnergy;
             CurHeat = 0f;
-            CurEXPPoints = 0;
             _lastHeatLevel = -1;
             _curMiningHeatIncrease = 0f;
             CurDepth = 0;

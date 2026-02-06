@@ -1,5 +1,6 @@
 using System;
 using Assets.Scripts.Models.Loot;
+using Assets.Scripts.Models.Player;
 using Assets.Scripts.ViewModels.Player;
 using UnityEngine;
 
@@ -56,10 +57,16 @@ namespace Assets.Scripts.ViewModels.Managers
         #region Variables Unity
 
         /// <summary>
-        /// Le joueur
+        /// Le PlayerStatsManager
         /// </summary>
         [SerializeField]
-        private PlayerStatsManager _playerStats;
+        private PlayerStatsManager _playerStatsManager;
+
+        /// <summary>
+        /// Le PlayerUpgradeManager   
+        /// </summary>
+        [SerializeField]
+        private PlayerUpgradeManager _playerUpgradeManager;
 
         /// <summary>
         /// Le joueur
@@ -86,6 +93,7 @@ namespace Assets.Scripts.ViewModels.Managers
         private void Awake()
         {
             _playerController.OnTileMined += OnTileMined;
+            _playerUpgradeManager.OnStatUpgraded += OnStatUpgraded;
         }
 
         #endregion
@@ -98,8 +106,8 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <returns></returns>
         public void InitializeInventory()
         {
-            Inventory = new LootSO[_playerStats.MaxInventorySize];
-            _nbFreeSlots = _playerStats.MaxInventorySize;
+            Inventory = new LootSO[_playerStatsManager.MaxInventorySize];
+            _nbFreeSlots = _playerStatsManager.MaxInventorySize;
         }
 
         /// <summary>
@@ -154,11 +162,11 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public void UpdateInventorySize()
         {
-            LootSO[] newInventory = new LootSO[_playerStats.MaxInventorySize];
+            LootSO[] newInventory = new LootSO[_playerStatsManager.MaxInventorySize];
             Array.Copy(Inventory, newInventory, Inventory.Length);
             Inventory = newInventory;
-            _nbFreeSlots = _playerStats.MaxInventorySize;
-            OnInventorySizeIncreased?.Invoke(_playerStats.MaxInventorySize);
+            _nbFreeSlots = _playerStatsManager.MaxInventorySize;
+            OnInventorySizeIncreased?.Invoke(_playerStatsManager.MaxInventorySize);
         }
 
         /// <summary>
@@ -188,7 +196,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <param name="miningQuality">La qualité de minage</param>
         private void OnTileMined(LootSO loot, int miningQuality)
         {
-            _playerStats.GainEXP(loot.EXP);
+            _playerStatsManager.GainEXP(loot.EXP);
 
             switch (loot)
             {
@@ -200,6 +208,18 @@ namespace Assets.Scripts.ViewModels.Managers
                 case GemLootSO gem:
                     OnGemFound?.Invoke(gem);
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Appelée quand le joueur reçoit une amélioration
+        /// </summary>
+        /// <param name="upgrade">L'amélioration</param>
+        private void OnStatUpgraded(PlayerUpgradeSO upgrade)
+        {
+            if (_nbFreeSlots < _playerStatsManager.MaxInventorySize)
+            {
+                UpdateInventorySize();
             }
         }
 

@@ -20,10 +20,22 @@ namespace Assets.Scripts.Views.Base
         private BaseMenuManager _manager;
 
         /// <summary>
+        /// Le PlayerUpgradeView
+        /// </summary>
+        [SerializeField]
+        private PlayerUpgradeView _upgradeView;
+
+        /// <summary>
         /// Le CloningMenuView
         /// </summary>
         [SerializeField]
         private CloningMenuView _cloningView;
+
+        /// <summary>
+        /// Le TeamMenuView
+        /// </summary>
+        [SerializeField]
+        private TeamMenuView _teamView;
 
         /// <summary>
         /// Le GameManager
@@ -36,6 +48,12 @@ namespace Assets.Scripts.Views.Base
         /// </summary>
         [SerializeField]
         private Canvas _baseMenuCanvas;
+
+        /// <summary>
+        /// Le canvas du menu d'amélioration
+        /// </summary>
+        [SerializeField]
+        private Canvas _upgradeMenuCanvas;
 
         /// <summary>
         /// Le canvas du menu de clonage
@@ -108,6 +126,7 @@ namespace Assets.Scripts.Views.Base
         private void Start()
         {
             _baseMenuCanvas.enabled = false;
+            _upgradeMenuCanvas.enabled = false;
             _cloningMenuCanvas.enabled = false;
             _teamMenuCanvas.enabled = false;
             _sleepMenuCanvas.enabled = false;
@@ -141,6 +160,16 @@ namespace Assets.Scripts.Views.Base
         }
 
         /// <summary>
+        /// Ouvre le menu d'amélioration
+        /// </summary>
+        public void OpenUpgradeMenu()
+        {
+            _upgradeView.OnUpgradeMenuOpen();
+            _baseMenuBtnsParent.SetActive(false);
+            _upgradeMenuCanvas.enabled = true;
+        }
+
+        /// <summary>
         /// Ouvre le menu de clonage
         /// </summary>
         public void OpenCloningMenu()
@@ -155,6 +184,7 @@ namespace Assets.Scripts.Views.Base
         /// </summary>
         public void OpenTeamMenu()
         {
+            _teamView.OnTeamMenuOpen();
             _baseMenuBtnsParent.SetActive(false);
             _teamMenuCanvas.enabled = true;
         }
@@ -174,6 +204,7 @@ namespace Assets.Scripts.Views.Base
         public void BackToBaseMenu()
         {
             _baseMenuBtnsParent.SetActive(true);
+            _upgradeMenuCanvas.enabled = false;
             _cloningMenuCanvas.enabled = false;
             _teamMenuCanvas.enabled = false;
             _sleepMenuCanvas.enabled = false;

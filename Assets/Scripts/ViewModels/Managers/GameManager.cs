@@ -83,6 +83,7 @@ namespace Assets.Scripts.ViewModels.Managers
         {
             EnableController();
             RespawnPlayer();
+            _statsManager.LoseEXP(_statsManager.CurEXPPoints);
             _statsManager.RestoreStats();
             _inventoryManager.Clear();
         }
