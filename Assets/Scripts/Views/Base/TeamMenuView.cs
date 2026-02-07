@@ -177,10 +177,16 @@ namespace Assets.Scripts.Views.Base
                 _teamSlotsDropZones[i].GetChild(0).gameObject.SetActive(false);
             }
 
-            for (int i = 0; i < _manager.StandbyReserve.Count; ++i)
+            for (int i = 0; i < _inventoryGrid.childCount; ++i)
             {
-                _inventoryGrid.GetChild(i).GetChild(0).gameObject.SetActive(true);
-                _inventoryGrid.GetChild(i).GetChild(0).GetComponent<Image>().sprite = _manager.StandbyReserve[i].Sprite;
+                Transform slot = _inventoryGrid.GetChild(i).GetChild(0);
+
+                slot.gameObject.SetActive(i < _manager.StandbyReserve.Count);
+
+                if (i < _manager.StandbyReserve.Count)
+                {
+                    slot.GetComponent<Image>().sprite = _manager.StandbyReserve[i].Sprite;
+                }
             }
 
             for (int i = 0; i < _teamSlotsDropZones.Length; ++i)

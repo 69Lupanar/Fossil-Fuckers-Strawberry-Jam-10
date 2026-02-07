@@ -83,6 +83,7 @@ namespace Assets.Scripts.ViewModels.Managers
             for (int i = 0; i < StartingTeam.Length; ++i)
             {
                 PlayerTeam.Add(LustosaurSO.CreateFrom(StartingTeam[i], 100));
+                StandbyReserve.Add(LustosaurSO.CreateFrom(StartingTeam[i], 100));
             }
         }
 

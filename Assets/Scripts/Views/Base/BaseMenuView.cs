@@ -1,3 +1,5 @@
+using Assets.Scripts.Models;
+using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.Models.Loot;
 using Assets.Scripts.ViewModels.Managers;
 using DG.Tweening;
@@ -38,6 +40,18 @@ namespace Assets.Scripts.Views.Base
         private TeamMenuView _teamView;
 
         /// <summary>
+        /// Le SleepMenuView
+        /// </summary>
+        [SerializeField]
+        private SleepMenuView _sleepView;
+
+        /// <summary>
+        /// Le SexMenuView
+        /// </summary>
+        [SerializeField]
+        private SexMenuView _sexView;
+
+        /// <summary>
         /// Le GameManager
         /// </summary>
         [SerializeField]
@@ -72,6 +86,12 @@ namespace Assets.Scripts.Views.Base
         /// </summary>
         [SerializeField]
         private Canvas _sleepMenuCanvas;
+
+        /// <summary>
+        /// Le canvas de la scène adulte
+        /// </summary>
+        [SerializeField]
+        private Canvas _sexMenuCanvas;
 
         /// <summary>
         /// Le conteneur des btns du menu de la base
@@ -130,6 +150,7 @@ namespace Assets.Scripts.Views.Base
             _cloningMenuCanvas.enabled = false;
             _teamMenuCanvas.enabled = false;
             _sleepMenuCanvas.enabled = false;
+            _sexMenuCanvas.enabled = false;
         }
 
         #endregion
@@ -146,13 +167,13 @@ namespace Assets.Scripts.Views.Base
         }
 
         /// <summary>
-        /// Ouvre le menu de la base
+        /// Ferma le menu de la base
         /// </summary>
         public void CloseBaseMenu()
         {
             _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
             {
-                _baseMenuCanvas.enabled = false;
+                CloseAll();
                 _gameManager.RespawnPlayer();
                 _gameManager.EnableController();
                 _blackFadeImg.DOFade(0f, _fadeSpeed);
@@ -194,8 +215,26 @@ namespace Assets.Scripts.Views.Base
         /// </summary>
         public void OpenSleepMenu()
         {
+            _sleepView.OnSleepMenuOpen();
             _baseMenuBtnsParent.SetActive(false);
             _sleepMenuCanvas.enabled = true;
+        }
+
+        /// <summary>
+        /// Ouvre le menu de clonage
+        /// </summary>
+        /// <param name="reasonForSex">La raison pour laqulle une scène de sexe doit se jouer</param>
+        /// <param name="sexEnvironment">L'environnement où se déroule la scène adulte</param>
+        /// <param name="selectedLustosaur">Le luxurosaure correspondant à la scène adulte</param>
+        public void OpenSexMenu(ReasonForSex reasonForSex, SexEnvironment sexEnvironment, LustosaurSO selectedLustosaur)
+        {
+            _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
+            {
+                _baseMenuCanvas.enabled = true;
+                _sexMenuCanvas.enabled = true;
+                _sexView.OnSexMenuOpen(reasonForSex, sexEnvironment, selectedLustosaur);
+                _blackFadeImg.DOFade(0f, _fadeSpeed);
+            });
         }
 
         /// <summary>
@@ -210,6 +249,39 @@ namespace Assets.Scripts.Views.Base
             _sleepMenuCanvas.enabled = false;
 
             _cloningView.CleanupOnWindowClosed();
+            _sleepView.CleanupOnWindowClosed();
+        }
+
+        /// <summary>
+        /// Ferme le menu complètement
+        /// </summary>
+        public void CloseAll()
+        {
+            _baseMenuCanvas.enabled = false;
+            _upgradeMenuCanvas.enabled = false;
+            _cloningMenuCanvas.enabled = false;
+            _teamMenuCanvas.enabled = false;
+            _sleepMenuCanvas.enabled = false;
+            _sexMenuCanvas.enabled = false;
+
+            _cloningView.CleanupOnWindowClosed();
+            _sleepView.CleanupOnWindowClosed();
+        }
+
+        /// <summary>
+        /// Termine la scène adulte en cours
+        /// </summary>
+        /// <param name="reasonForSex">La raison pour laqulle une scène de sexe doit se jouer</param>
+        public void EndSexScene(ReasonForSex reasonForSex)
+        {
+            _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
+            {
+                CloseAll();
+                _gameManager.RestartLevel(reasonForSex != ReasonForSex.Gallery);
+
+                _blackFadeImg.DOFade(0f, _fadeSpeed);
+            });
+
         }
 
         #endregion

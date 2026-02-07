@@ -18,6 +18,12 @@ namespace Assets.Scripts.ViewModels.Managers
         private BaseMenuManager _baseMenuManager;
 
         /// <summary>
+        /// Le MineableSpawner
+        /// </summary>
+        [SerializeField]
+        private MineableSpawner _mineableSpawner;
+
+        /// <summary>
         /// L'InventoryManager
         /// </summary>
         [SerializeField]
@@ -104,6 +110,27 @@ namespace Assets.Scripts.ViewModels.Managers
         public void TransferInventoryToBase()
         {
 
+        }
+
+        /// <summary>
+        /// Ramène le joueur au point de départ,
+        /// vide son inventaire
+        /// et régénère la mine
+        /// </summary>
+        /// <param name="loseAllEXP">true si l'exp du joueur doit retomber à 0</param>
+        public void RestartLevel(bool loseAllEXP)
+        {
+            _mineableSpawner.Generate();
+            EnableController();
+            RespawnPlayer();
+
+            if (loseAllEXP)
+            {
+                _statsManager.LoseEXP(_statsManager.CurEXPPoints);
+            }
+
+            _statsManager.RestoreStats();
+            _inventoryManager.Clear();
         }
 
         #endregion

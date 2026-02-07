@@ -16,4 +16,23 @@ namespace Assets.Scripts.Models
         Wind,
         Earth
     }
+
+    /// <summary>
+    /// Le lieu dans lequel se déroule la scène adulte
+    /// </summary>
+    public enum SexEnvironment
+    {
+        Base,
+        Mine
+    }
+
+    /// <summary>
+    /// La raison pour laqulle une scène de sexe doit se jouer
+    /// </summary>
+    public enum ReasonForSex
+    {
+        Gallery,
+        Defeat,
+        StatDepleted
+    }
 }

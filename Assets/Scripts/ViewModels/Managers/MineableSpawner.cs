@@ -99,7 +99,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// Génère un nouveau niveau
         /// </summary>
         [ContextMenu("Generate")]
-        private void Generate()
+        public void Generate()
         {
             Clear();
             CreateGrid();
@@ -110,7 +110,7 @@ namespace Assets.Scripts.ViewModels.Managers
         }
 
         [ContextMenu("Clear")]
-        private void Clear()
+        public void Clear()
         {
             while (_activeTiles.Count > 0)
             {
