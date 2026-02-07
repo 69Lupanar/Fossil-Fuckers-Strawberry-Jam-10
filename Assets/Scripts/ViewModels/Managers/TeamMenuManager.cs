@@ -32,6 +32,11 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public Action OnCancelTryRemoveLastLustosaurFromTeam { get; set; }
 
+        /// <summary>
+        /// Appelée quand un Luxurosaure est relâché de la réserve
+        /// </summary>
+        public Action<LustosaurSO> OnLustosaurDiscardedFromStandby { get; set; }
+
         #endregion
 
         #region Propriétés
@@ -121,6 +126,17 @@ namespace Assets.Scripts.ViewModels.Managers
         public void CancelTryRemoveLastLustosaurFromTeam()
         {
             OnCancelTryRemoveLastLustosaurFromTeam?.Invoke();
+        }
+
+        /// <summary>
+        /// Relâche un Luxurosaure de la réserve
+        /// </summary>
+        /// <param name="index">La position de l'objet dans la liste</param>
+        public void DiscardLustosaur(int index)
+        {
+            LustosaurSO lustosaur = StandbyReserve[index];
+            StandbyReserve.RemoveAt(index);
+            OnLustosaurDiscardedFromStandby?.Invoke(lustosaur);
         }
 
         #endregion

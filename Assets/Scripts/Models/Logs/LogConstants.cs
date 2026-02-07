@@ -8,10 +8,9 @@ namespace Assets.Scripts.Models.Logs
         // Items
 
         public const string FOUND_ITEM_MSG = "Found a {0}! +{1} EXP!";
-        public const string DISCARDED_ITEM_MSG = "Inventory full, {0} discarded.";
+        public const string INVENTORY_ITEM_DISCARDED_MSG = "Inventory full, {0} discarded.";
         public const string FOUND_GEM_MSG = "Found a {0}! +{1} EXP!";
         public const string INVENTORY_FULL_MSG = "Inventory full.";
-        public const string ITEM_DISCARDED_MSG = "{0} discarded.";
 
         // Lustosaurs
 
@@ -23,6 +22,7 @@ namespace Assets.Scripts.Models.Logs
 
         // Fusion
 
+        public const string FUSION_ITEM_DISCARDED_MSG = "{0} discarded.";
         public const string FUSION_NOT_ENOUGH_MATERIALS_MSG = "You must place all materials before you can start the cloning process.";
         public const string FUSION_INCOMPATIBLE_MATERIALS_MSG = "The input ingredients have no associated Lustosaur.\n\nTry again with a different recipe!";
 

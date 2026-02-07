@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Models.Dinos;
@@ -13,6 +14,15 @@ namespace Assets.Scripts.ViewModels.Managers
     /// </summary>
     public class CloningMenuManager : MonoBehaviour
     {
+        #region Evénements
+
+        /// <summary>
+        /// Appelée quand un objet est retiré de l'inventaire
+        /// </summary>
+        public Action<LootSO> OnItemDiscarded { get; set; }
+
+        #endregion
+
         #region Propriétés
 
         /// <summary>
@@ -170,7 +180,7 @@ namespace Assets.Scripts.ViewModels.Managers
                     maxAlea += possibleResults[i].ChancePercentage;
                 }
 
-                float rand = Random.Range(0f, 100f);
+                float rand = UnityEngine.Random.Range(0f, 100f);
 
                 for (int i = 0; i < chanceIntervals.Length; ++i)
                 {
@@ -301,6 +311,17 @@ namespace Assets.Scripts.ViewModels.Managers
             {
                 ItemsInFusionSlots[i] = null;
             }
+        }
+
+        /// <summary>
+        /// Retire l'objet de l'inventaire
+        /// </summary>
+        /// <param name="index">La position de l'objet dans la liste</param>
+        public void DiscardItem(int index)
+        {
+            LootSO item = Inventory[index];
+            Inventory.RemoveAt(index);
+            OnItemDiscarded?.Invoke(item);
         }
 
         #endregion

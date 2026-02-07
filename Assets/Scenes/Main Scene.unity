@@ -3158,7 +3158,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 332430820}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -5512,6 +5512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assets.Scripts.Views::LogManager
   _playerStatsManager: {fileID: 852986446}
   _inventoryManager: {fileID: 602687407}
+  _cloningMenuManager: {fileID: 1591627179}
   _teamMenuManager: {fileID: 1946102866}
   _playerUpgradeMaanger: {fileID: 1714537600}
   _alertIcon: {fileID: 21300000, guid: 00509609cd0e8094184de5a42cc913a3, type: 3}
@@ -12028,7 +12029,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 957076142}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -13561,7 +13562,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1107365861}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}

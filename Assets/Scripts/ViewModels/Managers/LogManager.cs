@@ -37,6 +37,12 @@ namespace Assets.Scripts.ViewModels.Managers
         private InventoryManager _inventoryManager;
 
         /// <summary>
+        /// Le CloningMenuManager
+        /// </summary>
+        [SerializeField]
+        private CloningMenuManager _cloningMenuManager;
+
+        /// <summary>
         /// Le TeamMenuManager
         /// </summary>
         [SerializeField]
@@ -73,10 +79,13 @@ namespace Assets.Scripts.ViewModels.Managers
             _inventoryManager.OnInventoryFull += OnInventoryFull;
             _inventoryManager.OnLootDiscarded += OnLootDiscarded;
 
+            _cloningMenuManager.OnItemDiscarded += OnCloningItemDiscarded;
+
             _teamMenuManager.OnCreatedLustosaurAddedToTeam += OnCreatedLustosaurAddedToTeam;
             _teamMenuManager.OnCreatedLustosaurAddedToReserve += OnCreatedLustosaurAddedToReserve;
             _teamMenuManager.OnCreatedLustosaurDiscarded += OnCreatedLustosaurDiscarded;
             _teamMenuManager.OnCancelTryRemoveLastLustosaurFromTeam += OnCancelTryRemoveLastLustosaurFromTeam;
+            _teamMenuManager.OnLustosaurDiscardedFromStandby += OnLustosaurDiscardedFromStandby;
 
             _playerUpgradeMaanger.OnStatUpgraded += OnStatUpgraded;
         }
@@ -164,7 +173,16 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <param name="loot">L'objet défaussé</param>
         private void OnLootDiscarded(LootSO loot)
         {
-            AddLog(loot.Sprite, string.Format(LogConstants.DISCARDED_ITEM_MSG, loot.name));
+            AddLog(loot.Sprite, string.Format(LogConstants.INVENTORY_ITEM_DISCARDED_MSG, loot.name));
+        }
+
+        /// <summary>
+        /// Appelée quand on retire un objet de l'inventaire de clonage
+        /// </summary>
+        /// <param name="loot">L'objet défaussé</param>
+        private void OnCloningItemDiscarded(LootSO loot)
+        {
+            AddLog(loot.Sprite, string.Format(LogConstants.FUSION_ITEM_DISCARDED_MSG, loot.name));
         }
 
         /// <summary>
@@ -200,6 +218,15 @@ namespace Assets.Scripts.ViewModels.Managers
         private void OnCancelTryRemoveLastLustosaurFromTeam()
         {
             AddLog(_alertIcon, LogConstants.LAST_LUSTOSAUR_REMOVED_FROM_TEAM_ERROR_MSG);
+        }
+
+        /// <summary>
+        /// Appelée quand un Luxurosaure est relâché de la réserve
+        /// </summary>
+        /// <param name="lustosaur">Le luxurosaure défaussé</param>
+        private void OnLustosaurDiscardedFromStandby(LustosaurSO lustosaur)
+        {
+            AddLog(lustosaur.Sprite, string.Format(LogConstants.LUSTOSAUR_DISCARDED_MSG, lustosaur.name));
         }
 
         /// <summary>

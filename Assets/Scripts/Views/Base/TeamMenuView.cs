@@ -78,6 +78,14 @@ namespace Assets.Scripts.Views.Base
         /// </summary>
         private void Update()
         {
+            if (Input.GetMouseButtonDown(1) && !_draggableImg.gameObject.activeSelf && _curHoveredItemID != -1 && _curHoveredItemID < _inventoryGrid.childCount)
+            {
+                _manager.DiscardLustosaur(_curHoveredItemID);
+                _curHoveredItemID = -1;
+                DisplayLustosaurs();
+                return;
+            }
+
             if (Input.GetMouseButtonDown(0) && _curHoveredItemID != -1)
             {
                 _draggableImg.gameObject.SetActive(true);
