@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 664e7892315345a40981e594b9ba55fb, type: 3}
+  m_Name: Fossil Neutre 2
+  m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Loot.FossilLootSO
+  <Sprite>k__BackingField: {fileID: 8020143640844766479, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  <EXP>k__BackingField: 15
+  <Lustosaur>k__BackingField: {fileID: 11400000, guid: a2d188c1fc9af6f42b07af10e39f3ca7, type: 2}

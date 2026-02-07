@@ -13,9 +13,24 @@ namespace Assets.Scripts.ViewModels.Managers
         #region Evénements
 
         /// <summary>
-        /// Appelée quand un Luxurosaure est créé
+        /// Appelée quand un Luxurosaure créé est ajouté à l'équipe
         /// </summary>
-        public Action<LustosaurSO> OnLustosaurCreated { get; set; }
+        public Action<LustosaurSO> OnCreatedLustosaurAddedToTeam { get; set; }
+
+        /// <summary>
+        /// Appelée quand un Luxurosaure créé est ajouté à la reserve
+        /// </summary>
+        public Action<LustosaurSO> OnCreatedLustosaurAddedToReserve { get; set; }
+
+        /// <summary>
+        /// Appelée quand un Luxurosaure créé est défaussé
+        /// </summary>
+        public Action<LustosaurSO> OnCreatedLustosaurDiscarded { get; set; }
+
+        /// <summary>
+        /// Appelée quand un Luxurosaure créé est défaussé
+        /// </summary>
+        public Action OnCancelTryRemoveLastLustosaurFromTeam { get; set; }
 
         #endregion
 
@@ -29,7 +44,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <summary>
         /// L'équipe du joueur
         /// </summary>
-        public LustosaurSO[] Team { get; set; }
+        public List<LustosaurSO> PlayerTeam { get; private set; }
 
         #endregion
 
@@ -39,13 +54,19 @@ namespace Assets.Scripts.ViewModels.Managers
         /// La capacité max de la réserve de luxurosaures
         /// </summary>
         [SerializeField]
-        private int _teamStandbyCapacity = 20;
+        private int _standbyReserveCapacity = 20;
 
         /// <summary>
         /// La capacité max de l'équipe du joueur
         /// </summary>
         [SerializeField]
         private int _playerTeamCapacity = 5;
+
+        /// <summary>
+        /// L'équipe de départ du joueur (optionnel)
+        /// </summary>
+        [SerializeField]
+        private LustosaurSO[] StartingTeam;
 
         #endregion
 
@@ -56,11 +77,17 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         private void Start()
         {
-            StandbyReserve = new List<LustosaurSO>(_teamStandbyCapacity);
-            Team = new LustosaurSO[_playerTeamCapacity];
+            StandbyReserve = new List<LustosaurSO>(_standbyReserveCapacity);
+            PlayerTeam = new List<LustosaurSO>(_playerTeamCapacity);
+
+            for (int i = 0; i < StartingTeam.Length; ++i)
+            {
+                PlayerTeam.Add(LustosaurSO.CreateFrom(StartingTeam[i], 100));
+            }
         }
 
         #endregion
+
         #region Méthodes publiques
 
         /// <summary>
@@ -71,7 +98,28 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <param name="lustosaur">Le luxurosaure à ajouter</param>
         public void AddLustosaur(LustosaurSO lustosaur)
         {
-            OnLustosaurCreated?.Invoke(lustosaur);
+            if (PlayerTeam.Count < _playerTeamCapacity)
+            {
+                PlayerTeam.Add(lustosaur);
+                OnCreatedLustosaurAddedToTeam?.Invoke(lustosaur);
+            }
+            else if (StandbyReserve.Count < _standbyReserveCapacity)
+            {
+                StandbyReserve.Add(lustosaur);
+                OnCreatedLustosaurAddedToReserve?.Invoke(lustosaur);
+            }
+            else
+            {
+                OnCreatedLustosaurDiscarded?.Invoke(lustosaur);
+            }
+        }
+
+        /// <summary>
+        /// Annule la tentative de retirer le dernir luxurosaure de l'équipe
+        /// </summary>
+        public void CancelTryRemoveLastLustosaurFromTeam()
+        {
+            OnCancelTryRemoveLastLustosaurFromTeam?.Invoke();
         }
 
         #endregion

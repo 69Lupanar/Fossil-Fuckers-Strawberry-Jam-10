@@ -166,7 +166,7 @@ namespace Assets.Scripts.Views.Base
             if (Input.GetMouseButtonUp(0) && _curHoveredItemID != -1)
             {
                 OnDraggableImgReleased();
-                _draggableImg.gameObject.SetActive(false);
+                DisplayItems();
 
                 if (_curHoveredItemID < _inventoryGrid.childCount)
                 {
@@ -177,6 +177,7 @@ namespace Assets.Scripts.Views.Base
                     _fusionSlotsHandlers[_curHoveredItemID - _inventoryGrid.childCount].GetComponent<Image>().enabled = true;
                 }
 
+                _draggableImg.gameObject.SetActive(false);
                 _curHoveredItemID = -1;
             }
 
@@ -418,8 +419,6 @@ namespace Assets.Scripts.Views.Base
                     }
                 }
             }
-
-            DisplayItems();
         }
 
         /// <summary>

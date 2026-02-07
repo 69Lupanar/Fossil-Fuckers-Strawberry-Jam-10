@@ -73,7 +73,10 @@ namespace Assets.Scripts.ViewModels.Managers
             _inventoryManager.OnInventoryFull += OnInventoryFull;
             _inventoryManager.OnLootDiscarded += OnLootDiscarded;
 
-            _teamMenuManager.OnLustosaurCreated += OnLustosaurCreated;
+            _teamMenuManager.OnCreatedLustosaurAddedToTeam += OnCreatedLustosaurAddedToTeam;
+            _teamMenuManager.OnCreatedLustosaurAddedToReserve += OnCreatedLustosaurAddedToReserve;
+            _teamMenuManager.OnCreatedLustosaurDiscarded += OnCreatedLustosaurDiscarded;
+            _teamMenuManager.OnCancelTryRemoveLastLustosaurFromTeam += OnCancelTryRemoveLastLustosaurFromTeam;
 
             _playerUpgradeMaanger.OnStatUpgraded += OnStatUpgraded;
         }
@@ -165,12 +168,38 @@ namespace Assets.Scripts.ViewModels.Managers
         }
 
         /// <summary>
-        /// Appelée quand un Luxurosaure est créé
+        /// Appelée quand un Luxurosaure créé est ajouté à l'équipe
         /// </summary>
         /// <param name="lustosaur">Le luxurosaure créé</param>
-        private void OnLustosaurCreated(LustosaurSO lustosaur)
+        private void OnCreatedLustosaurAddedToTeam(LustosaurSO lustosaur)
         {
-            AddLog(lustosaur.Sprite, string.Format(LogConstants.LUSTOSAUR_CREATED_MSG, lustosaur.name));
+            AddLog(lustosaur.Sprite, string.Format(LogConstants.LUSTOSAUR_CREATED_TEAM_MSG, lustosaur.name));
+        }
+
+        /// <summary>
+        /// Appelée quand un Luxurosaure créé est ajouté à la réserve
+        /// </summary>
+        /// <param name="lustosaur">Le luxurosaure créé</param>
+        private void OnCreatedLustosaurAddedToReserve(LustosaurSO lustosaur)
+        {
+            AddLog(lustosaur.Sprite, string.Format(LogConstants.LUSTOSAUR_CREATED_STANDBY_MSG, lustosaur.name));
+        }
+
+        /// <summary>
+        /// Appelée quand un Luxurosaure créé est défaussé
+        /// </summary>
+        /// <param name="lustosaur">Le luxurosaure créé</param>
+        private void OnCreatedLustosaurDiscarded(LustosaurSO lustosaur)
+        {
+            AddLog(lustosaur.Sprite, string.Format(LogConstants.LUSTOSAUR_CREATED_DISCARDED_MSG, lustosaur.name));
+        }
+
+        /// <summary>
+        /// Appelée quand le joueur tente de retirer le dernier luxurosaure de son équipe
+        /// </summary>
+        private void OnCancelTryRemoveLastLustosaurFromTeam()
+        {
+            AddLog(_alertIcon, LogConstants.LAST_LUSTOSAUR_REMOVED_FROM_TEAM_ERROR_MSG);
         }
 
         /// <summary>

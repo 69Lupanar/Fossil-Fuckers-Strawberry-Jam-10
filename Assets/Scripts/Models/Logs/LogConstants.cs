@@ -11,10 +11,15 @@ namespace Assets.Scripts.Models.Logs
         public const string DISCARDED_ITEM_MSG = "Inventory full, {0} discarded.";
         public const string FOUND_GEM_MSG = "Found a {0}! +{1} EXP!";
         public const string INVENTORY_FULL_MSG = "Inventory full.";
+        public const string ITEM_DISCARDED_MSG = "{0} discarded.";
 
         // Lustosaurs
 
-        public const string LUSTOSAUR_CREATED_MSG = "{0} successfully cloned!";
+        public const string LUSTOSAUR_CREATED_TEAM_MSG = "{0} added to the active roster!";
+        public const string LUSTOSAUR_CREATED_STANDBY_MSG = "Team full; your {0} was sent on standby.";
+        public const string LUSTOSAUR_CREATED_DISCARDED_MSG = "Team and reserve full; your {0} was set free.";
+        public const string LUSTOSAUR_DISCARDED_MSG = "{0} was set free.";
+        public const string LAST_LUSTOSAUR_REMOVED_FROM_TEAM_ERROR_MSG = "You cannot remove your last Lustosaur in your team!";
 
         // Fusion
 
