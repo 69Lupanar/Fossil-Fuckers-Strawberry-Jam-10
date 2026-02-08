@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Base
+  - NPCFighter
   layers:
   - Default
   - TransparentFX
@@ -14,8 +15,8 @@ TagManager:
   - UI
   - Ground
   - Mineable
-  - 
-  - 
+  - Entity/NPC
+  - Entity/Player
   - 
   - 
   - 

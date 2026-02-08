@@ -58,3 +58,76 @@ MonoBehaviour:
       Value:
         <MinMaxDepth>k__BackingField: {x: 15, y: 100}
         <Rarity>k__BackingField: 2
+  <NbMaxLustosaursPerNPC>k__BackingField: 5
+  <MinMaxNbNPCFighters>k__BackingField: {x: 3, y: 20}
+  <DialoguesPerHeatThreshold>k__BackingField:
+  - <Tag>k__BackingField: Normal
+    <Lines>k__BackingField:
+    - <Lines>k__BackingField:
+      - Hey, I saw that fossil first! Let's settle who gets to keep it with a battle!
+    - <Lines>k__BackingField:
+      - Hey man, whatcha staring at for? I'm just minding my own business but you
+        had to come and ruin my vibe.
+      - Not getting the memo? Fine then, I'll deal with ya myself.
+    - <Lines>k__BackingField:
+      - Oh yes, of fuck, mmh... Right, almost there...
+      - ...
+      - Aaah!
+      - What are you doing here? I was just... I... Studying....
+      - ... You know what, screw you! My lustosaurs are gonna teach you not to sneak
+        up on people anymore!
+    - <Lines>k__BackingField:
+      - Don't you find this all odd, you too? The doctor's researches, the lustosaurs
+        themselves...
+      - Don't get me wrong, I'm not doubting the old man's motivations, but how come
+        all fossils we've found here so far are so... Phallic-shaped?
+  - <Tag>k__BackingField: Partially Nude
+    <Lines>k__BackingField:
+    - <Lines>k__BackingField:
+      - Phew! Starting to get hot down there, heh?
+      - I don't blame ya, the mines can be tough for newcomers to the craft.
+      - How about a friendly battle to cool off?
+    - <Lines>k__BackingField:
+      - Nice ti- Uhm I mean hi!
+      - I think I got lost. This mine is a giant maze.
+      - Thankfully my lustosaurs are here to guide me out after a good fuuuu- fight,
+        I mean fight, of course, haha...
+    - <Lines>k__BackingField:
+      - Aaah! A monster!
+      - Go, my lustosaurs! Attack!
+  - <Tag>k__BackingField: Fully Nude
+    <Lines>k__BackingField:
+    - <Lines>k__BackingField:
+      - Man...
+      - I can't take it anymore...
+      - It's so hot down there...
+      - I can't even think straight... I think I've put my clothes down somewhere...
+        Where are they?
+    - <Lines>k__BackingField:
+      - D-Don't look at me! It just got super hot in here and... And you're naked
+        too, so don't judge!
+      - Stop peeping at me like that, you perv!
+      - Fine, you asked for it! My lustosaurs are gonna wipe that stupid smug grin
+        off of your face!
+    - <Lines>k__BackingField:
+      - Me? Oh no, I'm not a miner, I'm a nudist.
+      - I've heard it could get quite hot down there, so much in fact that most workers
+        have to take off their clothes to avoid fainting.
+      - I'm pretty used to hot climates. At least I can walk around and pretend I'm
+        one of them~
+      - 'That''s gonna be our secret, of course~
+
+        Oh, unless you want to
+        let our little friends settle this for us? I''ll even let you have your way
+        with one of them if you win~'
+  <LustosaursUsableByNPCFighters>k__BackingField:
+  - {fileID: 11400000, guid: 420631c40b818694aa161b0eb590c3c1, type: 2}
+  - {fileID: 11400000, guid: 7f0fe807b015bec46a5f9548b5db538e, type: 2}
+  - {fileID: 11400000, guid: 4f86263c3f2e07e44b0739d525ae4426, type: 2}
+  - {fileID: 11400000, guid: 1f409ad547af04d4b9f6855c2cef61b3, type: 2}
+  - {fileID: 11400000, guid: 423a682727e2f414a9336025aab0c2e0, type: 2}
+  - {fileID: 11400000, guid: a2d188c1fc9af6f42b07af10e39f3ca7, type: 2}
+  - {fileID: 11400000, guid: aab525f8b1f7d894e92861222596565f, type: 2}
+  - {fileID: 11400000, guid: ef514f52b6b859e439178fade5d32a3f, type: 2}
+  - {fileID: 11400000, guid: 153de2c45b180af41a34e252dbba7b3c, type: 2}
+  - {fileID: 11400000, guid: 50ba6203d066ff1428f54e6e78b96202, type: 2}

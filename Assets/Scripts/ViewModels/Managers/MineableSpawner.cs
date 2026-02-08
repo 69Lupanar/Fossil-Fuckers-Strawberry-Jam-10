@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.Models.EventArgs;
 using Assets.Scripts.Models.Mineables;
+using Assets.Scripts.Models.NPCs;
 using Assets.Scripts.ViewModels.Mineables;
+using Assets.Scripts.ViewModels.NPCs;
 using AYellowpaper.SerializedCollections;
 using Unity.Collections;
 using UnityEngine;
@@ -39,12 +42,22 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <summary>
         /// La prefab de l'objet minable
         /// </summary>
-        [SerializeField] private Transform _mineableItemPrefab;
+        [SerializeField] private GameObject _mineableItemPrefab;
+
+        /// <summary>
+        /// La prefab du PNJ combattant
+        /// </summary>
+        [SerializeField] private GameObject _npcFighterPrefab;
 
         /// <summary>
         /// Le conteneur des cases
         /// </summary>
         [SerializeField] private Transform _tilesParent;
+
+        /// <summary>
+        /// Le conteneur des PNJs combattants
+        /// </summary>
+        [SerializeField] private Transform _npcFightersParent;
 
         /// <summary>
         /// Espacement entre les objets à instancier
@@ -76,6 +89,11 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         private readonly List<MineableTile> _activeTiles = new();
 
+        /// <summary>
+        /// L'ObjectPool des PNJs combattants
+        /// </summary>
+        private ObjectPool<NPCFighter> _npcFighterPool;
+
         #endregion
 
         #region Méthodes Unity
@@ -85,6 +103,8 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         private void Start()
         {
+            _npcFighterPool = new ObjectPool<NPCFighter>(CreateNPCFighter, GetNPCFighter, ReleaseNPCFighter, DestroyNPCFighter, true, _settings.MinMaxNbNPCFighters.y, 100);
+
             if (_generateOnStart)
             {
                 Generate();
@@ -105,6 +125,7 @@ namespace Assets.Scripts.ViewModels.Managers
             CreateGrid();
             PopulateGrid(_settings);
             InstantiateGrid();
+            InstantiateNPCs(_settings);
 
             OnGenerationCompleted?.Invoke(this, new GenerationEventArgs(_gridSize, _spawnSpacing));
         }
@@ -117,6 +138,15 @@ namespace Assets.Scripts.ViewModels.Managers
                 MineableTile tile = _activeTiles[0];
                 _poolsPerID[tile.Tile.name].Release(tile);
             }
+        }
+
+        /// <summary>
+        /// Désactive un PNJ combattant
+        /// </summary>
+        /// <param name="npc">Le PNJ combattant</param>
+        public void ReleaseFighter(NPCFighter npc)
+        {
+            _npcFighterPool.Release(npc);
         }
 
         #endregion
@@ -197,7 +227,7 @@ namespace Assets.Scripts.ViewModels.Managers
 
             #endregion
 
-            #region Génère les structures spéciales (base, caves, corridors, lacs, PNJs, etc.)
+            #region Génère les structures spéciales (base, caves, corridors, lacs, etc.)
 
             #region Sol de la base
 
@@ -231,6 +261,110 @@ namespace Assets.Scripts.ViewModels.Managers
             }
         }
 
+        /// <summary>
+        /// Instancie les PNJs
+        /// </summary>
+        /// <param name="settings">Paramètres de génération</param>
+        private void InstantiateNPCs(GenerationSettingsSO settings)
+        {
+            int nbFreeTiles = _idsGrid.Where(id => id == string.Empty).Count();
+            int nbNPCFighters = Mathf.Min(nbFreeTiles, Random.Range(settings.MinMaxNbNPCFighters.x, settings.MinMaxNbNPCFighters.y));
+            NativeList<Vector3> possiblePositions = new(nbNPCFighters, Allocator.Temp);
+
+            // Récupère les emplacements libres
+
+            for (int i = 0; i < _idsGrid.Length; ++i)
+            {
+                if (_idsGrid[i] == string.Empty)
+                {
+                    possiblePositions.Add(new Vector3(i % _gridSize.x, -i / _gridSize.x) * _spawnSpacing);
+                }
+            }
+
+            // Crée des PNJs à des emplacements libres choisis au hasard
+
+            for (int i = 0; i < nbNPCFighters; ++i)
+            {
+                int index = Random.Range(0, possiblePositions.Length);
+                Vector3 randomPos = possiblePositions[index];
+                possiblePositions.RemoveAt(index);
+
+                _npcFighterPool.Get(out NPCFighter npcFighter);
+                npcFighter.transform.position = randomPos;
+
+                int depth = -(int)(randomPos.y / _spawnSpacing);
+                LustosaurSO[] team = CreateTeam(settings.LustosaursUsableByNPCFighters, settings.NbMaxLustosaursPerNPC, depth, _gridSize.y);
+                string[] lines = SelectDialogueLines(settings.DialoguesPerHeatThreshold, depth, _gridSize.y);
+
+                npcFighter.SetData(team, lines);
+            }
+        }
+
+        #region Object Pool NPCFighter
+
+        /// <summary>
+        /// Crée une équipe au hasard parmi les luxurosaures disponibles
+        /// </summary>
+        /// <param name="lustosaursUsableByNPCFighters">Les luxurosaures disponibles</param>
+        /// <param name="nbMaxLustosaursPerNPC">Le nombre max de luxurosaures par PNJs combattant</param>
+        /// <param name="depth">Influe sur la puissance des luxurosaures</param>
+        /// <param name="maxPossibleDepth">La profondeur max possible</param>
+        /// <returns>Une équipe générée aléatoirement</returns>
+        private LustosaurSO[] CreateTeam(LustosaurSO[] lustosaursUsableByNPCFighters, int nbMaxLustosaursPerNPC, int depth, int maxPossibleDepth)
+        {
+            int nbLustosaurs = Mathf.Clamp(Mathf.RoundToInt((float)depth / (float)maxPossibleDepth * nbMaxLustosaursPerNPC), 0, nbMaxLustosaursPerNPC);
+            int lustosaurLevel = Mathf.RoundToInt((float)depth / (float)maxPossibleDepth * DinoConstants.MAX_LEVEL);
+            int lustosaurQuality = Mathf.RoundToInt((float)depth / (float)maxPossibleDepth * DinoConstants.MAX_QUALITY);
+            LustosaurSO[] newTeam = new LustosaurSO[nbMaxLustosaursPerNPC];
+
+            for (int i = 0; i < nbLustosaurs; ++i)
+            {
+                LustosaurSO template = lustosaursUsableByNPCFighters[Random.Range(0, lustosaursUsableByNPCFighters.Length)];
+                newTeam[i] = LustosaurSO.CreateFrom(template, Mathf.Clamp(lustosaurQuality, 1, DinoConstants.MAX_QUALITY), Mathf.Clamp(lustosaurLevel, 1, DinoConstants.MAX_LEVEL));
+            }
+
+            return newTeam;
+        }
+
+        /// <summary>
+        /// Sélectionne un dialogue au hasard pour le PNJ
+        /// </summary>
+        /// <param name="dialogues">Les dialogues possibles</param>
+        /// <param name="depth">Influe sur le dialogue à jouer</param>
+        /// <param name="maxPossibleDepth">La profondeur max possible</param>
+        /// <returns></returns>
+        private static string[] SelectDialogueLines(DialoguesPerHeatThreshold[] dialogues, int depth, int maxPossibleDepth)
+        {
+            int dialogueIndex = Mathf.RoundToInt((float)(depth * dialogues.Length) / (float)maxPossibleDepth);
+            DialoguesPerHeatThreshold dialogue = dialogues[Mathf.Clamp(dialogueIndex, 0, dialogues.Length - 1)];
+            DialogueLinesPerHeatThreshold lines = dialogue.Lines[Random.Range(0, dialogue.Lines.Length)];
+            return lines.Lines;
+        }
+
+        private NPCFighter CreateNPCFighter()
+        {
+            return Instantiate(_npcFighterPrefab, _npcFightersParent).GetComponent<NPCFighter>();
+        }
+
+        private void GetNPCFighter(NPCFighter npc)
+        {
+            npc.gameObject.SetActive(true);
+        }
+
+        private void ReleaseNPCFighter(NPCFighter npc)
+        {
+            npc.gameObject.SetActive(false);
+        }
+
+        private void DestroyNPCFighter(NPCFighter npc)
+        {
+            Destroy(npc.gameObject);
+        }
+
+        #endregion
+
+        #region Object Pool MineableTile
+
         private MineableTile CreateTile()
         {
             return Instantiate(_mineableItemPrefab, _tilesParent).GetComponent<MineableTile>();
@@ -257,6 +391,8 @@ namespace Assets.Scripts.ViewModels.Managers
 
             Destroy(tile.gameObject);
         }
+
+        #endregion
 
         #endregion
     }

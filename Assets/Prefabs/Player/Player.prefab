@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5305350213370765656}
   - component: {fileID: 3920925402188858787}
   - component: {fileID: 1679152219981467905}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -79,7 +79,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assets.Scripts.ViewModels::PlayerController
   _playerStats: {fileID: 0}
   _renderer: {fileID: 4463477328988611732}
-  _col: {fileID: 1679152219981467905}
   _rb: {fileID: 7632856314478347205}
   _groundCheck: {fileID: 7971470172966842682}
   _input: {fileID: 5305350213370765656}

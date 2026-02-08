@@ -80,7 +80,8 @@ namespace Assets.Scripts.Models.Dinos
         /// <param name="source">L'asset de référence dans le dossier du projet, 
         /// considéré comme ayant une qualité de 100% (donc avec ses stats au max pour le calcul)</param>
         /// <param name="quality">La qualité du luxurosaure à créer</param>
-        public static LustosaurSO CreateFrom(LustosaurSO source, int quality)
+        /// <param name="level">Le niveau de base du luxurosaure</param>
+        public static LustosaurSO CreateFrom(LustosaurSO source, int quality, int level = 1)
         {
             LustosaurSO clone = ScriptableObject.CreateInstance<LustosaurSO>();
 
@@ -90,7 +91,7 @@ namespace Assets.Scripts.Models.Dinos
             clone.SupportStats = source.SupportStats;
             clone.EXPProgressCurve = source.EXPProgressCurve;
             clone.CurEXP = 0;
-            clone.CurLevel = 1;
+            clone.CurLevel = level;
             clone.Quality = quality;
             float t = (float)quality / 100f;
 
@@ -118,7 +119,7 @@ namespace Assets.Scripts.Models.Dinos
                     Mathf.RoundToInt(Mathf.Lerp(statsAt0Quality.Evasion, source.FightingStatsAtMaxQuality.Evasion, t))
                 );
 
-            // Comme il débute au niveau 1, ses stats actuelles seront à 50% de ses stats max
+            // Au niveau 1, ses stats actuelles seront à 50% de ses stats max
             // et seront donc à 100% au niveau (DinoConstants.MAX_LEVEL)
 
             clone.CurFightingStats = new FightingStats
@@ -129,6 +130,13 @@ namespace Assets.Scripts.Models.Dinos
                     clone.FightingStatsAtMaxQuality.CriticalHitRate / 2,
                     clone.FightingStatsAtMaxQuality.Evasion / 2
                 );
+
+            if (level > 1)
+            {
+                // On recalcule ses stats si so niveau de base est supérieur à 1
+
+                clone.RecalculateStats();
+            }
 
             return clone;
         }
