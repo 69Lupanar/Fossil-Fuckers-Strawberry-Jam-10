@@ -21,9 +21,20 @@ namespace Assets.Scripts.ViewModels.Managers
         #region Evénements
 
         /// <summary>
+        /// Appelée avant le nettoyage et le début de la génération
+        /// </summary>
+        public System.Action OnBeforeGenerationStart { get; set; }
+
+        /// <summary>
         /// Appelée une fois la génération terminée
         /// </summary>
         public System.EventHandler<GenerationEventArgs> OnGenerationCompleted { get; set; }
+
+        #endregion
+
+        #region Propriétés
+
+        public List<NPCFighter> ActiveNPCFighters { get => _activeNPCFighters; }
 
         #endregion
 
@@ -90,6 +101,11 @@ namespace Assets.Scripts.ViewModels.Managers
         private readonly List<MineableTile> _activeTiles = new();
 
         /// <summary>
+        /// La liste des PNJs combattants actifs
+        /// </summary>
+        private readonly List<NPCFighter> _activeNPCFighters = new();
+
+        /// <summary>
         /// L'ObjectPool des PNJs combattants
         /// </summary>
         private ObjectPool<NPCFighter> _npcFighterPool;
@@ -121,6 +137,8 @@ namespace Assets.Scripts.ViewModels.Managers
         [ContextMenu("Generate")]
         public void Generate()
         {
+            OnBeforeGenerationStart?.Invoke();
+
             Clear();
             CreateGrid();
             PopulateGrid(_settings);
@@ -137,6 +155,11 @@ namespace Assets.Scripts.ViewModels.Managers
             {
                 MineableTile tile = _activeTiles[0];
                 _poolsPerID[tile.Tile.name].Release(tile);
+            }
+
+            while (ActiveNPCFighters.Count > 0)
+            {
+                _npcFighterPool.Release(ActiveNPCFighters[0]);
             }
         }
 
@@ -349,15 +372,22 @@ namespace Assets.Scripts.ViewModels.Managers
         private void GetNPCFighter(NPCFighter npc)
         {
             npc.gameObject.SetActive(true);
+            ActiveNPCFighters.Add(npc);
         }
 
         private void ReleaseNPCFighter(NPCFighter npc)
         {
             npc.gameObject.SetActive(false);
+            ActiveNPCFighters.Remove(npc);
         }
 
         private void DestroyNPCFighter(NPCFighter npc)
         {
+            if (ActiveNPCFighters.Contains(npc))
+            {
+                ActiveNPCFighters.Remove(npc);
+            }
+
             Destroy(npc.gameObject);
         }
 

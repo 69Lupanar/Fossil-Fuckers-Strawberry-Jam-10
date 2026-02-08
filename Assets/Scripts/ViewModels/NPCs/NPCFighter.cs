@@ -15,7 +15,7 @@ namespace Assets.Scripts.ViewModels.NPCs
         /// <summary>
         /// Appelée quand le joueur interagit avec ce PNJ
         /// </summary>
-        private Action<LustosaurSO[], string[]> OnInteracted { get; set; }
+        public Action<LustosaurSO[], string[]> OnInteracted { get; set; }
 
         #endregion
 

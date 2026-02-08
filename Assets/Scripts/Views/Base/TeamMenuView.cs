@@ -1,5 +1,6 @@
 using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.ViewModels.Managers;
+using Assets.Scripts.Views.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,6 +30,12 @@ namespace Assets.Scripts.Views.Base
         /// </summary>
         [SerializeField]
         private RectTransform _inventoryGrid;
+
+        /// <summary>
+        /// Les emplacements d'équipe en haut de l'écran
+        /// </summary>
+        [SerializeField]
+        private TeamSlotInstance[] _teamSlotsInstances;
 
         /// <summary>
         /// Les zones de dépot des emplacements de l'équipe
@@ -64,6 +71,14 @@ namespace Assets.Scripts.Views.Base
         #endregion
 
         #region Méthodes Unity
+
+        /// <summary>
+        /// init
+        /// </summary>
+        private void Awake()
+        {
+            _manager.OnStart += OnStart;
+        }
 
         /// <summary>
         /// Init
@@ -149,6 +164,14 @@ namespace Assets.Scripts.Views.Base
         #region Méthodes privées
 
         /// <summary>
+        /// Appelée dans la Start du manager
+        /// </summary>
+        private void OnStart()
+        {
+            DisplayLustosaurs();
+        }
+
+        /// <summary>
         /// Initialise les objets à glisser/déposer
         /// </summary>
         private void InitializePointerHandlers()
@@ -204,6 +227,11 @@ namespace Assets.Scripts.Views.Base
                 if (i < _manager.PlayerTeam.Count)
                 {
                     _teamSlotsDropZones[i].GetChild(0).GetComponent<Image>().sprite = _manager.PlayerTeam[i].Sprite;
+                    _teamSlotsInstances[i].SetLustosaur(_manager.PlayerTeam[i]);
+                }
+                else
+                {
+                    _teamSlotsInstances[i].SetLustosaur(null);
                 }
             }
         }

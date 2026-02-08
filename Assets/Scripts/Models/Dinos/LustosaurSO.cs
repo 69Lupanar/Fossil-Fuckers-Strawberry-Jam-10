@@ -23,7 +23,7 @@ namespace Assets.Scripts.Models.Dinos
         /// <summary>
         /// L'exp à gagner pour atteindre le niveau suivant
         /// </summary>
-        public int ExpUntilNextLevel => Mathf.RoundToInt(EXPProgressCurve.Evaluate((float)(CurLevel) / (float)DinoConstants.MAX_LEVEL - 1) * DinoConstants.TOTAL_EXP);
+        public int ExpUntilNextLevel => Mathf.RoundToInt(EXPProgressCurve.Evaluate((float)(CurLevel + 1) / (float)DinoConstants.MAX_LEVEL) * DinoConstants.TOTAL_EXP);
 
         /// <summary>
         /// La qualité moyenne du luxurosaure.

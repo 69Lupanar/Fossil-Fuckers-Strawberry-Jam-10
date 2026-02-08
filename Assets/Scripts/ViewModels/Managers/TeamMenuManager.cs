@@ -13,6 +13,11 @@ namespace Assets.Scripts.ViewModels.Managers
         #region Evénements
 
         /// <summary>
+        /// Appelée dans la Start
+        /// </summary>
+        public Action OnStart { get; set; }
+
+        /// <summary>
         /// Appelée quand un Luxurosaure créé est ajouté à l'équipe
         /// </summary>
         public Action<LustosaurSO> OnCreatedLustosaurAddedToTeam { get; set; }
@@ -90,6 +95,8 @@ namespace Assets.Scripts.ViewModels.Managers
                 PlayerTeam.Add(LustosaurSO.CreateFrom(StartingTeam[i], 100));
                 StandbyReserve.Add(LustosaurSO.CreateFrom(StartingTeam[i], 100));
             }
+
+            OnStart?.Invoke();
         }
 
         #endregion

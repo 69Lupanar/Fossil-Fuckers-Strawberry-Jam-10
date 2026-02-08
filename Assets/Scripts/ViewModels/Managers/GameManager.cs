@@ -1,3 +1,6 @@
+using Assets.Scripts.Models.Dinos;
+using Assets.Scripts.Models.EventArgs;
+using Assets.Scripts.ViewModels.NPCs;
 using Assets.Scripts.ViewModels.Player;
 using UnityEngine;
 
@@ -30,6 +33,18 @@ namespace Assets.Scripts.ViewModels.Managers
         private InventoryManager _inventoryManager;
 
         /// <summary>
+        /// Le DialogueManager
+        /// </summary>
+        [SerializeField]
+        private DialogueManager _dialogueManager;
+
+        /// <summary>
+        /// Le CombatManager
+        /// </summary>
+        [SerializeField]
+        private CombatManager _combatManager;
+
+        /// <summary>
         /// Le PlayerStatsManager
         /// </summary>
         [SerializeField]
@@ -49,7 +64,26 @@ namespace Assets.Scripts.ViewModels.Managers
 
         #endregion
 
+        #region Variables d'instance
+
+        /// <summary>
+        /// Equipe du PNJ combattant en cours de dialogue,
+        /// gardé temporairement le temps de son dialogue
+        /// </summary>
+        private LustosaurSO[] _tempTeam;
+
+        #endregion
+
         #region Méthodes Unity
+
+        /// <summary>
+        /// init
+        /// </summary>
+        private void Awake()
+        {
+            _mineableSpawner.OnBeforeGenerationStart += OnBeforeGenerationStart;
+            _mineableSpawner.OnGenerationCompleted += OnGenerationCompleted;
+        }
 
         /// <summary>
         /// init
@@ -131,6 +165,55 @@ namespace Assets.Scripts.ViewModels.Managers
 
             _statsManager.RestoreStats();
             _inventoryManager.Clear();
+        }
+
+        #endregion
+
+        #region Méthodes privées
+
+        /// <summary>
+        /// Appelée avant le nettoyage et le début de la génération
+        /// </summary>
+        private void OnBeforeGenerationStart()
+        {
+            foreach (NPCFighter npc in _mineableSpawner.ActiveNPCFighters)
+            {
+                npc.OnInteracted -= OnNPCFighterInteracted;
+            }
+        }
+
+        /// <summary>
+        /// Appelée une fois la génération terminée
+        /// </summary>
+        private void OnGenerationCompleted(object sender, GenerationEventArgs _)
+        {
+            foreach (NPCFighter npc in _mineableSpawner.ActiveNPCFighters)
+            {
+                npc.OnInteracted += OnNPCFighterInteracted;
+            }
+        }
+
+        /// <summary>
+        /// Appelée quand le joueur interagit avec un NPC
+        /// </summary>
+        /// <param name="npcTeam"></param>
+        /// <param name="npcDialogue"></param>
+        private void OnNPCFighterInteracted(LustosaurSO[] npcTeam, string[] npcDialogue)
+        {
+            DisableController();
+            _tempTeam = npcTeam;
+            _dialogueManager.StartDialogue(npcDialogue);
+            _dialogueManager.OnDialogueEnded += OnDialogueEnded;
+        }
+
+        /// <summary>
+        /// Appelée une fois un dialogue terminé
+        /// </summary>
+        private void OnDialogueEnded()
+        {
+            //EnableController();
+            _combatManager.StartCombat(_tempTeam);
+            _dialogueManager.OnDialogueEnded -= OnDialogueEnded;
         }
 
         #endregion
