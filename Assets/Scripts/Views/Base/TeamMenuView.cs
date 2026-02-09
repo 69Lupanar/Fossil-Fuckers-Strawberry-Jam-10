@@ -109,13 +109,13 @@ namespace Assets.Scripts.Views.Base
                 if (_curHoveredItemID < _inventoryGrid.childCount)
                 {
                     _inventoryGrid.GetChild(_curHoveredItemID).GetChild(0).GetComponent<Image>().enabled = false;
-                    _draggableImg.GetComponent<Image>().sprite = _manager.StandbyReserve[_curHoveredItemID].Sprite;
+                    _draggableImg.GetComponent<Image>().sprite = _manager.StandbyReserve[_curHoveredItemID].NormalSprite;
                 }
                 else
                 {
                     int index = _curHoveredItemID - _inventoryGrid.childCount;
                     _teamSlotsHandlers[index].GetComponent<Image>().enabled = false;
-                    _draggableImg.GetComponent<Image>().sprite = _manager.PlayerTeam[index].Sprite;
+                    _draggableImg.GetComponent<Image>().sprite = _manager.PlayerTeam[index].NormalSprite;
                 }
             }
 
@@ -216,7 +216,7 @@ namespace Assets.Scripts.Views.Base
 
                 if (i < _manager.StandbyReserve.Count)
                 {
-                    slot.GetComponent<Image>().sprite = _manager.StandbyReserve[i].Sprite;
+                    slot.GetComponent<Image>().sprite = _manager.StandbyReserve[i].NormalSprite;
                 }
             }
 
@@ -226,7 +226,7 @@ namespace Assets.Scripts.Views.Base
 
                 if (i < _manager.PlayerTeam.Count)
                 {
-                    _teamSlotsDropZones[i].GetChild(0).GetComponent<Image>().sprite = _manager.PlayerTeam[i].Sprite;
+                    _teamSlotsDropZones[i].GetChild(0).GetComponent<Image>().sprite = _manager.PlayerTeam[i].NormalSprite;
                     _teamSlotsInstances[i].SetLustosaur(_manager.PlayerTeam[i]);
                 }
                 else

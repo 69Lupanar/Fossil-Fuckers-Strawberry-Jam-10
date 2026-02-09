@@ -66,7 +66,7 @@ namespace Assets.Scripts.Views.UI
 
             if (lustosaur != null)
             {
-                _lustosaurImg.sprite = lustosaur.Sprite;
+                _lustosaurImg.sprite = lustosaur.NormalSprite;
                 SetExpFillAmount((float)lustosaur.CurEXP / (float)lustosaur.ExpUntilNextLevel);
             }
             else

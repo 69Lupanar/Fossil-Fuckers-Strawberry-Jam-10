@@ -50,7 +50,6 @@ namespace Assets.Scripts.Models.Mineables
         [field: SerializeField]
         public SerializedDictionary<MineableTileSO, MineableItemSpawnSettings> MineablesPrefabs { get; private set; }
 
-
         [field: Space(10)]
         [field: Header("NPCs")]
         [field: Space(10)]

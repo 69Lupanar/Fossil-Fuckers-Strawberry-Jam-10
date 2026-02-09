@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Fire 2
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Dinos.LustosaurSO
   <Attribute>k__BackingField: 2
-  <Sprite>k__BackingField: {fileID: -1591335095, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  <AttributeSprite>k__BackingField: {fileID: 21300000, guid: ddfa12407aa9c5641b4f7a90a0da989b, type: 3}
+  <NormalSprite>k__BackingField: {fileID: -1591335095, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  <HornySprite>k__BackingField: {fileID: -1591335095, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
   <FightingStatsAtMaxQuality>k__BackingField:
     <Health>k__BackingField: 100
     <Attack>k__BackingField: 40
@@ -50,3 +52,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  <LearnableAttacks>k__BackingField:
+    _serializedList:
+    - Key: 1
+      Value: {fileID: 11400000, guid: dc6bae3435dd07c41b15211c36d973bb, type: 2}
+    - Key: 3
+      Value: {fileID: 11400000, guid: c75174509a4ceff49a732b71cf4452ea, type: 2}
+    - Key: 7
+      Value: {fileID: 11400000, guid: 918474fe287c9d041916783463e11a28, type: 2}

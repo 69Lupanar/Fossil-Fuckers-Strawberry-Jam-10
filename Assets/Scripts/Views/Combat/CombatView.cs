@@ -1,3 +1,4 @@
+using Assets.Scripts.ViewModels.Managers;
 using UnityEngine;
 
 namespace Assets.Scripts.Views.Combat
@@ -7,16 +8,38 @@ namespace Assets.Scripts.Views.Combat
     /// </summary>
     public class CombatView : MonoBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        #region Variables Unity
+
+        /// <summary>
+        /// Le CombatManager
+        /// </summary>
+        [SerializeField]
+        private CombatManager _manager;
+
+        #endregion
+
+        #region Méthodes Unity
+
+        /// <summary>
+        /// init
+        /// </summary>
+        private void Start()
+        {
+            _manager.OnCombatStarted += OnCombatStarted;
+        }
+
+        #endregion
+
+        #region Méthodes privées
+
+        /// <summary>
+        /// Appelée quand un combat est commencé
+        /// </summary>
+        private void OnCombatStarted()
         {
 
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+        #endregion
     }
 }

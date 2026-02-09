@@ -56,6 +56,11 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public List<LustosaurSO> PlayerTeam { get; private set; }
 
+        /// <summary>
+        /// La capacité max de l'équipe du joueur
+        /// </summary>
+        public int PlayerTeamCapacity => _playerTeamCapacity;
+
         #endregion
 
         #region Variables Unity

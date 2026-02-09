@@ -33,6 +33,7 @@ namespace Assets.Scripts.Models
     {
         Gallery,
         Defeat,
+        Victory,
         StatDepleted
     }
 }

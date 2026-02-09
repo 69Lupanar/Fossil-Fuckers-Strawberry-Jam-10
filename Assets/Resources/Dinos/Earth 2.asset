@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Earth 2
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Dinos.LustosaurSO
   <Attribute>k__BackingField: 4
-  <Sprite>k__BackingField: {fileID: 1334091500, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  <AttributeSprite>k__BackingField: {fileID: 21300000, guid: 3776ac74fd086ba4e9d80dea7d5391f0, type: 3}
+  <NormalSprite>k__BackingField: {fileID: 1334091500, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  <HornySprite>k__BackingField: {fileID: 1334091500, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
   <FightingStatsAtMaxQuality>k__BackingField:
     <Health>k__BackingField: 100
     <Attack>k__BackingField: 40
@@ -50,3 +52,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  <LearnableAttacks>k__BackingField:
+    _serializedList:
+    - Key: 1
+      Value: {fileID: 11400000, guid: 464f7e88d82290944917c94f4a33ec3c, type: 2}
+    - Key: 3
+      Value: {fileID: 11400000, guid: 18edb3cc826f35a4c84b5fa95e1be5e1, type: 2}
+    - Key: 7
+      Value: {fileID: 11400000, guid: 6a16b6d74538e8b4d90c2b9f223544e2, type: 2}

@@ -435,7 +435,7 @@ namespace Assets.Scripts.Views.Base
         /// <param name="lustosaur">Le luxurosaure créé</param>
         private void ShowSuccessPopup(LustosaurSO lustosaur)
         {
-            _lustosaurIcon.sprite = lustosaur.Sprite;
+            _lustosaurIcon.sprite = lustosaur.NormalSprite;
             Color col = _textColorPerAttribute[lustosaur.Attribute];
             _lustosaurNameLabel.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(col)}>{lustosaur.name}</color>");
 

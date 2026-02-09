@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
 namespace Assets.Scripts.Models.Dinos
@@ -36,6 +38,11 @@ namespace Assets.Scripts.Models.Dinos
         /// </summary>
         public FightingStats CurFightingStats { get; private set; }
 
+        /// <summary>
+        /// Les attaques apprises par ce luxurosaure
+        /// </summary>
+        public List<AttackSO> LearnedAttacks { get; set; }
+
         #endregion
 
         #region Variables Unity
@@ -47,10 +54,22 @@ namespace Assets.Scripts.Models.Dinos
         public ElementalAttribute Attribute { get; private set; }
 
         /// <summary>
-        /// Le sprite du luxurosaure
+        /// Le sprite de l'attribut du luxurosaure
         /// </summary>
         [field: SerializeField]
-        public Sprite Sprite { get; private set; }
+        public Sprite AttributeSprite { get; private set; }
+
+        /// <summary>
+        /// Le sprite du luxurosaure dans un état normal
+        /// </summary>
+        [field: SerializeField]
+        public Sprite NormalSprite { get; private set; }
+
+        /// <summary>
+        /// Le sprite du luxurosaure dans un état excité
+        /// </summary>
+        [field: SerializeField]
+        public Sprite HornySprite { get; private set; }
 
         /// <summary>
         /// Les stats de combat du luxurosaure à une qualité maximale
@@ -70,6 +89,13 @@ namespace Assets.Scripts.Models.Dinos
         [field: SerializeField]
         public AnimationCurve EXPProgressCurve { get; private set; }
 
+        /// <summary>
+        /// Liste des attaques apprenables en montant de niveau
+        /// </summary>
+        [field: SerializedDictionary("Level", "Attack")]
+        [field: SerializeField]
+        public SerializedDictionary<int, AttackSO> LearnableAttacks { get; private set; }
+
         #endregion
 
         #region Méthodes publiques
@@ -83,16 +109,8 @@ namespace Assets.Scripts.Models.Dinos
         /// <param name="level">Le niveau de base du luxurosaure</param>
         public static LustosaurSO CreateFrom(LustosaurSO source, int quality, int level = 1)
         {
-            LustosaurSO clone = ScriptableObject.CreateInstance<LustosaurSO>();
+            LustosaurSO clone = source.Clone();
 
-            clone.name = source.name;
-            clone.Attribute = source.Attribute;
-            clone.Sprite = source.Sprite;
-            clone.SupportStats = source.SupportStats;
-            clone.EXPProgressCurve = source.EXPProgressCurve;
-            clone.CurEXP = 0;
-            clone.CurLevel = level;
-            clone.Quality = quality;
             float t = (float)quality / 100f;
 
             // La qualité minimale que peut avoir un luxurosaure est 0%,
@@ -138,6 +156,40 @@ namespace Assets.Scripts.Models.Dinos
                 clone.RecalculateStats();
             }
 
+            // On lui apprend aussi les capacités qu'il devrait avoir à son niveau
+
+            for (int i = 0; i <= level; ++i)
+            {
+                clone.CheckLearnableMove(i);
+            }
+
+            return clone;
+        }
+
+        /// <summary>
+        /// Clone le luxurosaure
+        /// </summary>
+        /// <returns>Une copie de l'objet</returns>
+        public LustosaurSO Clone()
+        {
+            LustosaurSO clone = new()
+            {
+                name = name,
+                Attribute = Attribute,
+                AttributeSprite = AttributeSprite,
+                NormalSprite = NormalSprite,
+                HornySprite = HornySprite,
+                Quality = Quality,
+                FightingStatsAtMaxQuality = FightingStatsAtMaxQuality,
+                CurFightingStats = CurFightingStats,
+                SupportStats = SupportStats,
+                CurEXP = CurEXP,
+                CurLevel = CurLevel,
+                EXPProgressCurve = EXPProgressCurve,
+                LearnableAttacks = LearnableAttacks,
+                LearnedAttacks = new List<AttackSO>(LearnedAttacks)
+            };
+
             return clone;
         }
 
@@ -177,6 +229,23 @@ namespace Assets.Scripts.Models.Dinos
                 CurEXP = 0;
             }
         }
+
+        /// <summary>
+        /// Vérifie si une nouvelle capacité est apprenable à ce niveau
+        /// et lui apprend cette dernière
+        /// </summary>
+        /// <param name="level">Le niveau atteint</param>
+        public void CheckLearnableMove(int level)
+        {
+            if (LearnableAttacks.ContainsKey(level))
+            {
+                LearnedAttacks.Add(LearnableAttacks[level]);
+            }
+        }
+
+        #endregion
+
+        #region Méthodes privées
 
         /// <summary>
         /// Recalcule les stats du joueur en fonction de son niveau

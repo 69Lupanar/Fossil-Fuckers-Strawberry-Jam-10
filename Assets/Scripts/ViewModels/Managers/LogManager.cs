@@ -191,7 +191,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <param name="lustosaur">Le luxurosaure créé</param>
         private void OnCreatedLustosaurAddedToTeam(LustosaurSO lustosaur)
         {
-            AddLog(lustosaur.Sprite, string.Format(LogConstants.LUSTOSAUR_CREATED_TEAM_MSG, lustosaur.name));
+            AddLog(lustosaur.NormalSprite, string.Format(LogConstants.LUSTOSAUR_CREATED_TEAM_MSG, lustosaur.name));
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <param name="lustosaur">Le luxurosaure créé</param>
         private void OnCreatedLustosaurAddedToReserve(LustosaurSO lustosaur)
         {
-            AddLog(lustosaur.Sprite, string.Format(LogConstants.LUSTOSAUR_CREATED_STANDBY_MSG, lustosaur.name));
+            AddLog(lustosaur.NormalSprite, string.Format(LogConstants.LUSTOSAUR_CREATED_STANDBY_MSG, lustosaur.name));
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <param name="lustosaur">Le luxurosaure créé</param>
         private void OnCreatedLustosaurDiscarded(LustosaurSO lustosaur)
         {
-            AddLog(lustosaur.Sprite, string.Format(LogConstants.LUSTOSAUR_CREATED_DISCARDED_MSG, lustosaur.name));
+            AddLog(lustosaur.NormalSprite, string.Format(LogConstants.LUSTOSAUR_CREATED_DISCARDED_MSG, lustosaur.name));
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <param name="lustosaur">Le luxurosaure défaussé</param>
         private void OnLustosaurDiscardedFromStandby(LustosaurSO lustosaur)
         {
-            AddLog(lustosaur.Sprite, string.Format(LogConstants.LUSTOSAUR_DISCARDED_MSG, lustosaur.name));
+            AddLog(lustosaur.NormalSprite, string.Format(LogConstants.LUSTOSAUR_DISCARDED_MSG, lustosaur.name));
         }
 
         /// <summary>

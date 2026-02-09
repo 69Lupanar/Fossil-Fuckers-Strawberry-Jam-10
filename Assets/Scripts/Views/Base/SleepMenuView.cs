@@ -165,7 +165,7 @@ namespace Assets.Scripts.Views.Base
 
                 if (i < _teamMenuManager.StandbyReserve.Count)
                 {
-                    slot.GetComponent<Image>().sprite = _teamMenuManager.StandbyReserve[i].Sprite;
+                    slot.GetComponent<Image>().sprite = _teamMenuManager.StandbyReserve[i].NormalSprite;
                 }
             }
 
@@ -175,7 +175,7 @@ namespace Assets.Scripts.Views.Base
 
                 if (i < _teamMenuManager.PlayerTeam.Count)
                 {
-                    _teamSlotsDropZones[i].GetChild(0).GetComponent<Image>().sprite = _teamMenuManager.PlayerTeam[i].Sprite;
+                    _teamSlotsDropZones[i].GetChild(0).GetComponent<Image>().sprite = _teamMenuManager.PlayerTeam[i].NormalSprite;
                 }
             }
         }
@@ -222,7 +222,7 @@ namespace Assets.Scripts.Views.Base
 
             _questionMarkImg.enabled = false;
             _selectedLustosaurImg.gameObject.SetActive(true);
-            _selectedLustosaurImg.sprite = _manager.SelectedLustosaur.Sprite;
+            _selectedLustosaurImg.sprite = _manager.SelectedLustosaur.NormalSprite;
         }
 
         /// <summary>

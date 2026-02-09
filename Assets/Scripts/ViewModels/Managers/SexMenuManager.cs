@@ -59,6 +59,13 @@ namespace Assets.Scripts.ViewModels.Managers
         [SerializeField]
         public SerializedDictionary<string, AdultSceneSO> ScenesOnStatDepleted;
 
+        /// <summary>
+        /// La scène adulte à jouer après une victoire en combat
+        /// </summary>
+        [SerializedDictionary("Associated Lustosaur", "Adult Scene")]
+        [SerializeField]
+        public SerializedDictionary<string, AdultSceneSO> ScenesOnVictory;
+
         #endregion
 
         #region Méthodes publiques

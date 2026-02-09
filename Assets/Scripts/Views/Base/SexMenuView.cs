@@ -67,6 +67,9 @@ namespace Assets.Scripts.Views.Base
                 case ReasonForSex.Defeat:
                     _manager.SetAdultScene(_manager.ScenesOnDefeat[lustosaurName]);
                     break;
+                case ReasonForSex.Victory:
+                    _manager.SetAdultScene(_manager.ScenesOnVictory[lustosaurName]);
+                    break;
                 case ReasonForSex.StatDepleted:
                     _manager.SetAdultScene(_manager.ScenesOnStatDepleted[lustosaurName]);
                     break;

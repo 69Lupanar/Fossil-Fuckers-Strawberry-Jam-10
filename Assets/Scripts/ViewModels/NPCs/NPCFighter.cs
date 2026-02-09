@@ -15,7 +15,23 @@ namespace Assets.Scripts.ViewModels.NPCs
         /// <summary>
         /// Appelée quand le joueur interagit avec ce PNJ
         /// </summary>
-        public Action<LustosaurSO[], string[]> OnInteracted { get; set; }
+        public Action<NPCFighter> OnInteracted { get; set; }
+
+        /// <summary>
+        /// L'équipe de luxurosaures du PNJ, 
+        /// générés aléatoirement en fonction de sa profondeur
+        /// </summary>
+        public LustosaurSO[] Team { get; private set; }
+
+        /// <summary>
+        /// Lignes de dialogue d'un PNJ, 
+        /// choisies aléatoirement en fonction de son palier de chaleur
+        /// </summary>
+        public string[] DialogueLines { get; private set; }
+
+        #endregion
+
+        #region Propriétés
 
         #endregion
 
@@ -42,18 +58,6 @@ namespace Assets.Scripts.ViewModels.NPCs
         #endregion
 
         #region Variables d'instance
-
-        /// <summary>
-        /// L'équipe de luxurosaures du PNJ, 
-        /// générés aléatoirement en fonction de sa profondeur
-        /// </summary>
-        private LustosaurSO[] _team;
-
-        /// <summary>
-        /// Lignes de dialogue d'un PNJ, 
-        /// choisies aléatoirement en fonction de son palier de chaleur
-        /// </summary>
-        private string[] _dialogueLines;
 
         /// <summary>
         ///  La Transform du joueur
@@ -96,7 +100,7 @@ namespace Assets.Scripts.ViewModels.NPCs
 
             if (_interactUI.activeSelf && _playerInput.Interacted)
             {
-                OnInteracted?.Invoke(_team, _dialogueLines);
+                OnInteracted?.Invoke(this);
             }
         }
 
@@ -111,8 +115,8 @@ namespace Assets.Scripts.ViewModels.NPCs
         /// <param name="dialogueLines">Lignes de dialogue d'un PNJ, choisies aléatoirement en fonction de son palier de chaleur</param>
         public void SetData(LustosaurSO[] team, string[] dialogueLines)
         {
-            _team = team;
-            _dialogueLines = dialogueLines;
+            Team = team;
+            DialogueLines = dialogueLines;
         }
 
 

@@ -1,4 +1,3 @@
-using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.Models.EventArgs;
 using Assets.Scripts.ViewModels.NPCs;
 using Assets.Scripts.ViewModels.Player;
@@ -67,10 +66,10 @@ namespace Assets.Scripts.ViewModels.Managers
         #region Variables d'instance
 
         /// <summary>
-        /// Equipe du PNJ combattant en cours de dialogue,
+        /// Le PNJ combattant en cours de dialogue,
         /// gardé temporairement le temps de son dialogue
         /// </summary>
-        private LustosaurSO[] _tempTeam;
+        private NPCFighter _tempNPCFighter;
 
         #endregion
 
@@ -198,11 +197,11 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         /// <param name="npcTeam"></param>
         /// <param name="npcDialogue"></param>
-        private void OnNPCFighterInteracted(LustosaurSO[] npcTeam, string[] npcDialogue)
+        private void OnNPCFighterInteracted(NPCFighter npcFighter)
         {
             DisableController();
-            _tempTeam = npcTeam;
-            _dialogueManager.StartDialogue(npcDialogue);
+            _tempNPCFighter = npcFighter;
+            _dialogueManager.StartDialogue(npcFighter.DialogueLines);
             _dialogueManager.OnDialogueEnded += OnDialogueEnded;
         }
 
@@ -212,7 +211,7 @@ namespace Assets.Scripts.ViewModels.Managers
         private void OnDialogueEnded()
         {
             //EnableController();
-            _combatManager.StartCombat(_tempTeam);
+            _combatManager.StartCombat(_tempNPCFighter.Team);
             _dialogueManager.OnDialogueEnded -= OnDialogueEnded;
         }
 
