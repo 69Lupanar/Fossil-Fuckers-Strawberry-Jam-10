@@ -162,6 +162,8 @@ GameObject:
   - component: {fileID: 8488432270673677115}
   - component: {fileID: 3491059096887751841}
   - component: {fileID: 2124706030110574119}
+  - component: {fileID: 6440556680749657538}
+  - component: {fileID: 6181955928165896038}
   m_Layer: 0
   m_Name: Player Lustosaur Handler
   m_TagString: Untagged
@@ -273,6 +275,38 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6440556680749657538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3664029146631830205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d815d31be14a4045a51f126f7f7dfb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets.Scripts.Views::CombatLustosaurHandler
+  _canvasGroup: {fileID: 6181955928165896038}
+  _lustosaurImg: {fileID: 3491059096887751841}
+  _resistanceIcon: {fileID: 8136000033645501398}
+  _healthBarFill: {fileID: 1412147180091936346}
+  _vulnerableIcon: {fileID: 21300000, guid: 10b83888e3d7d1b449673c3d854a2f56, type: 3}
+  _neutralIcon: {fileID: 0}
+  _resistantIcon: {fileID: 21300000, guid: af4308b4be39c1b40a6cf0a72798d951, type: 3}
+  _healthBarFillSpeed: 0.5
+--- !u!225 &6181955928165896038
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3664029146631830205}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6499182085639694236
 GameObject:
   m_ObjectHideFlags: 0

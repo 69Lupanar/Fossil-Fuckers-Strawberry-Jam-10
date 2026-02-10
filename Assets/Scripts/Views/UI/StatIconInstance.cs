@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -53,6 +54,21 @@ namespace Assets.Scripts.Views.UI
         [SerializeField]
         private Color _neutralColor;
 
+        /// <summary>
+        /// Vitesse d'animation
+        /// </summary>
+        [SerializeField]
+        private float _valueIncrementSpeed = .5f;
+
+        #endregion
+
+        #region Variables d'instance
+
+        /// <summary>
+        /// Value de fin d'anim au cas où on arrête la coroutine prématurément
+        /// </summary>
+        private int _endValue = 0;
+
         #endregion
 
         #region Méthodes publiques
@@ -61,7 +77,8 @@ namespace Assets.Scripts.Views.UI
         /// Assigne la valeur de la stat
         /// </summary>
         /// <param name="value">La valeur</param>
-        public void SetValue(int value)
+        /// <param name="animate">true pour incrémenter la valeur au fil du temps, sinon l'assigne directement</param>
+        public void SetValue(int value, bool animate)
         {
             bool show = _showIfStatZero || value != 0;
 
@@ -71,6 +88,35 @@ namespace Assets.Scripts.Views.UI
             _border.color = _icon.color = value > 0 ? _positiveColor :
                                           value < 0 ? _negativeColor :
                                           _neutralColor;
+
+            if (animate)
+            {
+                StopAllCoroutines();
+                _label.SetText($"{_endValue}%");
+                StartCoroutine(IncrementCurValueCo(value));
+            }
+            else
+            {
+                _label.SetText($"{value}%");
+            }
+        }
+
+        /// <summary>
+        /// Incrémente la valeur au fil du temps
+        /// </summary>
+        /// <param name="value">La nouvelle valeur</param>
+        private IEnumerator IncrementCurValueCo(int value)
+        {
+            _endValue = value;
+            int curValue = int.Parse(_label.text[..^1]);
+            float t = 0f;
+
+            while (t < 1f)
+            {
+                t += Time.deltaTime * _valueIncrementSpeed;
+                _label.SetText(Mathf.RoundToInt(Mathf.Lerp(curValue, value, t)).ToString());
+                yield return null;
+            }
 
             _label.SetText($"{value}%");
         }

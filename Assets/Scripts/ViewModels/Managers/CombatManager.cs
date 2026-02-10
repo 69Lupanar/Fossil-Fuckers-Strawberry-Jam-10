@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Assets.Scripts.Models.Combat;
 using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.ViewModels.Extensions;
 using Assets.Scripts.ViewModels.Player;
@@ -18,46 +19,6 @@ namespace Assets.Scripts.ViewModels.Managers
         /// Appelée quand un combat est commencé
         /// </summary>
         public Action OnCombatStarted { get; set; }
-
-        #endregion
-
-        #region Variables Unity
-
-        /// <summary>
-        /// Le TeamMenuManager
-        /// </summary>
-        [SerializeField]
-        private TeamMenuManager _teamMenuManager;
-
-        /// <summary>
-        /// Le PlayerStatsManager
-        /// </summary>
-        [SerializeField]
-        private PlayerStatsManager _playerStatsManager;
-
-        /// <summary>
-        /// Le nombre de luxurosaures participant au combat
-        /// </summary>
-        [SerializeField]
-        private int _nbParticipatingLustosaurs = 3;
-
-        /// <summary>
-        /// Le gain de PP au début de chaque tour
-        /// </summary>
-        [SerializeField]
-        private int _FPIncreaseOnTurnStart = 50;
-
-        /// <summary>
-        /// Le gain de PP à la perte d'un allié
-        /// </summary>
-        [SerializeField]
-        private int _FPIncreaseOnAllyDeath = 100;
-
-        /// <summary>
-        /// Le gain de stats des luxurosaures du joueur si celui-ci a perdu des vêtements
-        /// </summary>
-        [SerializeField]
-        private FightingStats _hornyBonusStats;
 
         #endregion
 
@@ -86,12 +47,12 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <summary>
         /// Le total des stats de soutien apportées au luxurosaure du joueur
         /// </summary>
-        public FightingStats PlayerTotalAppliedSupportStats { get; private set; }
+        public FightingStats PlayerTotalAppliedSupportStats { get; private set; } = FightingStats.Zero;
 
         /// <summary>
         /// Le total des stats de soutien apportées au luxurosaure de l'ennemi
         /// </summary>
-        public FightingStats EnemyTotalAppliedSupportStats { get; private set; }
+        public FightingStats EnemyTotalAppliedSupportStats { get; private set; } = FightingStats.Zero;
 
         /// <summary>
         /// true si le joueur a l'initiative (ses luxurosaures ont moins de PV que ceux de l'ennemi)
@@ -109,6 +70,51 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public FightingStats HornyBonusStats => _hornyBonusStats;
 
+        /// <summary>
+        /// Le gain de stats des luxurosaures du joueur si celui-ci a perdu tous ses vêtements
+        /// </summary>
+        public FightingStats VeryHornyBonusStats => _veryHornyBonusStats;
+
+        #endregion
+
+        #region Variables Unity
+
+        /// <summary>
+        /// Le TeamMenuManager
+        /// </summary>
+        [SerializeField]
+        private TeamMenuManager _teamMenuManager;
+
+        /// <summary>
+        /// Le PlayerStatsManager
+        /// </summary>
+        [SerializeField]
+        private PlayerStatsManager _playerStatsManager;
+
+        /// <summary>
+        /// Le gain de PP au début de chaque tour
+        /// </summary>
+        [SerializeField]
+        private int _FPIncreaseOnTurnStart = 50;
+
+        /// <summary>
+        /// Le gain de PP à la perte d'un allié
+        /// </summary>
+        [SerializeField]
+        private int _FPIncreaseOnAllyDeath = 100;
+
+        /// <summary>
+        /// Le gain de stats des luxurosaures du joueur si celui-ci a perdu des vêtements
+        /// </summary>
+        [SerializeField]
+        private FightingStats _hornyBonusStats;
+
+        /// <summary>
+        /// Le gain de stats des luxurosaures du joueur si celui-ci a perdu tous ses vêtements
+        /// </summary>
+        [SerializeField]
+        private FightingStats _veryHornyBonusStats;
+
         #endregion
 
         #region Méthodes publiques
@@ -122,10 +128,10 @@ namespace Assets.Scripts.ViewModels.Managers
             // On copie les luxurosaures au lieu de directement les référencer.
             // Ca nous permet de modifier leurs stats sans avoir à toucher aux originaux.
 
-            PlayerTeam = new LustosaurSO[_nbParticipatingLustosaurs];
-            EnemyTeam = new LustosaurSO[_nbParticipatingLustosaurs];
+            PlayerTeam = new LustosaurSO[CombatConstants.NB_PARTICIPATING_LUSTOSAURS];
+            EnemyTeam = new LustosaurSO[CombatConstants.NB_PARTICIPATING_LUSTOSAURS];
 
-            for (int i = 0; i < Mathf.Min(_nbParticipatingLustosaurs, _teamMenuManager.PlayerTeam.Count); ++i)
+            for (int i = 0; i < Mathf.Min(CombatConstants.NB_PARTICIPATING_LUSTOSAURS, _teamMenuManager.PlayerTeam.Count); ++i)
             {
                 PlayerTeam[i] = _teamMenuManager.PlayerTeam[i].Clone();
             }
@@ -146,7 +152,7 @@ namespace Assets.Scripts.ViewModels.Managers
 
             shuffled.Shuffle();
 
-            for (int i = 0; i < Mathf.Min(_nbParticipatingLustosaurs, shuffled.Count); ++i)
+            for (int i = 0; i < Mathf.Min(CombatConstants.NB_PARTICIPATING_LUSTOSAURS, shuffled.Count); ++i)
             {
                 EnemyTeam[i] = shuffled[i].Clone();
             }
@@ -163,7 +169,7 @@ namespace Assets.Scripts.ViewModels.Managers
 
             // On ne prend que les 3 premiers dinos
 
-            for (int i = 0; i < _nbParticipatingLustosaurs; ++i)
+            for (int i = 0; i < CombatConstants.NB_PARTICIPATING_LUSTOSAURS; ++i)
             {
                 if (PlayerTeam[i] != null)
                 {
@@ -175,6 +181,23 @@ namespace Assets.Scripts.ViewModels.Managers
                     EnemyTotalHP += EnemyTeam[i].CurFightingStats.Health;
                 }
             }
+        }
+
+        /// <summary>
+        /// Modifie les stats de soutien
+        /// </summary>
+        /// <param name="bonusStats">Les stats bonus</param>
+        public void ApplySupportStatChange(FightingStats bonusStats)
+        {
+            PlayerTotalAppliedSupportStats += bonusStats;
+        }
+
+        /// <summary>
+        /// Commence un nouveau tour
+        /// </summary>
+        public void StartNewTurn()
+        {
+
         }
 
         #endregion

@@ -1022,15 +1022,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &70193647 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3491059096887751841, guid: 64695166cf8a0cf429750bf63da78dd3, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6440556680749657538, guid: 64695166cf8a0cf429750bf63da78dd3, type: 3}
   m_PrefabInstance: {fileID: 70193645}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d815d31be14a4045a51f126f7f7dfb0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_EditorClassIdentifier: Assets.Scripts.Views::CombatLustosaurHandler
 --- !u!1 &70806141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2347,15 +2347,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &176945306 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3491059096887751841, guid: 64695166cf8a0cf429750bf63da78dd3, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6440556680749657538, guid: 64695166cf8a0cf429750bf63da78dd3, type: 3}
   m_PrefabInstance: {fileID: 176945304}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d815d31be14a4045a51f126f7f7dfb0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_EditorClassIdentifier: Assets.Scripts.Views::CombatLustosaurHandler
 --- !u!1 &179341289
 GameObject:
   m_ObjectHideFlags: 0
@@ -7297,16 +7297,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assets.Scripts.ViewModels::Assets.Scripts.ViewModels.Managers.CombatManager
   _teamMenuManager: {fileID: 1946102866}
   _playerStatsManager: {fileID: 852986446}
-  _nbParticipatingLustosaurs: 3
   _FPIncreaseOnTurnStart: 50
   _FPIncreaseOnAllyDeath: 100
   _hornyBonusStats:
     <Health>k__BackingField: 0
-    <Attack>k__BackingField: 0
-    <Defense>k__BackingField: 0
-    <CriticalHitRate>k__BackingField: 0
-    <Accuracy>k__BackingField: 0
-    <Evasion>k__BackingField: 0
+    <Attack>k__BackingField: 10
+    <Defense>k__BackingField: -10
+    <CriticalHitRate>k__BackingField: 10
+    <Accuracy>k__BackingField: -10
+    <Evasion>k__BackingField: -10
+  _veryHornyBonusStats:
+    <Health>k__BackingField: 0
+    <Attack>k__BackingField: 20
+    <Defense>k__BackingField: -15
+    <CriticalHitRate>k__BackingField: 20
+    <Accuracy>k__BackingField: -15
+    <Evasion>k__BackingField: -15
 --- !u!114 &510056680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7341,8 +7347,14 @@ MonoBehaviour:
   _messagePanel: {fileID: 7826805212224075179}
   _messageIcon: {fileID: 724704574}
   _messageLabel: {fileID: 5302812616482445518}
+  _hornyIcon: {fileID: 21300000, guid: 75b5db6620371684dbed0483b6787454, type: 3}
+  _veryHornyIcon: {fileID: 21300000, guid: accb2767dab53f748bf2b85a418ec4e5, type: 3}
+  _deathIcon: {fileID: 21300000, guid: 51acc872552e1d44aa4e21ff4ccaaaf4, type: 3}
+  _messageFadeSpeed: 0.5
+  _messageDuration: 5
   _playerFPLabel: {fileID: 7887437474138953650}
   _enemyFPLabel: {fileID: 784872979}
+  _FPChangeSpeed: 1
   _playerZones:
   - {fileID: 284017307501425552}
   - {fileID: 1910942249}
@@ -7353,11 +7365,11 @@ MonoBehaviour:
   - {fileID: 392773733}
   - {fileID: 1988413985}
   - {fileID: 1503932315}
-  _playerLustosaursImgs:
+  _playerLustosaursHandlers:
   - {fileID: 6771972646292923434}
   - {fileID: 813875720}
   - {fileID: 1696119047}
-  _enemyLustosaursImgs:
+  _enemyLustosaursHandlers:
   - {fileID: 70193647}
   - {fileID: 1756319289}
   - {fileID: 176945306}
@@ -11328,10 +11340,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 306494424756508692}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: -10, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &724704574
 MonoBehaviour:
@@ -11644,7 +11656,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -4492963.5}
+  m_AnchoredPosition: {x: 0, y: -4733765.5}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &743267552
@@ -13378,15 +13390,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &813875720 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3491059096887751841, guid: 64695166cf8a0cf429750bf63da78dd3, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6440556680749657538, guid: 64695166cf8a0cf429750bf63da78dd3, type: 3}
   m_PrefabInstance: {fileID: 813875718}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d815d31be14a4045a51f126f7f7dfb0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_EditorClassIdentifier: Assets.Scripts.Views::CombatLustosaurHandler
 --- !u!1 &823126813
 GameObject:
   m_ObjectHideFlags: 0
@@ -24824,7 +24836,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1510475647}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -27644,15 +27656,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1696119047 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3491059096887751841, guid: 64695166cf8a0cf429750bf63da78dd3, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6440556680749657538, guid: 64695166cf8a0cf429750bf63da78dd3, type: 3}
   m_PrefabInstance: {fileID: 1696119045}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d815d31be14a4045a51f126f7f7dfb0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_EditorClassIdentifier: Assets.Scripts.Views::CombatLustosaurHandler
 --- !u!1 &1700341611
 GameObject:
   m_ObjectHideFlags: 0
@@ -28788,15 +28800,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1756319289 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3491059096887751841, guid: 64695166cf8a0cf429750bf63da78dd3, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6440556680749657538, guid: 64695166cf8a0cf429750bf63da78dd3, type: 3}
   m_PrefabInstance: {fileID: 1756319287}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d815d31be14a4045a51f126f7f7dfb0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_EditorClassIdentifier: Assets.Scripts.Views::CombatLustosaurHandler
 --- !u!1001 &1758263450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38217,15 +38229,15 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 64695166cf8a0cf429750bf63da78dd3, type: 3}
 --- !u!114 &6771972646292923434 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3491059096887751841, guid: 64695166cf8a0cf429750bf63da78dd3, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6440556680749657538, guid: 64695166cf8a0cf429750bf63da78dd3, type: 3}
   m_PrefabInstance: {fileID: 6771972646292923433}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d815d31be14a4045a51f126f7f7dfb0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_EditorClassIdentifier: Assets.Scripts.Views::CombatLustosaurHandler
 --- !u!224 &6880182229303994827 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7542958983346237097, guid: 0e629467414c87a428010480aca803ad, type: 3}

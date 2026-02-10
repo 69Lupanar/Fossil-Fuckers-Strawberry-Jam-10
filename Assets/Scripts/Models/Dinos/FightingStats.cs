@@ -12,6 +12,11 @@ namespace Assets.Scripts.Models.Dinos
         #region Propriétés
 
         /// <summary>
+        /// Stats à zéro
+        /// </summary>
+        public static FightingStats Zero => new(0, 0, 0, 0, 0, 0);
+
+        /// <summary>
         /// La santé du luxurosaure
         /// </summary>
         [field: SerializeField]
@@ -73,6 +78,22 @@ namespace Assets.Scripts.Models.Dinos
         #endregion
 
         #region Méthodes publiques
+
+        /// <summary>
+        /// Opérateur +
+        /// </summary>
+        public static FightingStats operator +(FightingStats a, FightingStats b)
+        {
+            return new FightingStats
+                (
+                a.Health + b.Health,
+                a.Attack + b.Attack,
+                a.Defense + b.Defense,
+                a.CriticalHitRate + b.CriticalHitRate,
+                a.Accuracy + b.Accuracy,
+                a.Evasion + b.Evasion
+                );
+        }
 
         /// <summary>
         /// Opérateur -

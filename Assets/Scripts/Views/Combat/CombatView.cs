@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
+using Assets.Scripts.Models.Combat;
+using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.ViewModels.Managers;
 using Assets.Scripts.Views.UI;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -137,7 +140,7 @@ namespace Assets.Scripts.Views.Combat
         private CanvasGroup _enemyInitiativeContent;
 
         [Space(10)]
-        [Header("Terrain")]
+        [Header("Messages")]
         [Space(10)]
 
         /// <summary>
@@ -159,6 +162,40 @@ namespace Assets.Scripts.Views.Combat
         private TextMeshProUGUI _messageLabel;
 
         /// <summary>
+        /// Icône du message où le joueur perd partiellement ses vêtements
+        /// </summary>
+        [SerializeField]
+        private Sprite _hornyIcon;
+
+        /// <summary>
+        /// Icône du message où le joueur perd tous ses vêtements
+        /// </summary>
+        [SerializeField]
+        private Sprite _veryHornyIcon;
+
+        /// <summary>
+        /// Icône du message où un luxurosaure est battu
+        /// </summary>
+        [SerializeField]
+        private Sprite _deathIcon;
+
+        /// <summary>
+        /// Vitesse d'animation
+        /// </summary>
+        [SerializeField]
+        private float _messageFadeSpeed = .5f;
+
+        /// <summary>
+        /// Durée d'un message à l'écran
+        /// </summary>
+        [SerializeField]
+        private float _messageDuration = 3f;
+
+        [Space(10)]
+        [Header("Terrain")]
+        [Space(10)]
+
+        /// <summary>
         /// Label du compteur de PPs du joueur
         /// </summary>
         [SerializeField]
@@ -169,6 +206,12 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         [SerializeField]
         private TextMeshProUGUI _enemyFPLabel;
+
+        /// <summary>
+        /// Vitesse d'animation
+        /// </summary>
+        [SerializeField]
+        private float _FPChangeSpeed = 1f;
 
         /// <summary>
         /// Zones de combat du joueur
@@ -186,13 +229,13 @@ namespace Assets.Scripts.Views.Combat
         /// Icônes des luxurosaures du joueur
         /// </summary>
         [SerializeField]
-        private Image[] _playerLustosaursImgs;
+        private CombatLustosaurHandler[] _playerLustosaursHandlers;
 
         /// <summary>
         /// Icônes des luxurosaures de l'ennemi
         /// </summary>
         [SerializeField]
-        private Image[] _enemyLustosaursImgs;
+        private CombatLustosaurHandler[] _enemyLustosaursHandlers;
 
         /// <summary>
         /// Icônes des stats des luxurosaures du joueur
@@ -389,6 +432,8 @@ namespace Assets.Scripts.Views.Combat
 
         #region Méthodes privées
 
+        #region Général
+
         /// <summary>
         /// Appelée quand un combat est commencé
         /// </summary>
@@ -424,19 +469,69 @@ namespace Assets.Scripts.Views.Combat
             _escapedContent.gameObject.SetActive(false);
             _escapeFailedContent.gameObject.SetActive(false);
 
-            for (int i = 0; i < _playerDisplayStats.Length; ++i)
-            {
-                _playerDisplayStats[i].SetValue(0);
-                _enemyDisplayStats[i].SetValue(0);
-            }
-
             _playerFPLabel.SetText("0");
             _enemyFPLabel.SetText("0");
             _playerTotalHPLabel.SetText("0");
             _enemyTotalHPLabel.SetText("0");
             _victoryExpGainedLabel.SetText("0");
             _defeatExpGainedLabel.SetText("0");
+
+            UpdateStatHandlers(_playerDisplayStats, FightingStats.Zero, false);
+            UpdateStatHandlers(_enemyDisplayStats, FightingStats.Zero, false);
+            SetLustosaursHandlers();
         }
+
+        /// <summary>
+        /// Assigne les valeurs des icônes de stats
+        /// </summary>
+        /// <param name="statIcons">Les icônes</param>
+        /// <param name="stats">Les stats</param>
+        /// <param name="animate">true pour incrémenter la valeur au fil du temps, sinon l'assigne directement</param>
+        private void UpdateStatHandlers(StatIconInstance[] statIcons, FightingStats stats, bool animate)
+        {
+            statIcons[0].SetValue(stats.Health, animate);
+            statIcons[1].SetValue(stats.Attack, animate);
+            statIcons[2].SetValue(stats.Defense, animate);
+            statIcons[3].SetValue(stats.CriticalHitRate, animate);
+            statIcons[4].SetValue(stats.Accuracy, animate);
+            statIcons[5].SetValue(stats.Evasion, animate);
+        }
+
+        /// <summary>
+        /// Assigne les sprites des luxurosaurs
+        /// </summary>
+        private void SetLustosaursHandlers()
+        {
+            for (int i = 0; i < _manager.PlayerTeam.Length; ++i)
+            {
+                LustosaurSO lustosaur = _manager.PlayerTeam[i];
+                CombatLustosaurHandler handler = _playerLustosaursHandlers[i];
+                handler.gameObject.SetActive(lustosaur != null);
+
+                if (lustosaur != null)
+                {
+                    handler.SetLustosaurSprite(_manager.PlayerHeatLevel == -1 ? lustosaur.NormalSprite : lustosaur.HornySprite);
+                    handler.HideResistanceIcon();
+                }
+            }
+
+            for (int i = 0; i < _manager.EnemyTeam.Length; ++i)
+            {
+                LustosaurSO lustosaur = _manager.EnemyTeam[i];
+                CombatLustosaurHandler handler = _enemyLustosaursHandlers[i];
+                handler.gameObject.SetActive(lustosaur != null);
+
+                if (lustosaur != null)
+                {
+                    handler.SetLustosaurSprite(lustosaur.NormalSprite);
+                    handler.HideResistanceIcon();
+                }
+            }
+        }
+
+        #endregion
+
+        #region Combat
 
         /// <summary>
         /// Appelée par les boutons des attaques
@@ -445,6 +540,10 @@ namespace Assets.Scripts.Views.Combat
         {
 
         }
+
+        #endregion
+
+        #region Animations
 
         /// <summary>
         /// Joue les animations d'intro avant de rendre le contrôle au joueur
@@ -485,22 +584,90 @@ namespace Assets.Scripts.Views.Combat
             // On reprend le contrôle
 
             _animator.enabled = false;
+
+            // Assigne les stats bonus avant le début du combat
+            // si le joueur a perdu des vêtements
+
+            ShowHornyMessageAndStats();
+
+            yield return new WaitForSeconds(1f);
+
+            // On commence le 1er tour
+
+            _manager.StartNewTurn();
+        }
+
+        /// <summary>
+        /// Assigne les stats bonus avant le début du combat
+        /// si le joueur a perdu des vêtements
+        /// </summary>
+        private void ShowHornyMessageAndStats()
+        {
+            string msg = string.Empty;
+            Sprite sprite = null;
+            FightingStats bonusStats = FightingStats.Zero;
+
+            switch (_manager.PlayerHeatLevel)
+            {
+                case 0:
+                    msg = CombatConstants.HORNY_MESSAGES[UnityEngine.Random.Range(0, CombatConstants.HORNY_MESSAGES.Length)];
+                    sprite = _hornyIcon;
+                    bonusStats = _manager.HornyBonusStats;
+                    break;
+                case >= 1:
+                    msg = CombatConstants.VERY_HORNY_MESSAGES[UnityEngine.Random.Range(0, CombatConstants.VERY_HORNY_MESSAGES.Length)];
+                    sprite = _veryHornyIcon;
+                    bonusStats = _manager.VeryHornyBonusStats;
+                    break;
+            }
+
+            if (msg != string.Empty)
+            {
+                ShowMessage(msg, sprite);
+                _manager.ApplySupportStatChange(bonusStats);
+                UpdateStatHandlers(_playerDisplayStats, _manager.PlayerTotalAppliedSupportStats, true);
+            }
+        }
+
+        /// <summary>
+        /// Affiche un message à l'écran
+        /// </summary>
+        /// <param name="msg">Message</param>
+        /// <param name="sprite">Icône</param>
+        private void ShowMessage(string msg, Sprite sprite)
+        {
+            // Pour interrompre le précédent message
+
+            _messageLabel.StopAllCoroutines();
+            _messagePanel.DOKill();
+
+            _messagePanel.alpha = 0f;
+            _messageLabel.SetText(msg);
+            _messageIcon.sprite = sprite;
+
+            _messagePanel.DOFade(1f, _messageFadeSpeed).OnComplete(() =>
+            {
+                _messageLabel.StartCoroutine(WaitCo(new WaitForSeconds(_messageDuration), () =>
+                {
+                    _messagePanel.DOFade(0f, _messageFadeSpeed);
+                }));
+            });
         }
 
         /// <summary>
         /// Incrémente les labels des totaux au fil du temps
         /// </summary>
-        /// <param name="duration">durée</param>
-        private IEnumerator IncrementTotalHPLabelsCo(float duration)
+        /// <param name="speed">vitesse d'animation</param>
+        private IEnumerator IncrementTotalHPLabelsCo(float speed)
         {
             _playerTotalHPLabel.SetText("0");
             _enemyTotalHPLabel.SetText("0");
 
             float t = 0f;
 
-            while (t < duration)
+            while (t < 1f)
             {
-                t += Time.deltaTime;
+                t += Time.deltaTime * speed;
 
                 _playerTotalHPLabel.SetText(Mathf.RoundToInt(Mathf.Lerp(0, _manager.PlayerTotalHP, t)).ToString());
                 _enemyTotalHPLabel.SetText(Mathf.RoundToInt(Mathf.Lerp(0, _manager.EnemyTotalHP, t)).ToString());
@@ -523,6 +690,8 @@ namespace Assets.Scripts.Views.Combat
             yield return wfs;
             callback?.Invoke();
         }
+
+        #endregion
 
         #endregion
     }
