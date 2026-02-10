@@ -190,7 +190,7 @@ namespace Assets.Scripts.Models.Dinos
                 CurLevel = CurLevel,
                 EXPProgressCurve = EXPProgressCurve,
                 LearnableAttacks = LearnableAttacks,
-                LearnedAttacks = new List<AttackSO>(LearnedAttacks)
+                LearnedAttacks = LearnedAttacks == null ? new List<AttackSO>() : new List<AttackSO>(LearnedAttacks)
             };
 
             return clone;
