@@ -1,5 +1,7 @@
+using System;
+using System.Collections;
 using Assets.Scripts.ViewModels.Managers;
-using DG.Tweening;
+using Assets.Scripts.Views.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -95,66 +97,54 @@ namespace Assets.Scripts.Views.Combat
         private float _fadeSpeed = .5f;
 
         [Space(10)]
-        [Header("Intro")]
+        [Header("Health Comparison")]
         [Space(10)]
 
         /// <summary>
-        /// L'image de haut de l'intro
+        /// Label du total du joueur
         /// </summary>
         [SerializeField]
-        private RectTransform _slideUp;
+        private TextMeshProUGUI _playerTotalHPLabel;
 
         /// <summary>
-        /// L'image du bas de l'intro
+        /// Label du total de l'ennemi
         /// </summary>
         [SerializeField]
-        private RectTransform _slideDown;
+        private TextMeshProUGUI _enemyTotalHPLabel;
 
         /// <summary>
-        /// Fondu en blanc
+        /// Contenu affiché si le joueur parvient à s'échapper
         /// </summary>
         [SerializeField]
-        private Image _whiteFadeImg;
+        private CanvasGroup _escapedContent;
 
         /// <summary>
-        /// Logo de combat
+        /// Contenu affiché si le joueur échoue à s'échapper
         /// </summary>
         [SerializeField]
-        private CanvasGroup _logo;
+        private CanvasGroup _escapeFailedContent;
+
+        /// <summary>
+        /// Contenu affiché si le joueur a l'initiative
+        /// </summary>
+        [SerializeField]
+        private CanvasGroup _playerInitiativeContent;
+
+        /// <summary>
+        /// Contenu affiché si l'ennemi a l'initiative
+        /// </summary>
+        [SerializeField]
+        private CanvasGroup _enemyInitiativeContent;
 
         [Space(10)]
         [Header("Terrain")]
         [Space(10)]
 
         /// <summary>
-        /// Terrain du joueur
-        /// </summary>
-        [SerializeField]
-        private RectTransform _playerTerrain;
-
-        /// <summary>
-        /// Terrain ennemi
-        /// </summary>
-        [SerializeField]
-        private RectTransform _enemyTerrain;
-
-        /// <summary>
         /// Panel des messages
         /// </summary>
         [SerializeField]
-        private RectTransform _messagePanel;
-
-        /// <summary>
-        /// Compteurs de PPs du joueur
-        /// </summary>
-        [SerializeField]
-        private RectTransform _playerFPCounter;
-
-        /// <summary>
-        /// Compteurs de PPs de l'ennemi
-        /// </summary>
-        [SerializeField]
-        private RectTransform _enemyFPCounter;
+        private CanvasGroup _messagePanel;
 
         /// <summary>
         /// Icône à afficher avec le message
@@ -204,6 +194,18 @@ namespace Assets.Scripts.Views.Combat
         [SerializeField]
         private Image[] _enemyLustosaursImgs;
 
+        /// <summary>
+        /// Icônes des stats des luxurosaures du joueur
+        /// </summary>
+        [SerializeField]
+        private StatIconInstance[] _playerDisplayStats;
+
+        /// <summary>
+        /// Icônes des stats des luxurosaures de l'ennemi
+        /// </summary>
+        [SerializeField]
+        private StatIconInstance[] _enemyDisplayStats;
+
         [Space(10)]
         [Header("Attacks")]
         [Space(10)]
@@ -225,58 +227,6 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         [SerializeField]
         private Transform _inactiveAttackSlotsParent;
-
-        [Space(10)]
-        [Header("Health Comparison")]
-        [Space(10)]
-
-        /// <summary>
-        /// Comparateur du joueur
-        /// </summary>
-        [SerializeField]
-        private RectTransform _playerComparer;
-
-        /// <summary>
-        /// Comparateur de l'ennemi
-        /// </summary>
-        [SerializeField]
-        private RectTransform _enemyComparer;
-
-        /// <summary>
-        /// Label du total du joueur
-        /// </summary>
-        [SerializeField]
-        private TextMeshProUGUI _playerTotalHPLabel;
-
-        /// <summary>
-        /// Label du total de l'ennemi
-        /// </summary>
-        [SerializeField]
-        private TextMeshProUGUI _enemyTotalHPLabel;
-
-        /// <summary>
-        /// Contenu affiché si le joueur parvient à s'échapper
-        /// </summary>
-        [SerializeField]
-        private CanvasGroup _escapedContent;
-
-        /// <summary>
-        /// Contenu affiché si le joueur échoue à s'échapper
-        /// </summary>
-        [SerializeField]
-        private CanvasGroup _escapeFailedContent;
-
-        /// <summary>
-        /// Contenu affiché si le joueur a l'initiative
-        /// </summary>
-        [SerializeField]
-        private CanvasGroup _playerInitiativeContent;
-
-        /// <summary>
-        /// Contenu affiché si l'ennemi a l'initiative
-        /// </summary>
-        [SerializeField]
-        private CanvasGroup _enemyInitiativeContent;
 
         [Space(10)]
         [Header("Instructions")]
@@ -322,6 +272,38 @@ namespace Assets.Scripts.Views.Combat
         [SerializeField]
         private TextMeshProUGUI _defeatExpGainedLabel;
 
+        [Space(10)]
+        [Header("Animations")]
+        [Space(10)]
+
+        /// <summary>
+        /// Animator du canvas
+        /// </summary>
+        [SerializeField]
+        private Animator _animator;
+
+        /// <summary>
+        /// Anim de l'intro
+        /// </summary>
+        [SerializeField]
+        private AnimationClip _introAnim;
+
+        /// <summary>
+        /// Anim de l'apparition des comparateurs de PV
+        /// </summary>
+        [SerializeField]
+        private AnimationClip _healthComparisonAnim;
+
+        /// <summary>
+        /// Anim de l'arrivée des luxurosaures sur le terrain
+        /// </summary>
+        [SerializeField]
+        private AnimationClip _lustosaurEntranceAnim;
+
+        #endregion
+
+        #region Variables d'instance
+
         #endregion
 
         #region Méthodes Unity
@@ -332,6 +314,75 @@ namespace Assets.Scripts.Views.Combat
         private void Start()
         {
             _manager.OnCombatStarted += OnCombatStarted;
+            _combatCanvas.enabled = false;
+        }
+
+        #endregion
+
+        #region Méthodes publiques
+
+        /// <summary>
+        /// Appelée par le bouton Fight
+        /// </summary>
+        public void OnFightBtnClick()
+        {
+
+        }
+
+        /// <summary>
+        /// Appelée par le bouton Fight
+        /// </summary>
+        public void OnFormationBtnClick()
+        {
+
+        }
+
+        /// <summary>
+        /// Appelée par le bouton Escape
+        /// </summary>
+        public void OnEscapeBtnClick()
+        {
+
+        }
+
+        /// <summary>
+        /// Appelée par le bouton Submit
+        /// </summary>
+        public void OnSubmitBtnClick()
+        {
+
+        }
+
+        /// <summary>
+        /// Appelée par le bouton Yes
+        /// </summary>
+        public void OnYesBtnClick()
+        {
+
+        }
+
+        /// <summary>
+        /// Appelée par le bouton No
+        /// </summary>
+        public void OnNoBtnClick()
+        {
+
+        }
+
+        /// <summary>
+        /// Appelée par le bouton Next
+        /// </summary>
+        public void OnNextBtnClick()
+        {
+
+        }
+
+        /// <summary>
+        /// Appelée quand on clique sur un luxurosaure
+        /// </summary>
+        public void OnLustosaurBtnClick(int index)
+        {
+
         }
 
         #endregion
@@ -343,20 +394,134 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         private void OnCombatStarted()
         {
+            InitComponents();
+            _manager.CalculateInitiative();
+            StartCoroutine(PlayAnimationsCo());
+        }
+
+        /// <summary>
+        /// init
+        /// </summary>
+        private void InitComponents()
+        {
+            _animator.enabled = false;
+            _combatCanvas.enabled = true;
+            _introCanvas.enabled = true;
+
+            _terrainCanvas.enabled = false;
+            _healthComparisonCanvas.enabled = false;
+            _actionMenuCanvas.enabled = false;
+            _attackListCanvas.enabled = false;
+            _instructionsCanvas.enabled = false;
+            _victoryCanvas.enabled = false;
+            _defeatCanvas.enabled = false;
+            _playerInitiativeContent.alpha = 0f;
+            _enemyInitiativeContent.alpha = 0f;
+            _escapedContent.alpha = 0f;
+            _escapeFailedContent.alpha = 0f;
+            _playerInitiativeContent.gameObject.SetActive(true);
+            _enemyInitiativeContent.gameObject.SetActive(true);
+            _escapedContent.gameObject.SetActive(false);
+            _escapeFailedContent.gameObject.SetActive(false);
+
+            for (int i = 0; i < _playerDisplayStats.Length; ++i)
+            {
+                _playerDisplayStats[i].SetValue(0);
+                _enemyDisplayStats[i].SetValue(0);
+            }
+
+            _playerFPLabel.SetText("0");
+            _enemyFPLabel.SetText("0");
+            _playerTotalHPLabel.SetText("0");
+            _enemyTotalHPLabel.SetText("0");
+            _victoryExpGainedLabel.SetText("0");
+            _defeatExpGainedLabel.SetText("0");
+        }
+
+        /// <summary>
+        /// Appelée par les boutons des attaques
+        /// </summary>
+        private void OnAttackBtnClick()
+        {
 
         }
 
         /// <summary>
-        /// Quitte l'écran de combat
+        /// Joue les animations d'intro avant de rendre le contrôle au joueur
         /// </summary>
-        private void QuitCombatScreen()
+        /// <returns></returns>
+        private IEnumerator PlayAnimationsCo()
         {
-            _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
+            _animator.enabled = true;
+
+            // Joue l'intro
+
+            _animator.Play(_introAnim.name);
+
+            // Joue la comparaison des totaux de PV
+
+            yield return WaitCo(new WaitForSeconds(_introAnim.length / 2f));
+            _terrainCanvas.enabled = true;
+            _healthComparisonCanvas.enabled = true;
+            yield return WaitCo(new WaitForSeconds(_introAnim.length / 2f));
+            _introCanvas.enabled = false;
+            _animator.Play(_healthComparisonAnim.name);
+            yield return WaitCo(new WaitForSeconds(.5f));
+            yield return IncrementTotalHPLabelsCo(1f);
+
+            // Affiche qui gagne l'initiative
+
+            _playerInitiativeContent.gameObject.SetActive(_manager.PlayerHasInitiative);
+            _enemyInitiativeContent.gameObject.SetActive(!_manager.PlayerHasInitiative);
+
+            yield return WaitCo(new WaitForSeconds(1.5f));
+            _healthComparisonCanvas.enabled = false;
+
+            // Joue l'arrivée des luxurosaures
+
+            _animator.Play(_lustosaurEntranceAnim.name);
+            yield return WaitCo(new WaitForSeconds(_lustosaurEntranceAnim.length));
+
+            // On reprend le contrôle
+
+            _animator.enabled = false;
+        }
+
+        /// <summary>
+        /// Incrémente les labels des totaux au fil du temps
+        /// </summary>
+        /// <param name="duration">durée</param>
+        private IEnumerator IncrementTotalHPLabelsCo(float duration)
+        {
+            _playerTotalHPLabel.SetText("0");
+            _enemyTotalHPLabel.SetText("0");
+
+            float t = 0f;
+
+            while (t < duration)
             {
-                _combatCanvas.enabled = false;
-                _gameManager.OnQuitCombatScreen();
-                _blackFadeImg.DOFade(0f, _fadeSpeed);
-            });
+                t += Time.deltaTime;
+
+                _playerTotalHPLabel.SetText(Mathf.RoundToInt(Mathf.Lerp(0, _manager.PlayerTotalHP, t)).ToString());
+                _enemyTotalHPLabel.SetText(Mathf.RoundToInt(Mathf.Lerp(0, _manager.EnemyTotalHP, t)).ToString());
+
+                yield return null;
+            }
+
+            _playerTotalHPLabel.SetText(_manager.PlayerTotalHP.ToString());
+            _enemyTotalHPLabel.SetText(_manager.EnemyTotalHP.ToString());
+        }
+
+        /// <summary>
+        /// Délai
+        /// </summary>
+        /// <param name="wfs">Délai</param>
+        /// <param name="callback">Action suivante</param>
+        /// <returns></returns>
+        private IEnumerator WaitCo(WaitForSeconds wfs, Action callback = null)
+        {
+            yield return wfs;
+            callback?.Invoke();
         }
 
         #endregion

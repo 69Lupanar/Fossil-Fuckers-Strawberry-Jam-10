@@ -335,7 +335,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <returns>Une équipe générée aléatoirement</returns>
         private LustosaurSO[] CreateTeam(LustosaurSO[] lustosaursUsableByNPCFighters, int nbMaxLustosaursPerNPC, int depth, int maxPossibleDepth)
         {
-            int nbLustosaurs = Mathf.Clamp(Mathf.RoundToInt((float)depth / (float)maxPossibleDepth * nbMaxLustosaursPerNPC), 0, nbMaxLustosaursPerNPC);
+            int nbLustosaurs = Mathf.Clamp(Mathf.RoundToInt((float)depth / (float)maxPossibleDepth * nbMaxLustosaursPerNPC), 1, nbMaxLustosaursPerNPC);
             int lustosaurLevel = Mathf.RoundToInt((float)depth / (float)maxPossibleDepth * DinoConstants.MAX_LEVEL);
             int lustosaurQuality = Mathf.RoundToInt((float)depth / (float)maxPossibleDepth * DinoConstants.MAX_QUALITY);
             LustosaurSO[] newTeam = new LustosaurSO[nbMaxLustosaursPerNPC];

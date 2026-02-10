@@ -149,6 +149,13 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         public bool IsDead { get; private set; }
 
+        /// <summary>
+        /// Le dernier palier de chaleur qu'à atteint le joueur.
+        /// Une fois un palier atteint, il perd la couche de vêtements correspondant.
+        /// Le palier ne peut être ramené à 0 qu'en terminant la journée à la base.
+        /// </summary>
+        public int LastHeatLevel { get; private set; }
+
         #endregion
 
         #region Variables Unity
@@ -209,13 +216,6 @@ namespace Assets.Scripts.ViewModels.Player
         /// Chaleur actuelle du joueur générée par le minage
         /// </summary>
         private float _curMiningHeatIncrease;
-
-        /// <summary>
-        /// Le dernier palier de chaleur qu'à atteint le joueur.
-        /// Une fois un palier atteint, il perd la couche de vêtements correspondant.
-        /// Le palier ne peut être ramené à 0 qu'en terminant la journée à la base.
-        /// </summary>
-        private int _lastHeatLevel;
 
         #endregion
 
@@ -280,10 +280,10 @@ namespace Assets.Scripts.ViewModels.Player
 
             for (int i = 0; i < MaxHeatThresholds.Length - 1; ++i)
             {
-                if (_lastHeatLevel < i && CurHeat > MaxHeatThresholds[i])
+                if (LastHeatLevel < i && CurHeat > MaxHeatThresholds[i])
                 {
-                    ++_lastHeatLevel;
-                    OnNewHeatThresholdReached?.Invoke(_lastHeatLevel);
+                    ++LastHeatLevel;
+                    OnNewHeatThresholdReached?.Invoke(LastHeatLevel);
                 }
             }
 
@@ -314,7 +314,7 @@ namespace Assets.Scripts.ViewModels.Player
             CurHealth = MaxHealth;
             CurEnergy = MaxEnergy;
             CurHeat = 0f;
-            _lastHeatLevel = -1;
+            LastHeatLevel = -1;
             _curMiningHeatIncrease = 0f;
             CurDepth = 0;
             CriticalHealthReached = false;
