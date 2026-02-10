@@ -166,6 +166,16 @@ namespace Assets.Scripts.ViewModels.Managers
             _inventoryManager.Clear();
         }
 
+        /// <summary>
+        /// Quitte l'écran de combat
+        /// </summary>
+        public void OnQuitCombatScreen()
+        {
+            EnableController();
+            _mineableSpawner.ReleaseFighter(_tempNPCFighter);
+            _tempNPCFighter = null;
+        }
+
         #endregion
 
         #region Méthodes privées

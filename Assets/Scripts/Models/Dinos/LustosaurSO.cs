@@ -122,6 +122,7 @@ namespace Assets.Scripts.Models.Dinos
                 source.FightingStatsAtMaxQuality.Attack / 2,
                 source.FightingStatsAtMaxQuality.Defense / 2,
                 source.FightingStatsAtMaxQuality.CriticalHitRate / 2,
+                source.FightingStatsAtMaxQuality.Accuracy / 2,
                 source.FightingStatsAtMaxQuality.Evasion / 2
                 );
 
@@ -134,6 +135,7 @@ namespace Assets.Scripts.Models.Dinos
                     Mathf.RoundToInt(Mathf.Lerp(statsAt0Quality.Attack, source.FightingStatsAtMaxQuality.Attack, t)),
                     Mathf.RoundToInt(Mathf.Lerp(statsAt0Quality.Defense, source.FightingStatsAtMaxQuality.Defense, t)),
                     Mathf.RoundToInt(Mathf.Lerp(statsAt0Quality.CriticalHitRate, source.FightingStatsAtMaxQuality.CriticalHitRate, t)),
+                    Mathf.RoundToInt(Mathf.Lerp(statsAt0Quality.Accuracy, source.FightingStatsAtMaxQuality.Accuracy, t)),
                     Mathf.RoundToInt(Mathf.Lerp(statsAt0Quality.Evasion, source.FightingStatsAtMaxQuality.Evasion, t))
                 );
 
@@ -146,6 +148,7 @@ namespace Assets.Scripts.Models.Dinos
                     clone.FightingStatsAtMaxQuality.Attack / 2,
                     clone.FightingStatsAtMaxQuality.Defense / 2,
                     clone.FightingStatsAtMaxQuality.CriticalHitRate / 2,
+                    clone.FightingStatsAtMaxQuality.Accuracy / 2,
                     clone.FightingStatsAtMaxQuality.Evasion / 2
                 );
 
@@ -260,6 +263,7 @@ namespace Assets.Scripts.Models.Dinos
                     FightingStatsAtMaxQuality.Attack / 2,
                     FightingStatsAtMaxQuality.Defense / 2,
                     FightingStatsAtMaxQuality.CriticalHitRate / 2,
+                    FightingStatsAtMaxQuality.Accuracy / 2,
                     FightingStatsAtMaxQuality.Evasion / 2
                 );
 
@@ -273,6 +277,7 @@ namespace Assets.Scripts.Models.Dinos
                     Mathf.RoundToInt(Mathf.Lerp(statsAtLevel1.Attack, FightingStatsAtMaxQuality.Attack, t)),
                     Mathf.RoundToInt(Mathf.Lerp(statsAtLevel1.Defense, FightingStatsAtMaxQuality.Defense, t)),
                     Mathf.RoundToInt(Mathf.Lerp(statsAtLevel1.CriticalHitRate, FightingStatsAtMaxQuality.CriticalHitRate, t)),
+                    Mathf.RoundToInt(Mathf.Lerp(statsAtLevel1.Accuracy, FightingStatsAtMaxQuality.Accuracy, t)),
                     Mathf.RoundToInt(Mathf.Lerp(statsAtLevel1.Evasion, FightingStatsAtMaxQuality.Evasion, t))
                 );
 

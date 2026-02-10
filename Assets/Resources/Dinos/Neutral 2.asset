@@ -21,12 +21,14 @@ MonoBehaviour:
     <Attack>k__BackingField: 25
     <Defense>k__BackingField: 25
     <CriticalHitRate>k__BackingField: 25
+    <Accuracy>k__BackingField: 90
     <Evasion>k__BackingField: 25
   <SupportStats>k__BackingField:
     <Health>k__BackingField: 5
     <Attack>k__BackingField: 5
     <Defense>k__BackingField: 5
     <CriticalHitRate>k__BackingField: 5
+    <Accuracy>k__BackingField: 5
     <Evasion>k__BackingField: 5
   <EXPProgressCurve>k__BackingField:
     serializedVersion: 2

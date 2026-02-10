@@ -27,6 +27,12 @@ namespace Assets.Scripts.Models.Dinos
         public int Damage { get; private set; }
 
         /// <summary>
+        /// La précision de l'attaque
+        /// </summary>
+        [field: SerializeField]
+        public int Accuracy { get; private set; }
+
+        /// <summary>
         /// Le coût de l'attaque
         /// </summary>
         [field: SerializeField]

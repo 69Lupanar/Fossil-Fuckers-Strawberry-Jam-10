@@ -36,6 +36,12 @@ namespace Assets.Scripts.Models.Dinos
         public int CriticalHitRate { get; private set; }
 
         /// <summary>
+        /// Le taux de précision du luxurosaure
+        /// </summary>
+        [field: SerializeField]
+        public int Accuracy { get; private set; }
+
+        /// <summary>
         /// Le taux d'esquive du luxurosaure
         /// </summary>
         [field: SerializeField]
@@ -52,13 +58,15 @@ namespace Assets.Scripts.Models.Dinos
         /// <param name="attack">L'attaque du luxurosaure</param>
         /// <param name="defense">La défense du luxurosaure</param>
         /// <param name="criticalHitRate">Le taux de coups critiques du luxurosaure</param>
+        /// <param name="accuracy"> Le taux de précision du luxurosaure</param>
         /// <param name="evasion">Le taux d'esquive du luxurosaure</param>
-        public FightingStats(int health, int attack, int defense, int criticalHitRate, int evasion)
+        public FightingStats(int health, int attack, int defense, int criticalHitRate, int accuracy, int evasion)
         {
             Health = health;
             Attack = attack;
             Defense = defense;
             CriticalHitRate = criticalHitRate;
+            Accuracy = accuracy;
             Evasion = evasion;
         }
 
@@ -77,6 +85,7 @@ namespace Assets.Scripts.Models.Dinos
                 a.Attack - b.Attack,
                 a.Defense - b.Defense,
                 a.CriticalHitRate - b.CriticalHitRate,
+                a.Accuracy - b.Accuracy,
                 a.Evasion - b.Evasion
                 );
         }

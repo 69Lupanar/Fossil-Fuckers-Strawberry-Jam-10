@@ -15,4 +15,5 @@ MonoBehaviour:
   <Attribute>k__BackingField: 0
   <AttributeSprite>k__BackingField: {fileID: 21300000, guid: b8e90247a262dca49ad30acffa37f1b4, type: 3}
   <Damage>k__BackingField: 10
+  <Accuracy>k__BackingField: 100
   <Cost>k__BackingField: 10

@@ -15,4 +15,5 @@ MonoBehaviour:
   <Attribute>k__BackingField: 0
   <AttributeSprite>k__BackingField: {fileID: 0}
   <Damage>k__BackingField: 100
+  <Accuracy>k__BackingField: 85
   <Cost>k__BackingField: 100
