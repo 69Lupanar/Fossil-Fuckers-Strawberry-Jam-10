@@ -334,19 +334,19 @@ namespace Assets.Scripts.Views.Combat
         /// Vitesse du fondu en noir
         /// </summary>
         [SerializeField]
-        private float _fadeSpeed = .5f;
+        private float _blackFadeDuration = .5f;
 
         /// <summary>
         /// Vitesse d'animation
         /// </summary>
         [SerializeField]
-        private float _messageFadeSpeed = .5f;
+        private float _messageFadeDuration = .5f;
 
         /// <summary>
         /// Durée d'un message à l'écran
         /// </summary>
         [SerializeField]
-        private float _messageDuration = 3f;
+        private float _messageDuration = 5f;
 
         /// <summary>
         /// Vitesse d'animation
@@ -358,13 +358,13 @@ namespace Assets.Scripts.Views.Combat
         /// Vitesse d'animation
         /// </summary>
         [SerializeField]
-        private float _lustosaurSupportAnimSpeed = .25f;
+        private float _lustosaurSupportAnimDuration = .25f;
 
         /// <summary>
         /// Vitesse d'animation
         /// </summary>
         [SerializeField]
-        private float _lustosaurAttackAnimSpeed = .5f;
+        private float _lustosaurAttackAnimDuration = .5f;
 
         /// <summary>
         /// Vitesse d'animation
@@ -382,19 +382,19 @@ namespace Assets.Scripts.Views.Combat
         /// Vitesse d'animation
         /// </summary>
         [SerializeField]
-        private float _lustosaurSwapAnimSpeed = 1f;
+        private float _lustosaurSwapAnimDuration = 1f;
 
         /// <summary>
         /// Vitesse d'animation
         /// </summary>
         [SerializeField]
-        private float _arrowTargetMoveSpeed = .5f;
+        private float _arrowTargetMoveDuration = .5f;
 
         /// <summary>
         /// Vitesse d'animation
         /// </summary>
         [SerializeField]
-        private float _hitIconFadeSpeed = .5f;
+        private float _hitIconFadeDuration = .5f;
 
         /// <summary>
         /// Durée de l'icône des dégâts à l'écran
@@ -797,11 +797,11 @@ namespace Assets.Scripts.Views.Combat
             _messageLabel.SetText(msg);
             _messageIcon.sprite = sprite;
 
-            _messagePanel.DOFade(1f, _messageFadeSpeed).OnComplete(() =>
+            _messagePanel.DOFade(1f, _messageFadeDuration).OnComplete(() =>
             {
                 _messageLabel.StartCoroutine(WaitCo(_messageDuration, () =>
                 {
-                    _messagePanel.DOFade(0f, _messageFadeSpeed);
+                    _messagePanel.DOFade(0f, _messageFadeDuration);
                 }));
             });
         }
@@ -813,7 +813,7 @@ namespace Assets.Scripts.Views.Combat
         /// <param name="index">La position du luxurosaure dans la liste</param>
         private void ShowArrowTarget(CombatLustosaurHandler[] handlers, int index)
         {
-            _arrowTarget.DOLocalMove(handlers[index].transform.position + _arrowTargetOffset, _arrowTargetMoveSpeed);
+            _arrowTarget.DOLocalMove(handlers[index].transform.position + _arrowTargetOffset, _arrowTargetMoveDuration);
         }
 
         /// <summary>
@@ -1041,30 +1041,30 @@ namespace Assets.Scripts.Views.Combat
 
             if (handlers[1] != null)
             {
-                delay += _lustosaurSupportAnimSpeed;
+                delay += _lustosaurSupportAnimDuration;
                 Transform t1 = handlers[1].transform;
-                t1.DOLocalMoveY(t1.localPosition.y + _lustosaurBounceOffsets.y, _lustosaurSupportAnimSpeed).SetEase(_bounceCurve).OnComplete(() =>
+                t1.DOLocalMoveY(t1.localPosition.y + _lustosaurBounceOffsets.y, _lustosaurSupportAnimDuration).SetEase(_bounceCurve).OnComplete(() =>
                 {
                     if (handlers[2] != null)
                     {
-                        delay += _lustosaurSupportAnimSpeed;
+                        delay += _lustosaurSupportAnimDuration;
                         Transform t2 = handlers[2].transform;
-                        t2.DOLocalMoveY(t2.localPosition.y + _lustosaurBounceOffsets.y, _lustosaurSupportAnimSpeed).SetEase(_bounceCurve);
+                        t2.DOLocalMoveY(t2.localPosition.y + _lustosaurBounceOffsets.y, _lustosaurSupportAnimDuration).SetEase(_bounceCurve);
                     }
                 });
             }
 
             if (handlers[2] != null)
             {
-                delay += _lustosaurSupportAnimSpeed;
+                delay += _lustosaurSupportAnimDuration;
                 Transform t2 = handlers[2].transform;
-                t2.DOLocalMoveY(t2.localPosition.y + _lustosaurBounceOffsets.y, _lustosaurSupportAnimSpeed).SetEase(_bounceCurve).OnComplete(() =>
+                t2.DOLocalMoveY(t2.localPosition.y + _lustosaurBounceOffsets.y, _lustosaurSupportAnimDuration).SetEase(_bounceCurve).OnComplete(() =>
                 {
                     if (handlers[1] != null)
                     {
-                        delay += _lustosaurSupportAnimSpeed;
+                        delay += _lustosaurSupportAnimDuration;
                         Transform t1 = handlers[1].transform;
-                        t1.DOLocalMoveY(t1.localPosition.y + _lustosaurBounceOffsets.y, _lustosaurSupportAnimSpeed).SetEase(_bounceCurve);
+                        t1.DOLocalMoveY(t1.localPosition.y + _lustosaurBounceOffsets.y, _lustosaurSupportAnimDuration).SetEase(_bounceCurve);
                     }
                 });
             }
@@ -1094,13 +1094,13 @@ namespace Assets.Scripts.Views.Combat
 
             // Déplace l'attaquant et le défenseur
 
-            attackerT.DOLocalMoveX(attackerT.localPosition.x + _lustosaurBounceOffsets.x, _lustosaurAttackAnimSpeed).SetEase(_bounceCurve);
-            yield return new WaitForSeconds(_lustosaurAttackAnimSpeed / 2f);
-            defenderT.DOLocalMoveX(defenderT.localPosition.x - _lustosaurBounceOffsets.x, _lustosaurAttackAnimSpeed).OnComplete(() =>
+            attackerT.DOLocalMoveX(attackerT.localPosition.x + _lustosaurBounceOffsets.x, _lustosaurAttackAnimDuration).SetEase(_bounceCurve);
+            yield return new WaitForSeconds(_lustosaurAttackAnimDuration / 2f);
+            defenderT.DOLocalMoveX(defenderT.localPosition.x - _lustosaurBounceOffsets.x, _lustosaurAttackAnimDuration).OnComplete(() =>
             {
                 StartCoroutine(WaitCo(_lustosaurAttackStunDuration, () =>
                 {
-                    defenderT.DOLocalMoveX(defenderT.localPosition.x + _lustosaurBounceOffsets.x, _lustosaurAttackAnimSpeed);
+                    defenderT.DOLocalMoveX(defenderT.localPosition.x + _lustosaurBounceOffsets.x, _lustosaurAttackAnimDuration);
                 }));
             });
 
@@ -1110,11 +1110,11 @@ namespace Assets.Scripts.Views.Combat
             {
                 _criticalHitDmgLabel.SetText(dmg.ToString());
 
-                _criticalHitIcon.DOFade(1f, _hitIconFadeSpeed).OnComplete(() =>
+                _criticalHitIcon.DOFade(1f, _hitIconFadeDuration).OnComplete(() =>
                 {
                     _criticalHitDmgLabel.StartCoroutine(WaitCo(_hitIconDuration, () =>
                     {
-                        _criticalHitIcon.DOFade(0f, _hitIconFadeSpeed);
+                        _criticalHitIcon.DOFade(0f, _hitIconFadeDuration);
                     }));
                 });
             }
@@ -1122,11 +1122,11 @@ namespace Assets.Scripts.Views.Combat
             {
                 _normalHitDmgLabel.SetText(dmg.ToString());
 
-                _normalHitIcon.DOFade(1f, _hitIconFadeSpeed).OnComplete(() =>
+                _normalHitIcon.DOFade(1f, _hitIconFadeDuration).OnComplete(() =>
                 {
                     _normalHitDmgLabel.StartCoroutine(WaitCo(_hitIconDuration, () =>
                     {
-                        _normalHitIcon.DOFade(0f, _hitIconFadeSpeed);
+                        _normalHitIcon.DOFade(0f, _hitIconFadeDuration);
                     }));
                 });
             }
@@ -1137,7 +1137,7 @@ namespace Assets.Scripts.Views.Combat
 
             // Après les animations, si le défenseur n'a plus de vie, on le fait disparaître
 
-            yield return new WaitForSeconds(_lustosaurAttackAnimSpeed + _lustosaurAttackStunDuration + _lustosaurAttackAnimSpeed / 2f);
+            yield return new WaitForSeconds(_lustosaurAttackAnimDuration + _lustosaurAttackStunDuration + _lustosaurAttackAnimDuration / 2f);
 
             if (defender.CurFightingStats.Health == 0)
             {

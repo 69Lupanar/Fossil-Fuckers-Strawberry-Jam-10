@@ -57,13 +57,13 @@ namespace Assets.Scripts.Views.UI
         /// Vitesse d'animation
         /// </summary>
         [SerializeField]
-        private float _canvasGroupFadeSpeed = .5f;
+        private float _canvasGroupFadeDuration = 1f;
 
         /// <summary>
         /// Vitesse d'animation
         /// </summary>
         [SerializeField]
-        private float _healthBarFillSpeed = .5f;
+        private float _healthBarFillDuration = 1f;
 
         #endregion
 
@@ -84,7 +84,7 @@ namespace Assets.Scripts.Views.UI
         /// <param name="amount">Le montant de vie</param>
         public void SetHealthValue(float amount)
         {
-            _healthBarFill.DOFillAmount(amount, _healthBarFillSpeed);
+            _healthBarFill.DOFillAmount(amount, _healthBarFillDuration);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Assets.Scripts.Views.UI
         {
             if (animate)
             {
-                _canvasGroup.DOFade(amount, _canvasGroupFadeSpeed);
+                _canvasGroup.DOFade(amount, _canvasGroupFadeDuration);
             }
             else
             {
