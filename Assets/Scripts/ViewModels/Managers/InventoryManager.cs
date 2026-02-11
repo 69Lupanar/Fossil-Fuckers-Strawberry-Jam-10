@@ -196,6 +196,11 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <param name="miningQuality">La qualité de minage</param>
         private void OnTileMined(LootSO loot, int miningQuality)
         {
+            if (loot == null)
+            {
+                return;
+            }
+
             _playerStatsManager.GainEXP(loot.EXP);
 
             switch (loot)

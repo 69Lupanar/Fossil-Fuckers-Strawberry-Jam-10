@@ -175,23 +175,21 @@ namespace Assets.Scripts.Models.Dinos
         /// <returns>Une copie de l'objet</returns>
         public LustosaurSO Clone()
         {
-            LustosaurSO clone = new()
-            {
-                name = name,
-                Attribute = Attribute,
-                AttributeSprite = AttributeSprite,
-                NormalSprite = NormalSprite,
-                HornySprite = HornySprite,
-                Quality = Quality,
-                FightingStatsAtMaxQuality = FightingStatsAtMaxQuality,
-                CurFightingStats = CurFightingStats,
-                SupportStats = SupportStats,
-                CurEXP = CurEXP,
-                CurLevel = CurLevel,
-                EXPProgressCurve = EXPProgressCurve,
-                LearnableAttacks = LearnableAttacks,
-                LearnedAttacks = LearnedAttacks == null ? new List<AttackSO>() : new List<AttackSO>(LearnedAttacks)
-            };
+            LustosaurSO clone = ScriptableObject.CreateInstance<LustosaurSO>();
+            clone.name = name;
+            clone.Attribute = Attribute;
+            clone.AttributeSprite = AttributeSprite;
+            clone.NormalSprite = NormalSprite;
+            clone.HornySprite = HornySprite;
+            clone.Quality = Quality;
+            clone.FightingStatsAtMaxQuality = FightingStatsAtMaxQuality;
+            clone.CurFightingStats = CurFightingStats;
+            clone.SupportStats = SupportStats;
+            clone.CurEXP = CurEXP;
+            clone.CurLevel = CurLevel;
+            clone.EXPProgressCurve = EXPProgressCurve;
+            clone.LearnableAttacks = LearnableAttacks;
+            clone.LearnedAttacks = LearnedAttacks == null ? new List<AttackSO>() : new List<AttackSO>(LearnedAttacks);
 
             return clone;
         }

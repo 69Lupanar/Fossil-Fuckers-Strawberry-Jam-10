@@ -186,7 +186,8 @@ namespace Assets.Scripts.ViewModels.Player
 
                             // On récupère l'objet miné et on l'ajoute à l'inventaire.
 
-                            LootSO loot = tile.OnMined();
+                            LootSO loot = tile.GetLoot();
+                            tile.ReturnTileToPool();
                             OnTileMined?.Invoke(loot, _playerStats.MiningQualityPercentage);
                         });
                     }

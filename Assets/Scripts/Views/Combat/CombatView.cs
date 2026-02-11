@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Assets.Scripts.Models;
 using Assets.Scripts.Models.Combat;
 using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.ViewModels.Managers;
@@ -93,12 +94,6 @@ namespace Assets.Scripts.Views.Combat
         [SerializeField]
         private Image _blackFadeImg;
 
-        /// <summary>
-        /// Vitesse du fondu en noir
-        /// </summary>
-        [SerializeField]
-        private float _fadeSpeed = .5f;
-
         [Space(10)]
         [Header("Health Comparison")]
         [Space(10)]
@@ -179,18 +174,6 @@ namespace Assets.Scripts.Views.Combat
         [SerializeField]
         private Sprite _deathIcon;
 
-        /// <summary>
-        /// Vitesse d'animation
-        /// </summary>
-        [SerializeField]
-        private float _messageFadeSpeed = .5f;
-
-        /// <summary>
-        /// Durée d'un message à l'écran
-        /// </summary>
-        [SerializeField]
-        private float _messageDuration = 3f;
-
         [Space(10)]
         [Header("Terrain")]
         [Space(10)]
@@ -206,12 +189,6 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         [SerializeField]
         private TextMeshProUGUI _enemyFPLabel;
-
-        /// <summary>
-        /// Vitesse d'animation
-        /// </summary>
-        [SerializeField]
-        private float _FPChangeSpeed = 1f;
 
         /// <summary>
         /// Zones de combat du joueur
@@ -250,6 +227,22 @@ namespace Assets.Scripts.Views.Combat
         private StatIconInstance[] _enemyDisplayStats;
 
         [Space(10)]
+        [Header("Actions menu")]
+        [Space(10)]
+
+        /// <summary>
+        /// Bouton Fight
+        /// </summary>
+        [SerializeField]
+        private Button _fightBtn;
+
+        /// <summary>
+        /// Bouton Formation
+        /// </summary>
+        [SerializeField]
+        private Button _formationBtn;
+
+        [Space(10)]
         [Header("Attacks")]
         [Space(10)]
 
@@ -271,6 +264,30 @@ namespace Assets.Scripts.Views.Combat
         [SerializeField]
         private Transform _inactiveAttackSlotsParent;
 
+        /// <summary>
+        /// Icône affichant les dégâts
+        /// </summary>
+        [SerializeField]
+        private CanvasGroup _normalHitIcon;
+
+        /// <summary>
+        /// Icône affichant les dégâts
+        /// </summary>
+        [SerializeField]
+        private CanvasGroup _criticalHitIcon;
+
+        /// <summary>
+        /// Label affichant les dégâts
+        /// </summary>
+        [SerializeField]
+        private TextMeshProUGUI _normalHitDmgLabel;
+
+        /// <summary>
+        /// Label affichant les dégâts
+        /// </summary>
+        [SerializeField]
+        private TextMeshProUGUI _criticalHitDmgLabel;
+
         [Space(10)]
         [Header("Instructions")]
         [Space(10)]
@@ -282,22 +299,16 @@ namespace Assets.Scripts.Views.Combat
         private RectTransform _arrowTarget;
 
         /// <summary>
-        /// Décalage de la flèche par rapport luxurosaure ciblé
+        /// Le label affichant l'instruction
         /// </summary>
         [SerializeField]
-        private Vector3 _arrowTargetOffset;
+        private TextMeshProUGUI _instructionLabel;
 
         /// <summary>
-        /// Panel des instructions
+        /// Les instructions
         /// </summary>
         [SerializeField]
-        private GameObject _instructionsPanel;
-
-        /// <summary>
-        /// Les labels de chaque instruction
-        /// </summary>
-        [SerializeField]
-        private GameObject[] _instructionsLabels;
+        private string[] _instructions;
 
         [Space(10)]
         [Header("Victory & Defeat")]
@@ -318,6 +329,90 @@ namespace Assets.Scripts.Views.Combat
         [Space(10)]
         [Header("Animations")]
         [Space(10)]
+
+        /// <summary>
+        /// Vitesse du fondu en noir
+        /// </summary>
+        [SerializeField]
+        private float _fadeSpeed = .5f;
+
+        /// <summary>
+        /// Vitesse d'animation
+        /// </summary>
+        [SerializeField]
+        private float _messageFadeSpeed = .5f;
+
+        /// <summary>
+        /// Durée d'un message à l'écran
+        /// </summary>
+        [SerializeField]
+        private float _messageDuration = 3f;
+
+        /// <summary>
+        /// Vitesse d'animation
+        /// </summary>
+        [SerializeField]
+        private float _FPChangeSpeed = 2f;
+
+        /// <summary>
+        /// Vitesse d'animation
+        /// </summary>
+        [SerializeField]
+        private float _lustosaurSupportAnimSpeed = .25f;
+
+        /// <summary>
+        /// Vitesse d'animation
+        /// </summary>
+        [SerializeField]
+        private float _lustosaurAttackAnimSpeed = .5f;
+
+        /// <summary>
+        /// Vitesse d'animation
+        /// </summary>
+        [SerializeField]
+        private float _lustosaurAttackStunDuration = .5f;
+
+        /// <summary>
+        /// Vitesse d'animation
+        /// </summary>
+        [SerializeField]
+        private float _lustosaurDeathDuration = 1f;
+
+        /// <summary>
+        /// Vitesse d'animation
+        /// </summary>
+        [SerializeField]
+        private float _lustosaurSwapAnimSpeed = 1f;
+
+        /// <summary>
+        /// Vitesse d'animation
+        /// </summary>
+        [SerializeField]
+        private float _arrowTargetMoveSpeed = .5f;
+
+        /// <summary>
+        /// Vitesse d'animation
+        /// </summary>
+        [SerializeField]
+        private float _hitIconFadeSpeed = .5f;
+
+        /// <summary>
+        /// Durée de l'icône des dégâts à l'écran
+        /// </summary>
+        [SerializeField]
+        private float _hitIconDuration = 1f;
+
+        /// <summary>
+        /// Décalage du luxurosaure lorsqu'il attaque ou assigne ses stats de soutien
+        /// </summary>
+        [SerializeField]
+        private Vector2 _lustosaurBounceOffsets;
+
+        /// <summary>
+        /// Décalage de la flèche de sélection
+        /// </summary>
+        [SerializeField]
+        private Vector3 _arrowTargetOffset;
 
         /// <summary>
         /// Animator du canvas
@@ -343,9 +438,31 @@ namespace Assets.Scripts.Views.Combat
         [SerializeField]
         private AnimationClip _lustosaurEntranceAnim;
 
+        /// <summary>
+        /// Courbe permettant de faire revenir une valeur à son état initial
+        /// après un tween
+        /// </summary>
+        [SerializeField]
+        private AnimationCurve _bounceCurve;
+
         #endregion
 
         #region Variables d'instance
+
+        /// <summary>
+        /// Indique quels luxurosaures peuvent être sélectionnés (aucun, joueur, adversaire, les deux)
+        /// </summary>
+        private CombatSelectionLockLevel _selectionLockLevel = CombatSelectionLockLevel.None;
+
+        /// <summary>
+        /// true si le joueur a changé de formation ce tour
+        /// </summary>
+        private bool _playerHasChangedFormationThisTurn;
+
+        /// <summary>
+        /// true si l'ennemi a changé de formation ce tour
+        /// </summary>
+        private bool _enemyHasChangedFormationThisTurn;
 
         #endregion
 
@@ -360,6 +477,18 @@ namespace Assets.Scripts.Views.Combat
             _combatCanvas.enabled = false;
         }
 
+        /// <summary>
+        /// màj à chaque frame
+        /// </summary>
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                // TAF: Au clic droit, annule la décision de formation
+                // et retourne au menu d'action
+            }
+        }
+
         #endregion
 
         #region Méthodes publiques
@@ -369,7 +498,12 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         public void OnFightBtnClick()
         {
-
+            _actionMenuCanvas.enabled = false;
+            _attackListCanvas.enabled = true;
+            _selectionLockLevel = CombatSelectionLockLevel.Player;
+            _manager.SelectAllyLustosaur(0);
+            ShowArrowTarget(_playerLustosaursHandlers, 0);
+            ShowInstruction(1);
         }
 
         /// <summary>
@@ -381,9 +515,9 @@ namespace Assets.Scripts.Views.Combat
         }
 
         /// <summary>
-        /// Appelée par le bouton Escape
+        /// Appelée par le bouton End Turn
         /// </summary>
-        public void OnEscapeBtnClick()
+        public void OnEndTurnBtnClick()
         {
 
         }
@@ -421,18 +555,68 @@ namespace Assets.Scripts.Views.Combat
         }
 
         /// <summary>
+        /// Appelée quand le curseur survole un luxurosaure
+        /// </summary>
+        public void OnLustosaurBtnHover(int index)
+        {
+            if (index > 0)
+            {
+                if (_selectionLockLevel == CombatSelectionLockLevel.Player || _selectionLockLevel == CombatSelectionLockLevel.Both)
+                {
+                    ShowArrowTarget(_playerLustosaursHandlers, index - 1);
+                }
+            }
+            else
+            {
+                if (_selectionLockLevel == CombatSelectionLockLevel.Enemy || _selectionLockLevel == CombatSelectionLockLevel.Both)
+                {
+                    ShowArrowTarget(_enemyLustosaursHandlers, -index - 1);
+                }
+            }
+        }
+
+        /// <summary>
         /// Appelée quand on clique sur un luxurosaure
         /// </summary>
         public void OnLustosaurBtnClick(int index)
         {
+            if (index > 0)
+            {
+                if (_selectionLockLevel == CombatSelectionLockLevel.Player || _selectionLockLevel == CombatSelectionLockLevel.Both)
+                {
+                    _manager.SelectAllyLustosaur(index - 1);
+                    PopulateAttacksList();
+                }
+            }
+            else
+            {
+                if (_selectionLockLevel == CombatSelectionLockLevel.Enemy || _selectionLockLevel == CombatSelectionLockLevel.Both)
+                {
+                    _manager.SelectEnemyLustosaur(-index - 1);
 
+                    switch (_manager.BattleState)
+                    {
+                        case BattleState.Ongoing:
+                            _attackListCanvas.enabled = false;
+                            _instructionsCanvas.enabled = false;
+                            HideEnemyResistances();
+
+                            ConductAttack(_manager.SelectedAlly, _manager.SelectedEnemy, true);
+                            break;
+
+                        case BattleState.Victory:
+                            // TAF : Lancer scène adulte
+                            break;
+                    }
+                }
+            }
         }
 
         #endregion
 
         #region Méthodes privées
 
-        #region Général
+        #region UI
 
         /// <summary>
         /// Appelée quand un combat est commencé
@@ -441,7 +625,7 @@ namespace Assets.Scripts.Views.Combat
         {
             InitComponents();
             _manager.CalculateInitiative();
-            StartCoroutine(PlayAnimationsCo());
+            StartCoroutine(PlayIntroAnimationsCo());
         }
 
         /// <summary>
@@ -479,6 +663,8 @@ namespace Assets.Scripts.Views.Combat
             UpdateStatHandlers(_playerDisplayStats, FightingStats.Zero, false);
             UpdateStatHandlers(_enemyDisplayStats, FightingStats.Zero, false);
             SetLustosaursHandlers();
+
+            _selectionLockLevel = CombatSelectionLockLevel.None;
         }
 
         /// <summary>
@@ -529,103 +715,69 @@ namespace Assets.Scripts.Views.Combat
             }
         }
 
-        #endregion
-
-        #region Combat
-
         /// <summary>
-        /// Appelée par les boutons des attaques
+        /// Remplit la liste des attaques
         /// </summary>
-        private void OnAttackBtnClick()
+        private void PopulateAttacksList()
         {
+            int activeChildren = _attackSlotsParent.childCount;
 
-        }
+            // Retire les instances en trop
 
-        #endregion
+            for (int i = activeChildren - 1; i >= 0; --i)
+            {
+                if (i > _manager.SelectedAlly.LearnedAttacks.Count - 1)
+                {
+                    _attackSlotsParent.GetChild(i).SetParent(_inactiveAttackSlotsParent);
+                }
+            }
 
-        #region Animations
+            // Recycle les instances restantes,
+            // ou en crée de nouvelles s'il n'y en a pas assez
 
-        /// <summary>
-        /// Joue les animations d'intro avant de rendre le contrôle au joueur
-        /// </summary>
-        /// <returns></returns>
-        private IEnumerator PlayAnimationsCo()
-        {
-            _animator.enabled = true;
+            for (int i = 0; i < _manager.SelectedAlly.LearnedAttacks.Count; ++i)
+            {
+                AttackSO attack = _manager.SelectedAlly.LearnedAttacks[i];
+                AttackSlotInstance instance;
 
-            // Joue l'intro
+                if (i < _attackSlotsParent.childCount)
+                {
+                    instance = _attackSlotsParent.GetChild(i).GetComponent<AttackSlotInstance>();
+                }
+                else
+                {
+                    instance = Instantiate(_attackSlotPrefab, _attackSlotsParent).GetComponent<AttackSlotInstance>();
+                }
 
-            _animator.Play(_introAnim.name);
-
-            // Joue la comparaison des totaux de PV
-
-            yield return WaitCo(new WaitForSeconds(_introAnim.length / 2f));
-            _terrainCanvas.enabled = true;
-            _healthComparisonCanvas.enabled = true;
-            yield return WaitCo(new WaitForSeconds(_introAnim.length / 2f));
-            _introCanvas.enabled = false;
-            _animator.Play(_healthComparisonAnim.name);
-            yield return WaitCo(new WaitForSeconds(.5f));
-            yield return IncrementTotalHPLabelsCo(1f);
-
-            // Affiche qui gagne l'initiative
-
-            _playerInitiativeContent.gameObject.SetActive(_manager.PlayerHasInitiative);
-            _enemyInitiativeContent.gameObject.SetActive(!_manager.PlayerHasInitiative);
-
-            yield return WaitCo(new WaitForSeconds(1.5f));
-            _healthComparisonCanvas.enabled = false;
-
-            // Joue l'arrivée des luxurosaures
-
-            _animator.Play(_lustosaurEntranceAnim.name);
-            yield return WaitCo(new WaitForSeconds(_lustosaurEntranceAnim.length));
-
-            // On reprend le contrôle
-
-            _animator.enabled = false;
-
-            // Assigne les stats bonus avant le début du combat
-            // si le joueur a perdu des vêtements
-
-            ShowHornyMessageAndStats();
-
-            yield return new WaitForSeconds(1f);
-
-            // On commence le 1er tour
-
-            _manager.StartNewTurn();
+                instance.SetData(attack, OnAttackBtnClick);
+            }
         }
 
         /// <summary>
         /// Assigne les stats bonus avant le début du combat
         /// si le joueur a perdu des vêtements
         /// </summary>
-        private void ShowHornyMessageAndStats()
+        private void ShowHornyMessage()
         {
             string msg = string.Empty;
             Sprite sprite = null;
-            FightingStats bonusStats = FightingStats.Zero;
 
             switch (_manager.PlayerHeatLevel)
             {
                 case 0:
                     msg = CombatConstants.HORNY_MESSAGES[UnityEngine.Random.Range(0, CombatConstants.HORNY_MESSAGES.Length)];
                     sprite = _hornyIcon;
-                    bonusStats = _manager.HornyBonusStats;
                     break;
                 case >= 1:
                     msg = CombatConstants.VERY_HORNY_MESSAGES[UnityEngine.Random.Range(0, CombatConstants.VERY_HORNY_MESSAGES.Length)];
                     sprite = _veryHornyIcon;
-                    bonusStats = _manager.VeryHornyBonusStats;
                     break;
             }
 
             if (msg != string.Empty)
             {
                 ShowMessage(msg, sprite);
-                _manager.ApplySupportStatChange(bonusStats);
-                UpdateStatHandlers(_playerDisplayStats, _manager.PlayerTotalAppliedSupportStats, true);
+                UpdateStatHandlers(_playerDisplayStats, _manager.HornySupportStats + _manager.PlayerSupportStats, true);
             }
         }
 
@@ -647,11 +799,399 @@ namespace Assets.Scripts.Views.Combat
 
             _messagePanel.DOFade(1f, _messageFadeSpeed).OnComplete(() =>
             {
-                _messageLabel.StartCoroutine(WaitCo(new WaitForSeconds(_messageDuration), () =>
+                _messageLabel.StartCoroutine(WaitCo(_messageDuration, () =>
                 {
                     _messagePanel.DOFade(0f, _messageFadeSpeed);
                 }));
             });
+        }
+
+        /// <summary>
+        /// Affiche la flèche de sélection au dessus du luxurosaure correspondant
+        /// </summary>
+        /// <param name="handlers">La liste des handlers</param>
+        /// <param name="index">La position du luxurosaure dans la liste</param>
+        private void ShowArrowTarget(CombatLustosaurHandler[] handlers, int index)
+        {
+            _arrowTarget.DOLocalMove(handlers[index].transform.position + _arrowTargetOffset, _arrowTargetMoveSpeed);
+        }
+
+        /// <summary>
+        /// Affiche l'instruction en haut de l'écran
+        /// </summary>
+        /// <param name="index">L'id de l'instruction</param>
+        private void ShowInstruction(int index)
+        {
+            _instructionsCanvas.enabled = true;
+            _instructionLabel.SetText(_instructions[index]);
+        }
+
+        /// <summary>
+        /// Affiche les résistances et vulnérabilités de chaque défenser
+        /// en fonction de l'attaque sélectionnée
+        /// </summary>
+        /// <param name="resistances">Les niveaux de résistance de chaque ennemi</param>
+        private void ShowEnemyResistances(LustosaurResistance[] resistances)
+        {
+            for (int i = 0; i < _manager.EnemyTeam.Length; ++i)
+            {
+                LustosaurSO lustosaur = _manager.EnemyTeam[i];
+                CombatLustosaurHandler handler = _enemyLustosaursHandlers[i];
+
+                if (lustosaur != null)
+                {
+                    switch (resistances[i])
+                    {
+                        case LustosaurResistance.Neutral:
+                            handler.SetNeutralIcon();
+                            break;
+                        case LustosaurResistance.Resistant:
+                            handler.SetResistantIcon();
+                            break;
+                        case LustosaurResistance.Vulnerable:
+                            handler.SetVulnerableIcon();
+                            break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Masque les résistances
+        /// </summary>
+        private void HideEnemyResistances()
+        {
+            for (int i = 0; i < _manager.EnemyTeam.Length; ++i)
+            {
+                LustosaurSO lustosaur = _manager.EnemyTeam[i];
+                CombatLustosaurHandler handler = _enemyLustosaursHandlers[i];
+
+                if (lustosaur != null)
+                {
+                    handler.HideResistanceIcon();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Affiche l'écran de victoire
+        /// </summary>
+        private void ShowVictoryScreen()
+        {
+
+        }
+
+        /// <summary>
+        /// Affiche l'écran de défaite
+        /// </summary>
+        private void ShowDefeatScreen()
+        {
+
+        }
+
+        #endregion
+
+        #region Combat
+
+        /// <summary>
+        /// Commence un nouveau tour
+        /// </summary>
+        private IEnumerator StartNewTurnCo()
+        {
+            _manager.StartNewTurn();
+
+            _playerHasChangedFormationThisTurn = _enemyHasChangedFormationThisTurn = false;
+
+            StartCoroutine(IncrementFPLabelCo(_playerFPLabel, _manager.PlayerFP, _FPChangeSpeed));
+            UpdateStatHandlers(_playerDisplayStats, _manager.HornySupportStats + _manager.PlayerSupportStats, true);
+            UpdateStatHandlers(_enemyDisplayStats, _manager.EnemySupportStats, true);
+
+            if (_manager.PlayerHasInitiative)
+            {
+                yield return PlaySupportAnimationCo(_playerLustosaursHandlers);
+                yield return PlaySupportAnimationCo(_enemyLustosaursHandlers);
+                ShowActionMenu();
+            }
+            else
+            {
+                yield return PlaySupportAnimationCo(_enemyLustosaursHandlers);
+                yield return PlaySupportAnimationCo(_playerLustosaursHandlers);
+                ProcessOpponentTurn();
+            }
+        }
+
+        /// <summary>
+        /// Affiche le menu des actions du joueur
+        /// </summary>
+        private void ShowActionMenu()
+        {
+            _actionMenuCanvas.enabled = true;
+            _fightBtn.interactable = _manager.ActiveFighterHasEnoughFPToAttack(true);
+            _formationBtn.interactable = !_playerHasChangedFormationThisTurn;
+        }
+
+        /// <summary>
+        /// Appelée par les boutons des attaques
+        /// </summary>
+        /// <param name="index">La position de l'index dans la liste</param>
+        private void OnAttackBtnClick(int index)
+        {
+            _selectionLockLevel = CombatSelectionLockLevel.Enemy;
+            _manager.SelectAttack(_manager.SelectedAlly, index);
+            LustosaurResistance[] enemyResistances = _manager.GetEnemyResistances(_manager.SelectedAttack.Attribute);
+
+            ShowEnemyResistances(enemyResistances);
+            ShowArrowTarget(_enemyLustosaursHandlers, 0);
+            ShowInstruction(2);
+        }
+
+        /// <summary>
+        /// Conduit une attaque
+        /// </summary>
+        /// <param name="attacker">L'attaquant</param>
+        /// <param name="defender">Le défenseur</param>
+        /// <param name="isPlayerTurn">true si c'est le tour du joueur</param>
+        private void ConductAttack(LustosaurSO attacker, LustosaurSO defender, bool isPlayerTurn)
+        {
+            _manager.ConductAttack(attacker, defender, out int dmg, out bool criticalHit, isPlayerTurn);
+
+            // Affiche le message d'attaque
+
+            string msg = isPlayerTurn ? CombatConstants.ALLY_ATTACK_MSG : CombatConstants.ENEMY_ATTACK_MSG;
+            ShowMessage(string.Format(msg, _manager.SelectedAlly.name, _manager.SelectedEnemy.name), null);
+
+            // Anime l'attaque
+
+            StartCoroutine(PlayAttackAnimationCo(attacker, defender, dmg, criticalHit, isPlayerTurn));
+        }
+
+        /// <summary>
+        /// Exécute un tour pour l'adversaire
+        /// </summary>
+        private void ProcessOpponentTurn()
+        {
+
+        }
+
+        #endregion
+
+        #region Animations
+
+        /// <summary>
+        /// Joue les animations d'intro avant de rendre le contrôle au joueur
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator PlayIntroAnimationsCo()
+        {
+            _animator.enabled = true;
+
+            // Joue l'intro
+
+            _animator.Play(_introAnim.name);
+
+            // Joue la comparaison des totaux de PV
+
+            yield return new WaitForSeconds(_introAnim.length / 2f);
+            _terrainCanvas.enabled = true;
+            _healthComparisonCanvas.enabled = true;
+            yield return new WaitForSeconds(_introAnim.length / 2f);
+            _introCanvas.enabled = false;
+            _animator.Play(_healthComparisonAnim.name);
+            yield return new WaitForSeconds(.5f);
+            yield return IncrementTotalHPLabelsCo(1f);
+
+            // Affiche qui gagne l'initiative
+
+            _playerInitiativeContent.gameObject.SetActive(_manager.PlayerHasInitiative);
+            _enemyInitiativeContent.gameObject.SetActive(!_manager.PlayerHasInitiative);
+
+            yield return new WaitForSeconds(1.5f);
+            _healthComparisonCanvas.enabled = false;
+
+            // Joue l'arrivée des luxurosaures
+
+            _animator.Play(_lustosaurEntranceAnim.name);
+            yield return new WaitForSeconds(_lustosaurEntranceAnim.length);
+
+            // On reprend le contrôle
+
+            _animator.enabled = false;
+
+            // Assigne les stats bonus avant le début du combat
+            // si le joueur a perdu des vêtements
+
+            ShowHornyMessage();
+
+            yield return new WaitForSeconds(1f);
+
+            // On commence le 1er tour
+
+            yield return StartNewTurnCo();
+        }
+
+        /// <summary>
+        /// Jour l'animation de support des luxurosaures
+        /// </summary>
+        /// <param name="handlers">Les luxurosaures à animer</param>
+        private IEnumerator PlaySupportAnimationCo(CombatLustosaurHandler[] handlers)
+        {
+            float delay = 0f;
+
+            // Joue une animation de bond pour chaque luxurosaure encore en vie
+
+            if (handlers[1] != null)
+            {
+                delay += _lustosaurSupportAnimSpeed;
+                Transform t1 = handlers[1].transform;
+                t1.DOLocalMoveY(t1.localPosition.y + _lustosaurBounceOffsets.y, _lustosaurSupportAnimSpeed).SetEase(_bounceCurve).OnComplete(() =>
+                {
+                    if (handlers[2] != null)
+                    {
+                        delay += _lustosaurSupportAnimSpeed;
+                        Transform t2 = handlers[2].transform;
+                        t2.DOLocalMoveY(t2.localPosition.y + _lustosaurBounceOffsets.y, _lustosaurSupportAnimSpeed).SetEase(_bounceCurve);
+                    }
+                });
+            }
+
+            if (handlers[2] != null)
+            {
+                delay += _lustosaurSupportAnimSpeed;
+                Transform t2 = handlers[2].transform;
+                t2.DOLocalMoveY(t2.localPosition.y + _lustosaurBounceOffsets.y, _lustosaurSupportAnimSpeed).SetEase(_bounceCurve).OnComplete(() =>
+                {
+                    if (handlers[1] != null)
+                    {
+                        delay += _lustosaurSupportAnimSpeed;
+                        Transform t1 = handlers[1].transform;
+                        t1.DOLocalMoveY(t1.localPosition.y + _lustosaurBounceOffsets.y, _lustosaurSupportAnimSpeed).SetEase(_bounceCurve);
+                    }
+                });
+            }
+
+            // Pour la coroutine, on attend _lustosaurSupportAnimSpeed * le nb d'anims jouées
+
+            yield return new WaitForSeconds(delay);
+        }
+
+        /// <summary>
+        /// Affiche les animations liées à l'attaque
+        /// </summary>
+        /// <param name="attacker">L'attaquant</param>
+        /// <param name="defender">Le défenseur</param>
+        /// <param name="dmg">Les dégâts infligés</param>
+        /// <param name="criticalHit">true s'il s'agit d'un coup critique</param>
+        /// <param name="isPlayerTurn">true si c'est le tour du joueur</param>
+        private IEnumerator PlayAttackAnimationCo(LustosaurSO attacker, LustosaurSO defender, int dmg, bool criticalHit, bool isPlayerTurn)
+        {
+            // Récupère les bons components
+
+            CombatLustosaurHandler attackerHandler = isPlayerTurn ? _playerLustosaursHandlers[_manager.SelectedAllyIndex] : _enemyLustosaursHandlers[_manager.SelectedEnemyIndex];
+            CombatLustosaurHandler defenderHandler = isPlayerTurn ? _enemyLustosaursHandlers[_manager.SelectedEnemyIndex] : _playerLustosaursHandlers[_manager.SelectedAllyIndex];
+
+            Transform attackerT = attackerHandler.transform;
+            Transform defenderT = defenderHandler.transform;
+
+            // Déplace l'attaquant et le défenseur
+
+            attackerT.DOLocalMoveX(attackerT.localPosition.x + _lustosaurBounceOffsets.x, _lustosaurAttackAnimSpeed).SetEase(_bounceCurve);
+            yield return new WaitForSeconds(_lustosaurAttackAnimSpeed / 2f);
+            defenderT.DOLocalMoveX(defenderT.localPosition.x - _lustosaurBounceOffsets.x, _lustosaurAttackAnimSpeed).OnComplete(() =>
+            {
+                StartCoroutine(WaitCo(_lustosaurAttackStunDuration, () =>
+                {
+                    defenderT.DOLocalMoveX(defenderT.localPosition.x + _lustosaurBounceOffsets.x, _lustosaurAttackAnimSpeed);
+                }));
+            });
+
+            // Affiche le montant de dégâts
+
+            if (criticalHit)
+            {
+                _criticalHitDmgLabel.SetText(dmg.ToString());
+
+                _criticalHitIcon.DOFade(1f, _hitIconFadeSpeed).OnComplete(() =>
+                {
+                    _criticalHitDmgLabel.StartCoroutine(WaitCo(_hitIconDuration, () =>
+                    {
+                        _criticalHitIcon.DOFade(0f, _hitIconFadeSpeed);
+                    }));
+                });
+            }
+            else
+            {
+                _normalHitDmgLabel.SetText(dmg.ToString());
+
+                _normalHitIcon.DOFade(1f, _hitIconFadeSpeed).OnComplete(() =>
+                {
+                    _normalHitDmgLabel.StartCoroutine(WaitCo(_hitIconDuration, () =>
+                    {
+                        _normalHitIcon.DOFade(0f, _hitIconFadeSpeed);
+                    }));
+                });
+            }
+
+            // Modifie la barre de vie
+
+            defenderHandler.SetHealthValue(defender.CurFightingStats.Health);
+
+            // Après les animations, si le défenseur n'a plus de vie, on le fait disparaître
+
+            yield return new WaitForSeconds(_lustosaurAttackAnimSpeed + _lustosaurAttackStunDuration + _lustosaurAttackAnimSpeed / 2f);
+
+            if (defender.CurFightingStats.Health == 0)
+            {
+                defenderHandler.SetAlpha(0f, true);
+                yield return new WaitForSeconds(_lustosaurDeathDuration);
+                defenderHandler.gameObject.SetActive(false);
+            }
+
+            // Redonne le contrôle à l'attaquant
+
+            if (isPlayerTurn)
+            {
+                if (_manager.BattleState == BattleState.Victory)
+                {
+                    ShowVictoryScreen();
+                }
+                else
+                {
+                    ShowActionMenu();
+                }
+            }
+            else
+            {
+                if (_manager.BattleState == BattleState.Defeat)
+                {
+                    ShowDefeatScreen();
+                }
+                else
+                {
+                    ProcessOpponentTurn();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Incrémente le label des PPs d'un combattant au fil du temps
+        /// </summary>
+        /// <param name="fpLabel">Le label à incrémenter</param>
+        /// <param name="speed">vitesse d'animation</param>
+        private IEnumerator IncrementFPLabelCo(TextMeshProUGUI fpLabel, int newValue, float speed)
+        {
+            int oldValue = int.Parse(fpLabel.text);
+            float t = 0f;
+
+            while (t < 1f)
+            {
+                t += Time.deltaTime * speed;
+
+                fpLabel.SetText(Mathf.RoundToInt(Mathf.Lerp(oldValue, newValue, t)).ToString());
+
+                yield return null;
+            }
+
+            fpLabel.SetText(newValue.ToString());
         }
 
         /// <summary>
@@ -682,12 +1222,12 @@ namespace Assets.Scripts.Views.Combat
         /// <summary>
         /// Délai
         /// </summary>
-        /// <param name="wfs">Délai</param>
+        /// <param name="duration">Délai</param>
         /// <param name="callback">Action suivante</param>
         /// <returns></returns>
-        private IEnumerator WaitCo(WaitForSeconds wfs, Action callback = null)
+        private IEnumerator WaitCo(float duration, Action callback = null)
         {
-            yield return wfs;
+            yield return new WaitForSeconds(duration);
             callback?.Invoke();
         }
 

@@ -388,7 +388,7 @@ namespace Assets.Scripts.ViewModels.Managers
                 ActiveNPCFighters.Remove(npc);
             }
 
-            Destroy(npc.gameObject);
+            DestroyImmediate(npc.gameObject);
         }
 
         #endregion
@@ -397,7 +397,9 @@ namespace Assets.Scripts.ViewModels.Managers
 
         private MineableTile CreateTile()
         {
-            return Instantiate(_mineableItemPrefab, _tilesParent).GetComponent<MineableTile>();
+            MineableTile tile = Instantiate(_mineableItemPrefab, _tilesParent).GetComponent<MineableTile>();
+            tile.ReturnToPool += ReleaseTile;
+            return tile;
         }
 
         private void GetTile(MineableTile tile)
@@ -419,7 +421,7 @@ namespace Assets.Scripts.ViewModels.Managers
                 _activeTiles.Remove(tile);
             }
 
-            Destroy(tile.gameObject);
+            DestroyImmediate(tile.gameObject);
         }
 
         #endregion

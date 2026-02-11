@@ -1,3 +1,4 @@
+using System;
 using Assets.Scripts.Models.Loot;
 using Assets.Scripts.Models.Mineables;
 using UnityEngine;
@@ -9,6 +10,15 @@ namespace Assets.Scripts.ViewModels.Mineables
     /// </summary>
     public class MineableTile : MonoBehaviour
     {
+        #region Evénements
+
+        /// <summary>
+        /// Appelée pour renvoyer cette case dans son ObjectPool
+        /// </summary>
+        public Action<MineableTile> ReturnToPool { get; set; }
+
+        #endregion
+
         #region Propriétés
 
         /// <summary>
@@ -33,21 +43,24 @@ namespace Assets.Scripts.ViewModels.Mineables
         public void SetData(MineableTileSO data)
         {
             Tile = data;
-            _renderer.sprite = data.Sprites[Random.Range(0, data.Sprites.Length)];
+            _renderer.sprite = data.Sprites[UnityEngine.Random.Range(0, data.Sprites.Length)];
         }
 
         /// <summary>
-        /// Appelée quand cet objet est renvoyé à l'ObjectPool
+        /// Obtient un loot au hasard de la case
         /// </summary>
         /// <returns>L'objet miné</returns>
-        public LootSO OnMined()
+        public LootSO GetLoot()
         {
-            gameObject.SetActive(false);
+            return (Tile.PossibleLoots == null || Tile.PossibleLoots.Length == 0) ? null : Tile.PossibleLoots[UnityEngine.Random.Range(0, Tile.PossibleLoots.Length)];
+        }
 
-            // On sélectionne un objet au hasard dans la liste des loots possibles
-
-            LootSO loot = (Tile.PossibleLoots == null || Tile.PossibleLoots.Length == 0) ? null : Tile.PossibleLoots[UnityEngine.Random.Range(0, Tile.PossibleLoots.Length)];
-            return loot;
+        /// <summary>
+        /// Renvoie cette case à son ObjectPool
+        /// </summary>
+        public void ReturnTileToPool()
+        {
+            ReturnToPool?.Invoke(this);
         }
 
         #endregion

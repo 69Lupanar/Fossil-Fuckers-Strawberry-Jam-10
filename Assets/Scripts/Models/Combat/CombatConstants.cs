@@ -11,6 +11,16 @@ namespace Assets.Scripts.Models.Combat
         public const int NB_PARTICIPATING_LUSTOSAURS = 3;
 
         /// <summary>
+        /// Message d'attaque sur un ennemi
+        /// </summary>
+        public const string ALLY_ATTACK_MSG = "{0} attacks the opposing {1}!";
+
+        /// <summary>
+        /// Message d'attaque sur un allié
+        /// </summary>
+        public const string ENEMY_ATTACK_MSG = "The opposing {0} attacks your {1}!";
+
+        /// <summary>
         /// Nb max de luxurosaures participant à un combat donné
         /// </summary>
         public const string LUSTOSAUR_DEFEATED_MSG = "{0} has been defeated!";
