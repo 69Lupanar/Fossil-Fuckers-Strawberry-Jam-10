@@ -111,6 +111,26 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public int PlayerHeatLevel => _playerStatsManager.LastHeatLevel;
 
+        /// <summary>
+        /// true si le joueur a terminé son tour
+        /// </summary>
+        public bool PlayerHasEndedHisTurn { get; private set; }
+
+        /// <summary>
+        /// true si l'ennemi a terminé tour
+        /// </summary>
+        public bool EnemyHasEndedHisTurn { get; private set; }
+
+        /// <summary>
+        /// true si le joueur a changé de formation ce tour
+        /// </summary>
+        public bool PlayerHasChangedFormationThisTurn { get; private set; }
+
+        /// <summary>
+        /// true si l'ennemi a changé de formation ce tour
+        /// </summary>
+        public bool EnemyHasChangedFormationThisTurn { get; private set; }
+
         #endregion
 
         #region Variables Unity
@@ -248,6 +268,8 @@ namespace Assets.Scripts.ViewModels.Managers
 
             EnemySupportStats = (EnemyTeam[1] == null ? FightingStats.Zero : EnemyTeam[1].SupportStats) +
                                               (EnemyTeam[2] == null ? FightingStats.Zero : EnemyTeam[2].SupportStats);
+
+            PlayerHasEndedHisTurn = PlayerHasChangedFormationThisTurn = EnemyHasEndedHisTurn = EnemyHasChangedFormationThisTurn = false;
         }
 
         /// <summary>
@@ -258,7 +280,7 @@ namespace Assets.Scripts.ViewModels.Managers
         {
             int count = 0;
 
-            while (PlayerTeam[index] == null || PlayerTeam[index].CurFightingStats.Health == 0)
+            while (PlayerTeam[index] == null || PlayerTeam[index].CurHealth == 0)
             {
                 // On boucle à travers toute la liste jusqu'à avoir fait le tour,
                 // car on ne commence pas forcément à 0.
@@ -288,7 +310,7 @@ namespace Assets.Scripts.ViewModels.Managers
         {
             int count = 0;
 
-            while (EnemyTeam[index] == null || EnemyTeam[index].CurFightingStats.Health == 0)
+            while (EnemyTeam[index] == null || EnemyTeam[index].CurHealth == 0)
             {
                 // On boucle à travers toute la liste jusqu'à avoir fait le tour,
                 // car on ne commence pas forcément à 0.

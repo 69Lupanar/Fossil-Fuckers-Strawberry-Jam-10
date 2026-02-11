@@ -23,6 +23,11 @@ namespace Assets.Scripts.Models.Dinos
         public int CurLevel { get; set; }
 
         /// <summary>
+        /// La santé actuelle du luxurosaure
+        /// </summary>
+        public int CurHealth { get; set; }
+
+        /// <summary>
         /// L'exp à gagner pour atteindre le niveau suivant
         /// </summary>
         public int ExpUntilNextLevel => Mathf.RoundToInt(EXPProgressCurve.Evaluate((float)(CurLevel + 1) / (float)DinoConstants.MAX_LEVEL) * DinoConstants.TOTAL_EXP);
@@ -185,6 +190,7 @@ namespace Assets.Scripts.Models.Dinos
             clone.FightingStatsAtMaxQuality = FightingStatsAtMaxQuality;
             clone.CurFightingStats = CurFightingStats;
             clone.SupportStats = SupportStats;
+            clone.CurHealth = CurFightingStats.Health;
             clone.CurEXP = CurEXP;
             clone.CurLevel = CurLevel;
             clone.EXPProgressCurve = EXPProgressCurve;

@@ -454,16 +454,6 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         private CombatSelectionLockLevel _selectionLockLevel = CombatSelectionLockLevel.None;
 
-        /// <summary>
-        /// true si le joueur a changé de formation ce tour
-        /// </summary>
-        private bool _playerHasChangedFormationThisTurn;
-
-        /// <summary>
-        /// true si l'ennemi a changé de formation ce tour
-        /// </summary>
-        private bool _enemyHasChangedFormationThisTurn;
-
         #endregion
 
         #region Méthodes Unity
@@ -900,8 +890,6 @@ namespace Assets.Scripts.Views.Combat
         {
             _manager.StartNewTurn();
 
-            _playerHasChangedFormationThisTurn = _enemyHasChangedFormationThisTurn = false;
-
             StartCoroutine(IncrementFPLabelCo(_playerFPLabel, _manager.PlayerFP, _FPChangeSpeed));
             UpdateStatHandlers(_playerDisplayStats, _manager.HornySupportStats + _manager.PlayerSupportStats, true);
             UpdateStatHandlers(_enemyDisplayStats, _manager.EnemySupportStats, true);
@@ -927,7 +915,7 @@ namespace Assets.Scripts.Views.Combat
         {
             _actionMenuCanvas.enabled = true;
             _fightBtn.interactable = _manager.ActiveFighterHasEnoughFPToAttack(true);
-            _formationBtn.interactable = !_playerHasChangedFormationThisTurn;
+            _formationBtn.interactable = !_manager.PlayerHasChangedFormationThisTurn;
         }
 
         /// <summary>
@@ -1133,13 +1121,13 @@ namespace Assets.Scripts.Views.Combat
 
             // Modifie la barre de vie
 
-            defenderHandler.SetHealthValue(defender.CurFightingStats.Health);
+            defenderHandler.SetHealthValue((float)defender.CurHealth / (float)defender.CurFightingStats.Health);
 
             // Après les animations, si le défenseur n'a plus de vie, on le fait disparaître
 
             yield return new WaitForSeconds(_lustosaurAttackAnimDuration + _lustosaurAttackStunDuration + _lustosaurAttackAnimDuration / 2f);
 
-            if (defender.CurFightingStats.Health == 0)
+            if (defender.CurHealth == 0)
             {
                 defenderHandler.SetAlpha(0f, true);
                 yield return new WaitForSeconds(_lustosaurDeathDuration);
