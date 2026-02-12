@@ -217,6 +217,11 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         private float _curMiningHeatIncrease;
 
+        /// <summary>
+        /// true si l'Update peut tourner
+        /// </summary>
+        private bool _enabled = true;
+
         #endregion
 
         #region Méthodes Unity
@@ -234,7 +239,7 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         private void Update()
         {
-            if (IsDead)
+            if (IsDead || !_enabled)
             {
                 return;
             }
@@ -403,6 +408,22 @@ namespace Assets.Scripts.ViewModels.Player
                 IsDead = true;
                 OnDeath?.Invoke();
             }
+        }
+
+        /// <summary>
+        /// Empêche l'update de tourner
+        /// </summary>
+        internal void DisableUpdate()
+        {
+            _enabled = false;
+        }
+
+        /// <summary>
+        /// Permet à l'update de tourner
+        /// </summary>
+        internal void EnableUpdate()
+        {
+            _enabled = true;
         }
 
         #endregion

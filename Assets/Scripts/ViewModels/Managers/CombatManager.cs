@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Assets.Scripts.Models;
 using Assets.Scripts.Models.Combat;
 using Assets.Scripts.Models.Dinos;
@@ -187,6 +186,16 @@ namespace Assets.Scripts.ViewModels.Managers
         private int _avgLevelDifference;
 
         /// <summary>
+        /// Nb de lustosaurs battus par le joueur
+        /// </summary>
+        private int _nbDefeatedEnemyLustosaurs;
+
+        /// <summary>
+        /// Nb de lustosaurs battus par l'ennemi
+        /// </summary>
+        private int _nbDefeatedAllyLustosaurs;
+
+        /// <summary>
         /// L'équipe ennemie à restaurer en cas de victoire
         /// pour que le joueur puisse sélectionner une scène adulte
         /// </summary>
@@ -206,8 +215,10 @@ namespace Assets.Scripts.ViewModels.Managers
 
             BattleState = BattleState.Ongoing;
             PlayerSupportStats = EnemySupportStats = FightingStats.Zero;
-            _activePlayerLustosaurs = _activeEnemyLustosaurs = 0;
+            PlayerFP = EnemyFP = 0;
             EXPGained = 0;
+            _activePlayerLustosaurs = _activeEnemyLustosaurs = 0;
+            _nbDefeatedEnemyLustosaurs = _nbDefeatedAllyLustosaurs = 0;
 
             switch (PlayerHeatLevel)
             {
@@ -457,6 +468,7 @@ namespace Assets.Scripts.ViewModels.Managers
                 {
                     EnemyTeam[SelectedEnemyIndex] = null;
                     --_activeEnemyLustosaurs;
+                    ++_nbDefeatedEnemyLustosaurs;
 
                     if (_activeEnemyLustosaurs == 0)
                     {
@@ -468,6 +480,7 @@ namespace Assets.Scripts.ViewModels.Managers
                 {
                     PlayerTeam[SelectedAllyIndex] = null;
                     --_activePlayerLustosaurs;
+                    ++_nbDefeatedAllyLustosaurs;
 
                     if (_activePlayerLustosaurs == 0)
                     {
@@ -758,10 +771,11 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <param name="battleState">Issue de la partie</param>
         private void CalculateExpGained(BattleState battleState)
         {
-            int expPerEnemyDefeated = CombatConstants.EXP_GAINED_PER_DEFEATED_ENEMY * EnemyTeam.Count(lustosaur => lustosaur == null);
+            int expPerEnemyDefeated = CombatConstants.EXP_GAINED_PER_DEFEATED_ENEMY * _nbDefeatedEnemyLustosaurs;
+            int expPerAllyDefeated = CombatConstants.EXP_LOST_PER_DEFEATED_ALLY * _nbDefeatedAllyLustosaurs;
             int expPerLevelDifference = CombatConstants.EXP_GAINED_PER_LEVEL_DIFFERENCE * _avgLevelDifference;
 
-            EXPGained = expPerEnemyDefeated + expPerLevelDifference;
+            EXPGained = expPerEnemyDefeated - expPerAllyDefeated + expPerLevelDifference;
             EXPGained /= battleState == BattleState.Defeat ? CombatConstants.EXP_REDUCTION_COEF_IF_DEFEATED : 1;
         }
 

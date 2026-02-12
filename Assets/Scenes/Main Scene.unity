@@ -6992,6 +6992,7 @@ MonoBehaviour:
   _dialogueManager: {fileID: 16936568}
   _combatManager: {fileID: 510056679}
   _statsManager: {fileID: 852986446}
+  _teamMenuManager: {fileID: 1946102866}
   _controller: {fileID: 8622508510301249956}
   _spawnPoint: {fileID: 2022424996}
 --- !u!114 &485394137
@@ -7351,6 +7352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assets.Scripts.Views::Assets.Scripts.Views.Combat.CombatView
   _baseMenuView: {fileID: 574469022}
+  _teamMenuView: {fileID: 1946102867}
   _gameManager: {fileID: 485394136}
   _manager: {fileID: 510056679}
   _combatCanvas: {fileID: 1510475651}
@@ -10018,6 +10020,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1953204440}
     m_Modifications:
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -11746,7 +11752,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -119272.12}
+  m_AnchoredPosition: {x: 0, y: -229126.8}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &743267552
@@ -14993,6 +14999,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 332430821}
     m_Modifications:
+    - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -18349,7 +18359,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 222673.48}
+  m_AnchoredPosition: {x: 0, y: 167230.84}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1154122712
@@ -19691,10 +19701,10 @@ MonoBehaviour:
     m_Bottom: 5
   m_ChildAlignment: 4
   m_StartCorner: 0
-  m_StartAxis: 0
+  m_StartAxis: 1
   m_CellSize: {x: 230, y: 130}
   m_Spacing: {x: 5, y: 5}
-  m_Constraint: 1
+  m_Constraint: 0
   m_ConstraintCount: 3
 --- !u!114 &1187995077
 MonoBehaviour:
@@ -21471,6 +21481,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1953204440}
     m_Modifications:
+    - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -26474,6 +26488,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 441182103}
     m_Modifications:
+    - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -33421,11 +33439,11 @@ RectTransform:
   - {fileID: 1187995075}
   m_Father: {fileID: 1510475648}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -400}
-  m_SizeDelta: {x: 740, y: 170}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 50, y: 0}
+  m_SizeDelta: {x: 260, y: 440}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2011704307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35937,7 +35955,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 100}
-  m_SizeDelta: {x: 590, y: 100}
+  m_SizeDelta: {x: 850, y: 100}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &465946033238680377
 CanvasRenderer:

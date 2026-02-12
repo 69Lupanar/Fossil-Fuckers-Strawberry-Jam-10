@@ -270,6 +270,7 @@ namespace Assets.Scripts.Views.Base
             _teamMenuCanvas.enabled = false;
             _sleepMenuCanvas.enabled = false;
             _sexMenuCanvas.enabled = false;
+            _combatCanvas.enabled = false;
 
             _cloningView.CleanupOnWindowClosed();
             _sleepView.CleanupOnWindowClosed();
@@ -297,7 +298,6 @@ namespace Assets.Scripts.Views.Base
 
                 _blackFadeImg.DOFade(0f, _fadeSpeed);
             });
-
         }
 
         #endregion

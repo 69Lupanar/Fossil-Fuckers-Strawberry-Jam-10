@@ -128,6 +128,7 @@ namespace Assets.Scripts.ViewModels.Managers
         {
             StandbyReserve = new List<LustosaurSO>(_standbyReserveCapacity);
             PlayerTeam = new List<LustosaurSO>(_playerTeamCapacity);
+            ResizeExpGainTrackers();
 
             for (int i = 0; i < StartingTeam.Length; ++i)
             {
@@ -195,6 +196,16 @@ namespace Assets.Scripts.ViewModels.Managers
         }
 
         /// <summary>
+        /// Màj les traqueurs de gain d'exp
+        /// </summary>
+        public void ResizeExpGainTrackers()
+        {
+            _levelsGainedOnLastExpGain = new int[_playerTeamCapacity];
+            _statsGainedOnLastExpGain = new FightingStats[_playerTeamCapacity];
+            _attacksGainedOnLastExpGain = new List<AttackSO>[_playerTeamCapacity];
+        }
+
+        /// <summary>
         /// Fait gagner de l'exp à tous les membres de l'équipe active
         /// </summary>
         /// <param name="expGained">L'exp gagnée</param>
@@ -202,7 +213,10 @@ namespace Assets.Scripts.ViewModels.Managers
         {
             for (int i = 0; i < PlayerTeam.Count; ++i)
             {
-                PlayerTeam[i].GainEXP(expGained, out _levelsGainedOnLastExpGain[i], out _statsGainedOnLastExpGain[i], out _attacksGainedOnLastExpGain[i]);
+                if (PlayerTeam[i] != null)
+                {
+                    PlayerTeam[i].GainEXP(expGained, out _levelsGainedOnLastExpGain[i], out _statsGainedOnLastExpGain[i], out _attacksGainedOnLastExpGain[i]);
+                }
             }
         }
 

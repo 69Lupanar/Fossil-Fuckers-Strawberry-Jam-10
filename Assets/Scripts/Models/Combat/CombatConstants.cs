@@ -26,6 +26,11 @@ namespace Assets.Scripts.Models.Combat
         public const int EXP_GAINED_PER_DEFEATED_ENEMY = 250;
 
         /// <summary>
+        /// EXP perdue par allié vainu
+        /// </summary>
+        public const int EXP_LOST_PER_DEFEATED_ALLY = 100;
+
+        /// <summary>
         /// EXP gagnée par différence de niveau moyen entre le joueur et l'ennemi,
         /// seulement si l'ennemi est plus fort que le joueur
         /// </summary>

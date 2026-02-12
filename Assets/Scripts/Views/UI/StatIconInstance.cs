@@ -82,21 +82,21 @@ namespace Assets.Scripts.Views.UI
         {
             bool show = _showIfStatZero || value != 0;
 
-            _border.gameObject.SetActive(show);
-            _label.gameObject.SetActive(show);
-
-            _border.color = _icon.color = value > 0 ? _positiveColor :
-                                          value < 0 ? _negativeColor :
-                                          _neutralColor;
-
             if (animate)
             {
                 StopAllCoroutines();
                 _label.SetText($"{_endValue}%");
-                StartCoroutine(IncrementCurValueCo(value));
+                StartCoroutine(IncrementCurValueCo(value, show));
             }
             else
             {
+                _border.gameObject.SetActive(show);
+                _label.gameObject.SetActive(show);
+
+                _border.color = _icon.color = value > 0 ? _positiveColor :
+                                              value < 0 ? _negativeColor :
+                                              _neutralColor;
+
                 _label.SetText($"{value}%");
             }
         }
@@ -105,7 +105,8 @@ namespace Assets.Scripts.Views.UI
         /// Incrémente la valeur au fil du temps
         /// </summary>
         /// <param name="value">La nouvelle valeur</param>
-        private IEnumerator IncrementCurValueCo(int value)
+        /// <param name="showAtEnd">true si les instances doivent être visibles à la fin de l'animation</param>
+        private IEnumerator IncrementCurValueCo(int value, bool showAtEnd)
         {
             _endValue = value;
             int curValue = int.Parse(_label.text[..^1]);
@@ -114,11 +115,24 @@ namespace Assets.Scripts.Views.UI
             while (t < 1f)
             {
                 t += Time.deltaTime * _valueIncrementSpeed;
-                _label.SetText(Mathf.RoundToInt(Mathf.Lerp(curValue, value, t)).ToString());
+                int val = Mathf.RoundToInt(Mathf.Lerp(curValue, value, t));
+                _label.SetText($"{val}%");
+
+                _border.color = _icon.color = val > 0 ? _positiveColor :
+                                              val < 0 ? _negativeColor :
+                                              _neutralColor;
+
                 yield return null;
             }
 
+            _border.color = _icon.color = value > 0 ? _positiveColor :
+                                          value < 0 ? _negativeColor :
+                                          _neutralColor;
+
             _label.SetText($"{value}%");
+            _border.gameObject.SetActive(showAtEnd);
+            _label.gameObject.SetActive(showAtEnd);
+
         }
 
         #endregion

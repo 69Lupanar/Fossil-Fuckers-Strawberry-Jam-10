@@ -30,6 +30,12 @@ namespace Assets.Scripts.Views.Combat
         private BaseMenuView _baseMenuView;
 
         /// <summary>
+        /// Le TeamMenuView
+        /// </summary>
+        [SerializeField]
+        private TeamMenuView _teamMenuView;
+
+        /// <summary>
         /// Le GameManagerView
         /// </summary>
         [SerializeField]
@@ -716,7 +722,7 @@ namespace Assets.Scripts.Views.Combat
 
             UpdateStatHandlers(_playerDisplayStats, FightingStats.Zero, false);
             UpdateStatHandlers(_enemyDisplayStats, FightingStats.Zero, false);
-            SetLustosaursHandlers();
+            InitLustosaursHandlers();
 
             _selectionLockLevel = CombatSelectionLockLevel.None;
         }
@@ -740,7 +746,7 @@ namespace Assets.Scripts.Views.Combat
         /// <summary>
         /// Assigne les sprites des luxurosaurs
         /// </summary>
-        private void SetLustosaursHandlers()
+        private void InitLustosaursHandlers()
         {
             for (int i = 0; i < _manager.PlayerTeam.Length; ++i)
             {
@@ -750,6 +756,8 @@ namespace Assets.Scripts.Views.Combat
 
                 if (lustosaur != null)
                 {
+                    handler.SetHealthBarFillAmount(1f);
+                    handler.SetAlpha(1f, false);
                     handler.SetLustosaurSprite(_manager.PlayerHeatLevel == -1 ? lustosaur.NormalSprite : lustosaur.HornySprite);
                     handler.HideResistanceIcon();
                 }
@@ -763,6 +771,8 @@ namespace Assets.Scripts.Views.Combat
 
                 if (lustosaur != null)
                 {
+                    handler.SetHealthBarFillAmount(1f);
+                    handler.SetAlpha(1f, false);
                     handler.SetLustosaurSprite(lustosaur.NormalSprite);
                     handler.HideResistanceIcon();
                 }
@@ -961,7 +971,20 @@ namespace Assets.Scripts.Views.Combat
             switch (battleState)
             {
                 case BattleState.Victory:
-                    _baseMenuView.OpenSexMenu(ReasonForSex.Victory, SexEnvironment.CombatVictory, enemyLustosaur);
+                    if (enemyLustosaur != null)
+                    {
+                        _baseMenuView.OpenSexMenu(ReasonForSex.Victory, SexEnvironment.CombatVictory, enemyLustosaur);
+                    }
+                    else
+                    {
+                        _blackFadeImg.DOFade(1f, _blackFadeDuration).OnComplete(() =>
+                        {
+                            _baseMenuView.CloseAll();
+                            _teamMenuView.UpdateExpGauges();
+                            _gameManager.EnableController();
+                            _blackFadeImg.DOFade(0f, _blackFadeDuration);
+                        });
+                    }
                     break;
                 case BattleState.Defeat:
                     _baseMenuView.OpenSexMenu(ReasonForSex.Defeat, SexEnvironment.CombatDefeat, enemyLustosaur);
@@ -1276,7 +1299,7 @@ namespace Assets.Scripts.Views.Combat
 
             // Modifie la barre de vie
 
-            defenderHandler.SetHealthValue((float)defender.CurHealth / (float)defender.CurFightingStats.Health);
+            defenderHandler.SetHealthBarFillAmount((float)defender.CurHealth / (float)defender.CurFightingStats.Health);
 
             // Après les animations, si le défenseur n'a plus de vie, on le fait disparaître
 

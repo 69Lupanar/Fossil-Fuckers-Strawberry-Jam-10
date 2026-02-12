@@ -109,6 +109,7 @@ namespace Assets.Scripts.ViewModels.Managers
         public void DisableController()
         {
             _controller.Disable();
+            _statsManager.DisableUpdate();
         }
 
         /// <summary>
@@ -118,6 +119,7 @@ namespace Assets.Scripts.ViewModels.Managers
         public void EnableController()
         {
             _controller.Enable();
+            _statsManager.EnableUpdate();
         }
 
         /// <summary>

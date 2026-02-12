@@ -82,7 +82,7 @@ namespace Assets.Scripts.Views.UI
         /// Assigne la valeur de la barre de vie
         /// </summary>
         /// <param name="amount">Le montant de vie</param>
-        public void SetHealthValue(float amount)
+        public void SetHealthBarFillAmount(float amount)
         {
             _healthBarFill.DOFillAmount(amount, _healthBarFillDuration);
         }

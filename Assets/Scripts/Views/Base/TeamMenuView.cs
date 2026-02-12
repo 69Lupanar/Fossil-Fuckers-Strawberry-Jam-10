@@ -386,6 +386,8 @@ namespace Assets.Scripts.Views.Base
                     }
                 }
             }
+
+            _manager.ResizeExpGainTrackers();
         }
 
         #endregion

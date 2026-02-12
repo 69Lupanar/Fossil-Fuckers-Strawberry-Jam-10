@@ -115,6 +115,7 @@ namespace Assets.Scripts.Models.Dinos
         public static LustosaurSO CreateFrom(LustosaurSO source, int quality, int level = 1)
         {
             LustosaurSO clone = source.Clone();
+            clone.CurLevel = level;
 
             float t = (float)quality / 100f;
 
