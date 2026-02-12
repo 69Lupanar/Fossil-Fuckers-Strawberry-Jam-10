@@ -20,6 +20,11 @@ namespace Assets.Scripts.Models.Logs
         public const string LUSTOSAUR_DISCARDED_MSG = "{0} was set free.";
         public const string LAST_LUSTOSAUR_REMOVED_FROM_TEAM_ERROR_MSG = "You cannot remove your last Lustosaur in your team!";
 
+        // Lustosaurs
+
+        public const string LEVEL_UP_STATS_MSG = "Level up!{0}";
+        public const string LEVEL_UP_NEW_ATTACK_MSG = "Learned {0}!";
+
         // Fusion
 
         public const string FUSION_ITEM_DISCARDED_MSG = "{0} discarded.";

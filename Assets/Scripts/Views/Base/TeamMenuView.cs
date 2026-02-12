@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.ViewModels.Managers;
@@ -12,6 +14,15 @@ namespace Assets.Scripts.Views.Base
     /// </summary>
     public class TeamMenuView : MonoBehaviour
     {
+        #region Evénements
+
+        /// <summary>
+        /// Appelée quand l'animation de montée de niveau se produit
+        /// </summary>
+        public Action<LustosaurSO, FightingStats, List<AttackSO>> OnLevelUpAnimPlayed { get; set; }
+
+        #endregion
+
         #region Variables Unity
 
         /// <summary>
@@ -19,6 +30,12 @@ namespace Assets.Scripts.Views.Base
         /// </summary>
         [SerializeField]
         private TeamMenuManager _manager;
+
+        /// <summary>
+        /// L'InventoryManager
+        /// </summary>
+        [SerializeField]
+        private InventoryManager _inventoryManager;
 
         /// <summary>
         /// L'image déplaçable représentant l'objet à déplacer
@@ -31,6 +48,12 @@ namespace Assets.Scripts.Views.Base
         /// </summary>
         [SerializeField]
         private RectTransform _inventoryGrid;
+
+        /// <summary>
+        /// Vitesse d'animation
+        /// </summary>
+        [SerializeField]
+        private float _expGainAnimSpeed = 1f;
 
         /// <summary>
         /// Les emplacements d'équipe en haut de l'écran
@@ -79,6 +102,7 @@ namespace Assets.Scripts.Views.Base
         private void Awake()
         {
             _manager.OnStart += OnStart;
+            _inventoryManager.OnLootMined += OnLootMined;
         }
 
         /// <summary>
@@ -167,6 +191,7 @@ namespace Assets.Scripts.Views.Base
         {
             for (int i = 0; i < _manager.PlayerTeam.Count; ++i)
             {
+                LustosaurSO lustosaur = _manager.PlayerTeam[i];
                 int levelsGainedOnLastExpGain = _manager.LevelsGainedOnLastExpGain[i];
                 FightingStats statsGainedOnLastExpGain = _manager.StatsGainedOnLastExpGain[i];
                 List<AttackSO> attacksGainedOnLastExpGain = _manager.AttacksGainedOnLastExpGain[i];
@@ -176,7 +201,8 @@ namespace Assets.Scripts.Views.Base
 
                 if (attacksGainedOnLastExpGain != null)
                 {
-
+                    TeamSlotInstance instance = _teamSlotsInstances[i];
+                    StartCoroutine(PlayEXPGainAnimationCo(instance, lustosaur, levelsGainedOnLastExpGain, statsGainedOnLastExpGain, attacksGainedOnLastExpGain));
                 }
             }
         }
@@ -388,6 +414,58 @@ namespace Assets.Scripts.Views.Base
             }
 
             _manager.ResizeExpGainTrackers();
+        }
+
+        /// <summary>
+        /// Appelée quand un objet est miné
+        /// </summary>
+        private void OnLootMined()
+        {
+            UpdateExpGauges();
+        }
+
+        /// <summary>
+        /// Joue les animations de gain d'EXP
+        /// </summary>
+        /// <param name="instance">L'instance</param>
+        /// <param name="lustosaur">Le luxurosaure associé</param>
+        /// <param name="levelsGainedOnLastExpGain">Niveaux gagnés lors du dernier gain d'exp</param>
+        /// <param name="statsGainedOnLastExpGain">Stats gagnées lors du dernier gain d'exp</param>
+        /// <param name="attacksGainedOnLastExpGain">Attaques gagnées lors du dernier gain d'exp</param>
+        /// <returns></returns>
+        private IEnumerator PlayEXPGainAnimationCo(TeamSlotInstance instance, LustosaurSO lustosaur, int levelsGainedOnLastExpGain, FightingStats statsGainedOnLastExpGain, List<AttackSO> attacksGainedOnLastExpGain)
+        {
+            float t;
+
+            // Pour chaque niveau passé, on peut faire monter la jauge au max
+
+            for (int i = 0; i < levelsGainedOnLastExpGain; ++i)
+            {
+                t = instance.GetExpFillAmount();
+
+                while (t < 1f)
+                {
+                    t += Time.deltaTime * _expGainAnimSpeed;
+                    instance.SetExpFillAmount(t);
+                    yield return null;
+                }
+
+                instance.PlayLevelUpAnimation();
+                instance.SetExpFillAmount(0f);
+                OnLevelUpAnimPlayed?.Invoke(lustosaur, statsGainedOnLastExpGain, attacksGainedOnLastExpGain);
+            }
+
+            // Une fois les niveaux passés, on monte la jauge
+            // jusqu'au niveau d'exp actuel du luxurosaure
+
+            t = instance.GetExpFillAmount();
+
+            while (t < (float)lustosaur.CurEXP / (float)lustosaur.ExpUntilNextLevel)
+            {
+                t += Time.deltaTime * _expGainAnimSpeed;
+                instance.SetExpFillAmount(t);
+                yield return null;
+            }
         }
 
         #endregion

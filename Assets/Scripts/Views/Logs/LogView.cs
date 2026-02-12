@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.Models.Logs;
 using Assets.Scripts.ViewModels.Managers;
+using Assets.Scripts.Views.Base;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -14,6 +16,12 @@ namespace Assets.Scripts.Views.Logs
     public class LogView : MonoBehaviour
     {
         #region Variables Unity
+
+        /// <summary>
+        /// TeamMenuView
+        /// </summary>
+        [SerializeField]
+        private TeamMenuView _teamMenuView;
 
         /// <summary>
         /// Le manager
@@ -87,6 +95,7 @@ namespace Assets.Scripts.Views.Logs
         private void Awake()
         {
             _manager.OnLogAdded += OnLogAdded;
+            _teamMenuView.OnLevelUpAnimPlayed += OnLevelUpAnimPlayed;
         }
 
         /// <summary>
@@ -120,6 +129,17 @@ namespace Assets.Scripts.Views.Logs
         #endregion
 
         #region Méthodes privées
+
+        /// <summary>
+        /// Appelée quand l'animation de montée de niveau se produit
+        /// </summary>
+        /// <param name="lustosaur">Le luxurosaure associé</param>
+        /// <param name="stats">Stats gagnées lors du dernier gain d'exp</param>
+        /// <param name="attacks">Attaques gagnées lors du dernier gain d'exp</param>
+        private void OnLevelUpAnimPlayed(LustosaurSO lustosaur, FightingStats stats, List<AttackSO> attacks)
+        {
+            _manager.OnLevelUpAnimPlayed(lustosaur, stats, attacks);
+        }
 
         /// <summary>
         /// Appelé quand un nouveau message est ajouté

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.Models.Logs;
 using Assets.Scripts.Models.Loot;
@@ -55,10 +57,25 @@ namespace Assets.Scripts.ViewModels.Managers
         private PlayerUpgradeManager _playerUpgradeMaanger;
 
         /// <summary>
-        /// L'icôned d'alerte
+        /// L'icône d'alerte
         /// </summary>
         [SerializeField]
         private Sprite _alertIcon;
+
+        /// <summary>
+        /// L'icône de montée de niveau
+        /// </summary>
+        [SerializeField]
+        private Sprite _levelUpIcon;
+
+        #endregion
+
+        #region Variables d'instance
+
+        /// <summary>
+        /// StringBuilder
+        /// </summary>
+        private StringBuilder _sb = new(50);
 
         #endregion
 
@@ -270,6 +287,54 @@ namespace Assets.Scripts.ViewModels.Managers
 
             AddLog(upgrade.Sprite, string.Format(LogConstants.UPGRADE_ACQUIRED_MSG, upgrade.name));
             AddLog(upgrade.Sprite, msg);
+        }
+
+        /// <summary>
+        /// Appelée quand l'animation de montée de niveau se produit
+        /// </summary>
+        /// <param name="lustosaur">Le luxurosaure associé</param>
+        /// <param name="stats">Stats gagnées lors du dernier gain d'exp</param>
+        /// <param name="attacks">Attaques gagnées lors du dernier gain d'exp</param>
+        public void OnLevelUpAnimPlayed(LustosaurSO lustosaur, FightingStats stats, List<AttackSO> attacks)
+        {
+            _sb.Clear();
+
+            if (stats.Health > 0)
+            {
+                _sb.Append($" +{stats.Health} HP!");
+            }
+
+            if (stats.Attack > 0)
+            {
+                _sb.Append($" +{stats.Attack} ATK!");
+            }
+
+            if (stats.Defense > 0)
+            {
+                _sb.Append($" +{stats.Defense} DEF!");
+            }
+
+            if (stats.Accuracy > 0)
+            {
+                _sb.Append($" +{stats.Accuracy} Acc!");
+            }
+
+            if (stats.CriticalHitRate > 0)
+            {
+                _sb.Append($" +{stats.CriticalHitRate}% Crit!");
+            }
+
+            if (stats.Evasion > 0)
+            {
+                _sb.Append($" +{stats.Evasion} EV!");
+            }
+
+            AddLog(lustosaur.NormalSprite, string.Format(LogConstants.LEVEL_UP_STATS_MSG, _sb.ToString()));
+
+            for (int i = 0; i < attacks.Count; ++i)
+            {
+                AddLog(lustosaur.NormalSprite, string.Format(LogConstants.LEVEL_UP_NEW_ATTACK_MSG, attacks[i].name));
+            }
         }
 
         #endregion

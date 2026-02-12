@@ -618,20 +618,20 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         public void OnLustosaurBtnHover(int index)
         {
-            if (index > 0)
-            {
-                if (_selectionLockLevel == CombatSelectionLockLevel.Player || _selectionLockLevel == CombatSelectionLockLevel.Both)
-                {
-                    ShowArrowTarget(_playerLustosaursHandlers, index - 1);
-                }
-            }
-            else
-            {
-                if (_selectionLockLevel == CombatSelectionLockLevel.Enemy || _selectionLockLevel == CombatSelectionLockLevel.Both)
-                {
-                    ShowArrowTarget(_enemyLustosaursHandlers, -index - 1);
-                }
-            }
+            //if (index > 0)
+            //{
+            //    if (_selectionLockLevel == CombatSelectionLockLevel.Player || _selectionLockLevel == CombatSelectionLockLevel.Both)
+            //    {
+            //        ShowArrowTarget(_playerLustosaursHandlers, index - 1);
+            //    }
+            //}
+            //else
+            //{
+            //    if (_selectionLockLevel == CombatSelectionLockLevel.Enemy || _selectionLockLevel == CombatSelectionLockLevel.Both)
+            //    {
+            //        ShowArrowTarget(_enemyLustosaursHandlers, -index - 1);
+            //    }
+            //}
         }
 
         /// <summary>
@@ -643,6 +643,7 @@ namespace Assets.Scripts.Views.Combat
             {
                 if (_selectionLockLevel == CombatSelectionLockLevel.Player || _selectionLockLevel == CombatSelectionLockLevel.Both)
                 {
+                    ShowArrowTarget(_playerLustosaursHandlers, index - 1);
                     _manager.SelectAllyLustosaur(index - 1);
                     PopulateAttacksList();
                 }
@@ -652,6 +653,7 @@ namespace Assets.Scripts.Views.Combat
                 if (_selectionLockLevel == CombatSelectionLockLevel.Enemy || _selectionLockLevel == CombatSelectionLockLevel.Both)
                 {
                     _selectionLockLevel = CombatSelectionLockLevel.None;
+                    ShowArrowTarget(_enemyLustosaursHandlers, -index - 1);
                     _manager.SelectEnemyLustosaur(-index - 1);
 
                     switch (_manager.BattleState)

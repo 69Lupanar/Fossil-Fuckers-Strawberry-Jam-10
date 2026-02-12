@@ -79,6 +79,14 @@ namespace Assets.Scripts.Views.UI
         /// <summary>
         /// Fait monter la jauge d'exp
         /// </summary>
+        public float GetExpFillAmount()
+        {
+            return _expBarFill.fillAmount;
+        }
+
+        /// <summary>
+        /// Fait monter la jauge d'exp
+        /// </summary>
         /// <param name="amount">Le montant</param>
         public void SetExpFillAmount(float amount)
         {
@@ -90,6 +98,7 @@ namespace Assets.Scripts.Views.UI
         /// </summary>
         public void PlayLevelUpAnimation()
         {
+            _radialGradient.DOKill();
             _radialGradient.DOFade(1f, 0f);
             _radialGradient.transform.localScale = Vector3.one;
             _radialGradient.DOFade(0f, _radialGradientAnimSpeed);

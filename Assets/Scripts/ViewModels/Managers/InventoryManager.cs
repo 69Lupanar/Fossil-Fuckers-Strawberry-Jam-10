@@ -43,6 +43,11 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public Action OnClear { get; set; }
 
+        /// <summary>
+        /// Appelée quand un objet est miné
+        /// </summary>
+        public Action OnLootMined { get; set; }
+
         #endregion
 
         #region Propriétés
@@ -67,6 +72,12 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         [SerializeField]
         private PlayerUpgradeManager _playerUpgradeManager;
+
+        /// <summary>
+        /// Le TeamMenuManager
+        /// </summary>
+        [SerializeField]
+        private TeamMenuManager _teamMenuManager;
 
         /// <summary>
         /// Le joueur
@@ -202,6 +213,7 @@ namespace Assets.Scripts.ViewModels.Managers
             }
 
             _playerStatsManager.GainEXP(loot.EXP);
+            _teamMenuManager.GainEXPForActiveTeam(loot.EXP);
 
             switch (loot)
             {
@@ -214,6 +226,8 @@ namespace Assets.Scripts.ViewModels.Managers
                     OnGemFound?.Invoke(gem);
                     break;
             }
+
+            OnLootMined?.Invoke();
         }
 
         /// <summary>
