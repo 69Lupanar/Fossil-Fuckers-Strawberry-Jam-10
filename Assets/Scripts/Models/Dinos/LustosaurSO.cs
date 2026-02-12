@@ -161,14 +161,14 @@ namespace Assets.Scripts.Models.Dinos
             {
                 // On recalcule ses stats si so niveau de base est supérieur à 1
 
-                clone.RecalculateStats();
+                clone.RecalculateStats(out _);
             }
 
             // On lui apprend aussi les capacités qu'il devrait avoir à son niveau
 
             for (int i = 0; i <= level; ++i)
             {
-                clone.CheckLearnableMove(i);
+                clone.CheckLearnableMove(i, out _);
             }
 
             return clone;
@@ -204,10 +204,15 @@ namespace Assets.Scripts.Models.Dinos
         /// Gagne de l'expérience pour monter au niveau suivant
         /// </summary>
         /// <param name="amount">Le montant</param>
-        public void GainEXP(int amount)
+        public void GainEXP(int amount, out int levelsGained, out FightingStats gainedStats, out List<AttackSO> learnedAttacks)
         {
+            levelsGained = 0;
+            gainedStats = FightingStats.Zero;
+            learnedAttacks = new List<AttackSO>();
+
             if (CurLevel == DinoConstants.MAX_LEVEL)
             {
+                learnedAttacks = null;
                 return;
             }
 
@@ -216,7 +221,16 @@ namespace Assets.Scripts.Models.Dinos
             while (CurEXP > ExpUntilNextLevel)
             {
                 GainLevel();
-                RecalculateStats();
+                RecalculateStats(out FightingStats difference);
+                CheckLearnableMove(CurLevel, out AttackSO newAttack);
+
+                ++levelsGained;
+                gainedStats += difference;
+
+                if (newAttack != null)
+                {
+                    learnedAttacks.Add(newAttack);
+                }
             }
         }
 
@@ -242,11 +256,15 @@ namespace Assets.Scripts.Models.Dinos
         /// et lui apprend cette dernière
         /// </summary>
         /// <param name="level">Le niveau atteint</param>
-        public void CheckLearnableMove(int level)
+        /// <param name="newAttack">La nouvelle attaque appris</param>
+        public void CheckLearnableMove(int level, out AttackSO newAttack)
         {
+            newAttack = null;
+
             if (LearnableAttacks.ContainsKey(level))
             {
                 LearnedAttacks.Add(LearnableAttacks[level]);
+                newAttack = LearnableAttacks[level];
             }
         }
 
@@ -257,7 +275,8 @@ namespace Assets.Scripts.Models.Dinos
         /// <summary>
         /// Recalcule les stats du joueur en fonction de son niveau
         /// </summary>
-        private void RecalculateStats()
+        /// <param name="difference">La différence de stats par rapport au niveau précédent</param>
+        private void RecalculateStats(out FightingStats difference)
         {
             FightingStats oldStats = CurFightingStats;
 
@@ -285,10 +304,9 @@ namespace Assets.Scripts.Models.Dinos
                     Mathf.RoundToInt(Mathf.Lerp(statsAtLevel1.Evasion, FightingStatsAtMaxQuality.Evasion, t))
                 );
 
-            // On regarde combien de points on a gagné dans chaque stat.
-            // Pas utile tout de suite, mais si on veut l'afficher plus tard, on l'aura au moins.
+            // On regarde combien de points on a gagné dans chaque stat
 
-            FightingStats diff = CurFightingStats - oldStats;
+            difference = CurFightingStats - oldStats;
         }
 
         #endregion

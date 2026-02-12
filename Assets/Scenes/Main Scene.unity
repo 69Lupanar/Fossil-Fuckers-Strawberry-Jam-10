@@ -6476,6 +6476,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4892506969934389629, guid: 56cb1ccbe0271594cb0a4e1655c3eb17, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4892506969934389629, guid: 56cb1ccbe0271594cb0a4e1655c3eb17, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -7416,7 +7420,7 @@ MonoBehaviour:
   _normalHitDmgLabel: {fileID: 344019863}
   _criticalHitDmgLabel: {fileID: 1204126391}
   _missHitLabel: {fileID: 1187685337}
-  _arrowTarget: {fileID: 1711645571}
+  _arrowTarget: {fileID: 1972330165}
   _instructionLabel: {fileID: 1243043899}
   _instructions:
   - Select your Lustosaur, then your attack.
@@ -7699,7 +7703,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 0
+  orthographic size: 8.4375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8722,7 +8726,7 @@ MonoBehaviour:
   _teamMenuCanvas: {fileID: 1959092545}
   _sleepMenuCanvas: {fileID: 332430822}
   _sexMenuCanvas: {fileID: 957076146}
-  _combatCanvas: {fileID: 0}
+  _combatCanvas: {fileID: 1510475651}
   _baseMenuBtnsParent: {fileID: 702140586}
   _blackFadeImg: {fileID: 804549117}
   _fadeSpeed: 0.5
@@ -11742,7 +11746,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00027234305}
+  m_AnchoredPosition: {x: 0, y: -119272.12}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &743267552
@@ -18345,7 +18349,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000014786121}
+  m_AnchoredPosition: {x: 0, y: 222673.48}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1154122712
@@ -20101,7 +20105,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201417968}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -24403,6 +24407,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4892506969934389629, guid: 56cb1ccbe0271594cb0a4e1655c3eb17, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4892506969934389629, guid: 56cb1ccbe0271594cb0a4e1655c3eb17, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -24420,7 +24428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4892506969934389629, guid: 56cb1ccbe0271594cb0a4e1655c3eb17, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnEscapeBtnClick
+      value: OnEndTurnBtnClick
       objectReference: {fileID: 0}
     - target: {fileID: 4892506969934389629, guid: 56cb1ccbe0271594cb0a4e1655c3eb17, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -25869,8 +25877,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1442447037}
   m_HandleRect: {fileID: 1442447036}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.88461536
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -29200,8 +29208,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1176248541}
   m_HandleRect: {fileID: 1176248540}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -32725,6 +32733,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4892506969934389629, guid: 56cb1ccbe0271594cb0a4e1655c3eb17, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4892506969934389629, guid: 56cb1ccbe0271594cb0a4e1655c3eb17, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -35925,7 +35937,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 100}
-  m_SizeDelta: {x: 700, y: 100}
+  m_SizeDelta: {x: 590, y: 100}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &465946033238680377
 CanvasRenderer:
@@ -37530,6 +37542,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4801011258479132107, guid: 56cb1ccbe0271594cb0a4e1655c3eb17, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4892506969934389629, guid: 56cb1ccbe0271594cb0a4e1655c3eb17, type: 3}
+      propertyPath: m_Navigation.m_Mode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4892506969934389629, guid: 56cb1ccbe0271594cb0a4e1655c3eb17, type: 3}

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.ViewModels.Managers;
 using Assets.Scripts.Views.UI;
@@ -157,6 +158,27 @@ namespace Assets.Scripts.Views.Base
         {
             _draggableImg.gameObject.SetActive(false);
             DisplayLustosaurs();
+        }
+
+        /// <summary>
+        /// Màj les jauges d'exp des luxurosaures
+        /// </summary>
+        public void UpdateExpGauges()
+        {
+            for (int i = 0; i < _manager.PlayerTeam.Count; ++i)
+            {
+                int levelsGainedOnLastExpGain = _manager.LevelsGainedOnLastExpGain[i];
+                FightingStats statsGainedOnLastExpGain = _manager.StatsGainedOnLastExpGain[i];
+                List<AttackSO> attacksGainedOnLastExpGain = _manager.AttacksGainedOnLastExpGain[i];
+
+                // Si la liste n'est pas nulle, alors ce luxurosaure n'était pas déjà au niveau max.
+                // On peut donc animer sa jauge
+
+                if (attacksGainedOnLastExpGain != null)
+                {
+
+                }
+            }
         }
 
         #endregion

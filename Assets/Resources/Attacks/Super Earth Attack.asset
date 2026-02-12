@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68856739c7f58634ba14dbd55878941f, type: 3}
   m_Name: Super Earth Attack
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Dinos.AttackSO
-  <Attribute>k__BackingField: 0
+  <Attribute>k__BackingField: 4
   <AttributeSprite>k__BackingField: {fileID: 21300000, guid: 3776ac74fd086ba4e9d80dea7d5391f0, type: 3}
   <Damage>k__BackingField: 50
   <Accuracy>k__BackingField: 95

@@ -61,6 +61,21 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public int PlayerTeamCapacity => _playerTeamCapacity;
 
+        /// <summary>
+        /// Niveaux gagnés lors du dernier gain d'exp
+        /// </summary>
+        public int[] LevelsGainedOnLastExpGain { get => _levelsGainedOnLastExpGain; private set => _levelsGainedOnLastExpGain = value; }
+
+        /// <summary>
+        /// Stats gagnées lors du dernier gain d'exp
+        /// </summary>
+        public FightingStats[] StatsGainedOnLastExpGain { get => _statsGainedOnLastExpGain; private set => _statsGainedOnLastExpGain = value; }
+
+        /// <summary>
+        /// Attaques gagnées lors du dernier gain d'exp
+        /// </summary>
+        public List<AttackSO>[] AttacksGainedOnLastExpGain { get => _attacksGainedOnLastExpGain; private set => _attacksGainedOnLastExpGain = value; }
+
         #endregion
 
         #region Variables Unity
@@ -82,6 +97,25 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         [SerializeField]
         private LustosaurSO[] StartingTeam;
+
+        #endregion
+
+        #region Variables d'instance
+
+        /// <summary>
+        /// Niveaux gagnés lors du dernier gain d'exp
+        /// </summary>
+        private int[] _levelsGainedOnLastExpGain;
+
+        /// <summary>
+        /// Stats gagnées lors du dernier gain d'exp
+        /// </summary>
+        private FightingStats[] _statsGainedOnLastExpGain;
+
+        /// <summary>
+        /// Attaques gagnées lors du dernier gain d'exp
+        /// </summary>
+        private List<AttackSO>[] _attacksGainedOnLastExpGain;
 
         #endregion
 
@@ -158,6 +192,18 @@ namespace Assets.Scripts.ViewModels.Managers
         public LustosaurSO GetRandomActiveLustosaur()
         {
             return PlayerTeam[UnityEngine.Random.Range(0, PlayerTeam.Count)];
+        }
+
+        /// <summary>
+        /// Fait gagner de l'exp à tous les membres de l'équipe active
+        /// </summary>
+        /// <param name="expGained">L'exp gagnée</param>
+        public void GainEXPForActiveTeam(int expGained)
+        {
+            for (int i = 0; i < PlayerTeam.Count; ++i)
+            {
+                PlayerTeam[i].GainEXP(expGained, out _levelsGainedOnLastExpGain[i], out _statsGainedOnLastExpGain[i], out _attacksGainedOnLastExpGain[i]);
+            }
         }
 
         #endregion

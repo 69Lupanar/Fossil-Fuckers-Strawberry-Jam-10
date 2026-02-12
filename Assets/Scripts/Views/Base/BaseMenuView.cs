@@ -284,7 +284,16 @@ namespace Assets.Scripts.Views.Base
             _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
             {
                 CloseAll();
-                _gameManager.RestartLevel(reasonForSex != ReasonForSex.Gallery);
+                _teamView.UpdateExpGauges();
+
+                if (reasonForSex == ReasonForSex.Defeat || reasonForSex == ReasonForSex.StatDepleted)
+                {
+                    _gameManager.RestartLevel(/*true*/);
+                }
+                else
+                {
+                    _gameManager.EnableController();
+                }
 
                 _blackFadeImg.DOFade(0f, _fadeSpeed);
             });

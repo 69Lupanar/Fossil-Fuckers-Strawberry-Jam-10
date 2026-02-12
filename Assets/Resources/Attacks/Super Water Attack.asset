@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68856739c7f58634ba14dbd55878941f, type: 3}
   m_Name: Super Water Attack
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Dinos.AttackSO
-  <Attribute>k__BackingField: 0
+  <Attribute>k__BackingField: 1
   <AttributeSprite>k__BackingField: {fileID: 21300000, guid: febb6811456b31547ad848c2b0bff68c, type: 3}
   <Damage>k__BackingField: 50
   <Accuracy>k__BackingField: 95

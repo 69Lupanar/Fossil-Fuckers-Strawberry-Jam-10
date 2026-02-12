@@ -50,6 +50,12 @@ namespace Assets.Scripts.ViewModels.Managers
         private PlayerStatsManager _statsManager;
 
         /// <summary>
+        /// Le TeamMenuManager
+        /// </summary>
+        [SerializeField]
+        private TeamMenuManager _teamMenuManager;
+
+        /// <summary>
         /// Le PlayerController
         /// </summary>
         [SerializeField]
@@ -151,16 +157,16 @@ namespace Assets.Scripts.ViewModels.Managers
         /// et régénère la mine
         /// </summary>
         /// <param name="loseAllEXP">true si l'exp du joueur doit retomber à 0</param>
-        public void RestartLevel(bool loseAllEXP)
+        public void RestartLevel(/*bool loseAllEXP*/)
         {
             _mineableSpawner.Generate();
             EnableController();
             RespawnPlayer();
 
-            if (loseAllEXP)
-            {
-                _statsManager.LoseEXP(_statsManager.CurEXPPoints);
-            }
+            //if (loseAllEXP)
+            //{
+            //    _statsManager.LoseEXP(_statsManager.CurEXPPoints);
+            //}
 
             _statsManager.RestoreStats();
             _inventoryManager.Clear();
@@ -171,6 +177,11 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public void OnQuitCombatScreen()
         {
+            // Ajoute au joueur l'EXP gagnée
+
+            _statsManager.GainEXP(_combatManager.EXPGained);
+            _teamMenuManager.GainEXPForActiveTeam(_combatManager.EXPGained);
+
             _tempNPCFighter.ReturnToPool();
             _tempNPCFighter = null;
         }

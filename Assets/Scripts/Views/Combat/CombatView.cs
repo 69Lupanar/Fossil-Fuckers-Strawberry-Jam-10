@@ -524,6 +524,7 @@ namespace Assets.Scripts.Views.Combat
             _attackListCanvas.enabled = true;
             _selectionLockLevel = CombatSelectionLockLevel.Player;
             _manager.SelectAllyLustosaur(0);
+            PopulateAttacksList();
             ShowArrowTarget(_playerLustosaursHandlers, 0);
             ShowInstruction(0);
         }
@@ -549,9 +550,10 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         public void OnEndTurnBtnClick()
         {
+            _actionMenuCanvas.enabled = false;
+
             if (_manager.PlayerHasInitiative)
             {
-                _actionMenuCanvas.enabled = false;
                 ProcessOpponentTurn();
             }
             else
@@ -574,8 +576,16 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         public void OnYesBtnClick()
         {
-            _defeatCanvas.enabled = false;
+            _victoryCanvas.enabled = false;
             _selectionLockLevel = CombatSelectionLockLevel.Enemy;
+            _manager.RestoreEnemyLustorsaurs();
+
+            for (int i = 0; i < _manager.EnemyTeam.Length; ++i)
+            {
+                _enemyLustosaursHandlers[i].gameObject.SetActive(_manager.EnemyTeam[i] != null);
+                _enemyLustosaursHandlers[i].SetAlpha(1f, false);
+            }
+
             _manager.SelectEnemyLustosaur(0);
             ShowArrowTarget(_enemyLustosaursHandlers, 0);
             ShowInstruction(3);
@@ -635,6 +645,7 @@ namespace Assets.Scripts.Views.Combat
             {
                 if (_selectionLockLevel == CombatSelectionLockLevel.Enemy || _selectionLockLevel == CombatSelectionLockLevel.Both)
                 {
+                    _selectionLockLevel = CombatSelectionLockLevel.None;
                     _manager.SelectEnemyLustosaur(-index - 1);
 
                     switch (_manager.BattleState)
@@ -648,30 +659,10 @@ namespace Assets.Scripts.Views.Combat
                             break;
 
                         case BattleState.Victory:
-                            QuitCombatScreen(BattleState.Victory);
+                            QuitCombatScreen(BattleState.Victory, _manager.SelectedEnemy);
                             break;
                     }
                 }
-            }
-        }
-
-        /// <summary>
-        /// Quitte l'écran de combat
-        /// </summary>
-        /// <param name="battleState">Issue de la victoire</param>
-        /// <param name="enemyLustosaur">Le luxurosaure ennemi</param>
-        private void QuitCombatScreen(BattleState battleState, LustosaurSO enemyLustosaur = null)
-        {
-            _gameManager.OnQuitCombatScreen();
-
-            switch (battleState)
-            {
-                case BattleState.Victory:
-                    _baseMenuView.OpenSexMenu(ReasonForSex.Victory, SexEnvironment.CombatVictory, null);
-                    break;
-                case BattleState.Defeat:
-                    _baseMenuView.OpenSexMenu(ReasonForSex.Defeat, SexEnvironment.CombatDefeat, enemyLustosaur);
-                    break;
             }
         }
 
@@ -859,6 +850,7 @@ namespace Assets.Scripts.Views.Combat
 
             _messagePanel.alpha = 0f;
             _messageLabel.SetText(msg);
+            _messageIcon.gameObject.SetActive(sprite != null);
             _messageIcon.sprite = sprite;
 
             _messagePanel.DOFade(1f, _messageFadeDuration).OnComplete(() =>
@@ -877,7 +869,8 @@ namespace Assets.Scripts.Views.Combat
         /// <param name="index">La position du luxurosaure dans la liste</param>
         private void ShowArrowTarget(CombatLustosaurHandler[] handlers, int index)
         {
-            _arrowTarget.DOLocalMove(handlers[index].transform.position + _arrowTargetOffset, _arrowTargetMoveDuration);
+            _arrowTarget.DOKill();
+            _arrowTarget.DOMove(handlers[index].transform.position + _arrowTargetOffset, _arrowTargetMoveDuration);
         }
 
         /// <summary>
@@ -954,6 +947,26 @@ namespace Assets.Scripts.Views.Combat
             _actionMenuCanvas.enabled = false;
             _defeatCanvas.enabled = true;
             StartCoroutine(IncreaseExpGainedCo());
+        }
+
+        /// <summary>
+        /// Quitte l'écran de combat
+        /// </summary>
+        /// <param name="battleState">Issue de la victoire</param>
+        /// <param name="enemyLustosaur">Le luxurosaure ennemi</param>
+        private void QuitCombatScreen(BattleState battleState, LustosaurSO enemyLustosaur = null)
+        {
+            _gameManager.OnQuitCombatScreen();
+
+            switch (battleState)
+            {
+                case BattleState.Victory:
+                    _baseMenuView.OpenSexMenu(ReasonForSex.Victory, SexEnvironment.CombatVictory, enemyLustosaur);
+                    break;
+                case BattleState.Defeat:
+                    _baseMenuView.OpenSexMenu(ReasonForSex.Defeat, SexEnvironment.CombatDefeat, enemyLustosaur);
+                    break;
+            }
         }
 
         #endregion
@@ -1122,7 +1135,7 @@ namespace Assets.Scripts.Views.Combat
 
             ShowHornyMessage();
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(_manager.PlayerHasInitiative || _manager.PlayerHeatLevel == -1 ? 1f : _messageDuration);
 
             // On commence le 1er tour
 
@@ -1153,20 +1166,11 @@ namespace Assets.Scripts.Views.Combat
                     }
                 });
             }
-
-            if (handlers[2] != null)
+            else if (handlers[2] != null)
             {
                 delay += _lustosaurSupportAnimDuration;
                 Transform t2 = handlers[2].transform;
-                t2.DOLocalMoveY(t2.localPosition.y + _lustosaurBounceOffsets.y, _lustosaurSupportAnimDuration).SetEase(_bounceCurve).OnComplete(() =>
-                {
-                    if (handlers[1] != null)
-                    {
-                        delay += _lustosaurSupportAnimDuration;
-                        Transform t1 = handlers[1].transform;
-                        t1.DOLocalMoveY(t1.localPosition.y + _lustosaurBounceOffsets.y, _lustosaurSupportAnimDuration).SetEase(_bounceCurve);
-                    }
-                });
+                t2.DOLocalMoveY(t2.localPosition.y + _lustosaurBounceOffsets.y, _lustosaurSupportAnimDuration).SetEase(_bounceCurve);
             }
 
             // Pour la coroutine, on attend _lustosaurSupportAnimSpeed * le nb d'anims jouées
@@ -1218,8 +1222,23 @@ namespace Assets.Scripts.Views.Combat
 
             // Affiche le montant de dégâts
 
+            _missHitIcon.transform.position = defenderHandler.transform.position;
+            _normalHitIcon.transform.position = defenderHandler.transform.position;
+            _criticalHitIcon.transform.position = defenderHandler.transform.position;
+
+            _missHitIcon.DOKill();
+            _normalHitIcon.DOKill();
+            _criticalHitIcon.DOKill();
+            _missHitIcon.alpha = 0f;
+            _normalHitIcon.alpha = 0f;
+            _criticalHitIcon.alpha = 0f;
+            _missHitLabel.StopAllCoroutines();
+            _normalHitDmgLabel.StopAllCoroutines();
+            _criticalHitDmgLabel.StopAllCoroutines();
+
             if (miss)
             {
+                _missHitIcon.transform.DOMove(_missHitIcon.transform.position + _arrowTargetOffset, _hitIconFadeDuration);
                 _missHitIcon.DOFade(1f, _hitIconFadeDuration).OnComplete(() =>
                 {
                     _missHitLabel.StartCoroutine(WaitCo(_hitIconDuration, () =>
@@ -1230,6 +1249,7 @@ namespace Assets.Scripts.Views.Combat
             }
             else if (criticalHit)
             {
+                _criticalHitIcon.transform.DOMove(_criticalHitIcon.transform.position + _arrowTargetOffset, _hitIconFadeDuration);
                 _criticalHitDmgLabel.SetText(dmg.ToString());
 
                 _criticalHitIcon.DOFade(1f, _hitIconFadeDuration).OnComplete(() =>
@@ -1242,6 +1262,7 @@ namespace Assets.Scripts.Views.Combat
             }
             else
             {
+                _normalHitIcon.transform.DOMove(_normalHitIcon.transform.position + _arrowTargetOffset, _hitIconFadeDuration);
                 _normalHitDmgLabel.SetText(dmg.ToString());
 
                 _normalHitIcon.DOFade(1f, _hitIconFadeDuration).OnComplete(() =>
@@ -1263,6 +1284,17 @@ namespace Assets.Scripts.Views.Combat
 
             if (defender.CurHealth == 0)
             {
+                _manager.IncreaseFPOnLustosaurDeath(isPlayerTurn);
+
+                if (isPlayerTurn)
+                {
+                    StartCoroutine(IncrementFPLabelCo(_enemyFPLabel, _manager.EnemyFP, _FPChangeSpeed));
+                }
+                else
+                {
+                    StartCoroutine(IncrementFPLabelCo(_playerFPLabel, _manager.PlayerFP, _FPChangeSpeed));
+                }
+
                 ShowMessage(string.Format(CombatConstants.LUSTOSAUR_DEFEATED_MSG, defender.name), _deathIcon);
                 defenderHandler.SetAlpha(0f, true);
                 yield return new WaitForSeconds(_lustosaurDeathDuration);

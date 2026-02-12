@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68856739c7f58634ba14dbd55878941f, type: 3}
   m_Name: Mega Wind Attack
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Dinos.AttackSO
-  <Attribute>k__BackingField: 0
+  <Attribute>k__BackingField: 3
   <AttributeSprite>k__BackingField: {fileID: 21300000, guid: b8e90247a262dca49ad30acffa37f1b4, type: 3}
   <Damage>k__BackingField: 100
   <Accuracy>k__BackingField: 85

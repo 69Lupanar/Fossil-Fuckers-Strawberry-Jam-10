@@ -186,6 +186,12 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         private int _avgLevelDifference;
 
+        /// <summary>
+        /// L'équipe ennemie à restaurer en cas de victoire
+        /// pour que le joueur puisse sélectionner une scène adulte
+        /// </summary>
+        private LustosaurSO[] _enemyLustosaursToRestoreOnVictory;
+
         #endregion
 
         #region Méthodes publiques
@@ -219,6 +225,7 @@ namespace Assets.Scripts.ViewModels.Managers
 
             PlayerTeam = new LustosaurSO[CombatConstants.NB_PARTICIPATING_LUSTOSAURS];
             EnemyTeam = new LustosaurSO[CombatConstants.NB_PARTICIPATING_LUSTOSAURS];
+            _enemyLustosaursToRestoreOnVictory = new LustosaurSO[CombatConstants.NB_PARTICIPATING_LUSTOSAURS];
 
             int avgPlayerLevels = 0;
             int avgEnemyLevels = 0;
@@ -257,6 +264,7 @@ namespace Assets.Scripts.ViewModels.Managers
             {
                 LustosaurSO lustosaur = shuffled[i];
                 EnemyTeam[i] = lustosaur.Clone();
+                _enemyLustosaursToRestoreOnVictory[i] = EnemyTeam[i];
                 ++_activeEnemyLustosaurs;
 
                 avgEnemyLevels += lustosaur.CurLevel;
@@ -412,11 +420,11 @@ namespace Assets.Scripts.ViewModels.Managers
 
             // On calcule le % de chance que l'attaque touche sa cible
 
-            int hitChance = (attack.Accuracy + attacker.CurFightingStats.Accuracy) / 2 + attackingPlayerStats.Accuracy;
-            int dodgeChance = defender.CurFightingStats.Evasion + defendingPlayerStats.Evasion;
-            int substract = hitChance - dodgeChance;
+            int accuracy = (attack.Accuracy + attacker.CurFightingStats.Accuracy) / 2 + attackingPlayerStats.Accuracy;
+            int evasion = defender.CurFightingStats.Evasion + defendingPlayerStats.Evasion;
+            int hitChance = accuracy - evasion;
             int rand = UnityEngine.Random.Range(0, 101);
-            miss = rand < substract;
+            miss = rand > hitChance;
 
             // On calcule les dégaâts et la chance d'un coup critique
 
@@ -427,6 +435,7 @@ namespace Assets.Scripts.ViewModels.Managers
                 return;
             }
 
+            float resistanceMultiplier = GetResistanceMultiplier(attacker.Attribute, defender.Attribute, attack.Attribute);
             int totalAttack = (attack.Damage + attacker.CurFightingStats.Attack) / 2 + attackingPlayerStats.Attack;
             int totalDefense = defender.CurFightingStats.Defense + defendingPlayerStats.Defense;
             rand = UnityEngine.Random.Range(0, 101);
@@ -434,6 +443,7 @@ namespace Assets.Scripts.ViewModels.Managers
             criticalHit = rand < attacker.CurFightingStats.CriticalHitRate + attackingPlayerStats.CriticalHitRate;
             dmg = Mathf.Max(0, Mathf.RoundToInt((totalAttack - totalDefense) * (criticalHit ? CombatConstants.CRITICAL_HIT_DMG_BONUS : 1f)));
             dmg /= attackerIsSupport || defenderIsSupport ? CombatConstants.SUPPORT_ZONE_DMG_REDUCTION : 1;
+            dmg = Mathf.RoundToInt(dmg * resistanceMultiplier);
 
             // Inflige les dégâts au luxurosaure et le retire du combat si ses PV atteignent 0.
             // Puis on calcule les conditions de victoire
@@ -450,6 +460,7 @@ namespace Assets.Scripts.ViewModels.Managers
 
                     if (_activeEnemyLustosaurs == 0)
                     {
+                        CalculateExpGained(BattleState);
                         BattleState = BattleState.Victory;
                     }
                 }
@@ -460,10 +471,82 @@ namespace Assets.Scripts.ViewModels.Managers
 
                     if (_activePlayerLustosaurs == 0)
                     {
+                        Submit();
                         BattleState = BattleState.Defeat;
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Obtient un multiplicateur de dégâts en fonction de la table des attributs
+        /// </summary>
+        /// <param name="attackerAttribute">Attribut de l'attaquant</param>
+        /// <param name="defenderAttribute">Attribut du défenseur</param>
+        /// <param name="attackAttribute">Attribut de l'attaque</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private float GetResistanceMultiplier(ElementalAttribute attackerAttribute, ElementalAttribute defenderAttribute, ElementalAttribute attackAttribute)
+        {
+            float resistanceMultiplier = 1f;
+
+            if (attackerAttribute == attackAttribute)
+            {
+                resistanceMultiplier += .5f;
+            }
+
+            switch (defenderAttribute)
+            {
+                case ElementalAttribute.Water:
+                    switch (attackAttribute)
+                    {
+                        case ElementalAttribute.Earth:
+                            resistanceMultiplier += .5f;
+                            break;
+                        case ElementalAttribute.Fire:
+                            resistanceMultiplier -= .5f;
+                            break;
+                    }
+                    break;
+
+                case ElementalAttribute.Fire:
+                    switch (attackAttribute)
+                    {
+                        case ElementalAttribute.Water:
+                            resistanceMultiplier += .5f;
+                            break;
+                        case ElementalAttribute.Wind:
+                            resistanceMultiplier -= .5f;
+                            break;
+                    }
+                    break;
+
+                case ElementalAttribute.Wind:
+                    switch (attackAttribute)
+                    {
+                        case ElementalAttribute.Fire:
+                            resistanceMultiplier += .5f;
+                            break;
+                        case ElementalAttribute.Earth:
+                            resistanceMultiplier -= .5f;
+                            break;
+                    }
+                    break;
+
+                case ElementalAttribute.Earth:
+                    switch (attackAttribute)
+                    {
+                        case ElementalAttribute.Wind:
+                            resistanceMultiplier += .5f;
+                            break;
+                        case ElementalAttribute.Water:
+                            resistanceMultiplier -= .5f;
+                            break;
+                    }
+                    break;
+            }
+
+            return resistanceMultiplier;
         }
 
         /// <summary>
@@ -564,17 +647,18 @@ namespace Assets.Scripts.ViewModels.Managers
             // On sélectionne un luxurosaure au hasard
             // parmi ceux de l'ennemi qui ont assez de PP pour attaquer
 
-            List<LustosaurSO> validTargets = new();
+            List<int> validTargets = new();
 
-            foreach (LustosaurSO lustosaur in EnemyTeam)
+            for (int i = 0; i < EnemyTeam.Length; ++i)
             {
+                LustosaurSO lustosaur = EnemyTeam[i];
                 if (lustosaur != null)
                 {
                     foreach (AttackSO attack in lustosaur.LearnedAttacks)
                     {
                         if (attack.Cost <= EnemyFP)
                         {
-                            validTargets.Add(lustosaur);
+                            validTargets.Add(i);
                         }
                     }
                 }
@@ -583,7 +667,8 @@ namespace Assets.Scripts.ViewModels.Managers
             // On sélectionne un luxurosaure au hasard pour attaquer,
             // et on choisit une attaque au hasard
 
-            SelectedEnemy = validTargets[UnityEngine.Random.Range(0, validTargets.Count)];
+            SelectedEnemyIndex = validTargets[UnityEngine.Random.Range(0, validTargets.Count)];
+            SelectedEnemy = EnemyTeam[SelectedEnemyIndex];
             SelectedAttack = SelectedEnemy.LearnedAttacks[UnityEngine.Random.Range(0, SelectedEnemy.LearnedAttacks.Count)];
 
             // On sélectionne une cible au hasard
@@ -591,15 +676,18 @@ namespace Assets.Scripts.ViewModels.Managers
 
             validTargets.Clear();
 
-            foreach (LustosaurSO lustosaur in EnemyTeam)
+            for (int i = 0; i < PlayerTeam.Length; ++i)
             {
+                LustosaurSO lustosaur = PlayerTeam[i];
+
                 if (lustosaur != null)
                 {
-                    validTargets.Add(lustosaur);
+                    validTargets.Add(i);
                 }
             }
 
-            SelectedAlly = validTargets[UnityEngine.Random.Range(0, validTargets.Count)];
+            SelectedAllyIndex = validTargets[UnityEngine.Random.Range(0, validTargets.Count)];
+            SelectedAlly = PlayerTeam[SelectedAllyIndex];
         }
 
         /// <summary>
@@ -626,6 +714,43 @@ namespace Assets.Scripts.ViewModels.Managers
 
             CalculateExpGained(BattleState);
         }
+
+        /// <summary>
+        /// Restaure l'équipe ennemie
+        /// pour que le joueur puisse sélectionner une scène adulte
+        /// </summary>
+        public void RestoreEnemyLustorsaurs()
+        {
+            for (int i = 0; i < EnemyTeam.Length; ++i)
+            {
+                EnemyTeam[i] = _enemyLustosaursToRestoreOnVictory[i];
+
+                if (EnemyTeam[i] != null)
+                {
+                    EnemyTeam[i].CurHealth = 1;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Augmente les PPs du perdant d'un luxurosaure
+        /// </summary>
+        /// <param name="isPlayerTurn">true si c'est le tour du joueur</param>
+        public void IncreaseFPOnLustosaurDeath(bool isPlayerTurn)
+        {
+            if (isPlayerTurn)
+            {
+                EnemyFP += _FPIncreaseOnAllyDeath;
+            }
+            else
+            {
+                PlayerFP += _FPIncreaseOnAllyDeath;
+            }
+        }
+
+        #endregion
+
+        #region Méthodes privées
 
         /// <summary>
         /// Calcule l'exp gagnée

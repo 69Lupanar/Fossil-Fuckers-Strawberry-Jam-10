@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68856739c7f58634ba14dbd55878941f, type: 3}
   m_Name: Fire Attack
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Dinos.AttackSO
-  <Attribute>k__BackingField: 0
+  <Attribute>k__BackingField: 2
   <AttributeSprite>k__BackingField: {fileID: 21300000, guid: ddfa12407aa9c5641b4f7a90a0da989b, type: 3}
   <Damage>k__BackingField: 10
   <Accuracy>k__BackingField: 100

@@ -109,7 +109,7 @@ namespace Assets.Scripts.Views.UI
         /// </summary>
         public void HideResistanceIcon()
         {
-            _resistanceIcon.enabled = false;
+            _resistanceIcon.gameObject.SetActive(false);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Assets.Scripts.Views.UI
         /// </summary>
         public void SetResistantIcon()
         {
-            _resistanceIcon.enabled = true;
+            _resistanceIcon.gameObject.SetActive(_resistantIcon != null);
             _resistanceIcon.sprite = _resistantIcon;
         }
 
@@ -126,7 +126,7 @@ namespace Assets.Scripts.Views.UI
         /// </summary>
         public void SetNeutralIcon()
         {
-            _resistanceIcon.enabled = true;
+            _resistanceIcon.gameObject.SetActive(_neutralIcon != null);
             _resistanceIcon.sprite = _neutralIcon;
         }
 
@@ -135,7 +135,7 @@ namespace Assets.Scripts.Views.UI
         /// </summary>
         public void SetVulnerableIcon()
         {
-            _resistanceIcon.enabled = true;
+            _resistanceIcon.gameObject.SetActive(_vulnerableIcon != null);
             _resistanceIcon.sprite = _vulnerableIcon;
         }
 

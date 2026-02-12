@@ -59,7 +59,7 @@ MonoBehaviour:
         <MinMaxDepth>k__BackingField: {x: 15, y: 100}
         <Rarity>k__BackingField: 2
   <NbMaxLustosaursPerNPC>k__BackingField: 5
-  <MinMaxNbNPCFighters>k__BackingField: {x: 3, y: 20}
+  <MinMaxNbNPCFighters>k__BackingField: {x: 10, y: 20}
   <DialoguesPerHeatThreshold>k__BackingField:
   - <Tag>k__BackingField: Normal
     <Lines>k__BackingField:
