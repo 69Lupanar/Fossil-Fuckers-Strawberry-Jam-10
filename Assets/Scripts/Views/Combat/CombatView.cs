@@ -277,6 +277,12 @@ namespace Assets.Scripts.Views.Combat
         private CanvasGroup _criticalHitIcon;
 
         /// <summary>
+        /// Icône indiquant que l'attaque a échoué
+        /// </summary>
+        [SerializeField]
+        private CanvasGroup _missHitIcon;
+
+        /// <summary>
         /// Label affichant les dégâts
         /// </summary>
         [SerializeField]
@@ -287,6 +293,12 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         [SerializeField]
         private TextMeshProUGUI _criticalHitDmgLabel;
+
+        /// <summary>
+        /// Label indiquant que l'attaque a échoué
+        /// </summary>
+        [SerializeField]
+        private TextMeshProUGUI _missHitLabel;
 
         [Space(10)]
         [Header("Instructions")]
@@ -454,6 +466,11 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         private CombatSelectionLockLevel _selectionLockLevel = CombatSelectionLockLevel.None;
 
+        /// <summary>
+        /// true si le joueur est en train de changer la formation de ses luxurosaures
+        /// </summary>
+        private bool _isChangingFormation;
+
         #endregion
 
         #region Méthodes Unity
@@ -467,17 +484,19 @@ namespace Assets.Scripts.Views.Combat
             _combatCanvas.enabled = false;
         }
 
-        /// <summary>
-        /// màj à chaque frame
-        /// </summary>
-        private void Update()
-        {
-            if (Input.GetMouseButtonDown(1))
-            {
-                // TAF: Au clic droit, annule la décision de formation
-                // et retourne au menu d'action
-            }
-        }
+        ///// <summary>
+        ///// màj à chaque frame
+        ///// </summary>
+        //private void Update()
+        //{
+        //    if (Input.GetMouseButtonDown(1) && _isChangingFormation)
+        //    {
+        //        // TAF: Au clic droit, annule la décision de formation
+        //        // et retourne au menu d'action
+
+        //        CancelChangeFormation();
+        //    }
+        //}
 
         #endregion
 
@@ -493,7 +512,7 @@ namespace Assets.Scripts.Views.Combat
             _selectionLockLevel = CombatSelectionLockLevel.Player;
             _manager.SelectAllyLustosaur(0);
             ShowArrowTarget(_playerLustosaursHandlers, 0);
-            ShowInstruction(1);
+            ShowInstruction(0);
         }
 
         /// <summary>
@@ -501,7 +520,15 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         public void OnFormationBtnClick()
         {
+            // Pas implémenté pour la jam ; pas assez de temps,
+            // et le code est pas assez robuste pour ça
 
+            //_isChangingFormation = true;
+            //_actionMenuCanvas.enabled = false;
+            //_selectionLockLevel = CombatSelectionLockLevel.Player;
+            //_manager.SelectAllyLustosaur(0);
+            //ShowArrowTarget(_playerLustosaursHandlers, 0);
+            //ShowInstruction(1);
         }
 
         /// <summary>
@@ -509,7 +536,15 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         public void OnEndTurnBtnClick()
         {
-
+            if (_manager.PlayerHasInitiative)
+            {
+                _actionMenuCanvas.enabled = false;
+                ProcessOpponentTurn();
+            }
+            else
+            {
+                StartCoroutine(StartNewTurnCo());
+            }
         }
 
         /// <summary>
@@ -944,16 +979,16 @@ namespace Assets.Scripts.Views.Combat
         /// <param name="isPlayerTurn">true si c'est le tour du joueur</param>
         private void ConductAttack(LustosaurSO attacker, LustosaurSO defender, AttackSO attack, bool isPlayerTurn)
         {
-            _manager.ConductAttack(attacker, defender, attack, out int dmg, out bool criticalHit, isPlayerTurn);
+            _manager.ConductAttack(attacker, defender, attack, isPlayerTurn, out int dmg, out bool criticalHit, out bool miss);
 
             // Affiche le message d'attaque
 
             string msg = isPlayerTurn ? CombatConstants.ALLY_ATTACK_MSG : CombatConstants.ENEMY_ATTACK_MSG;
-            ShowMessage(string.Format(msg, _manager.SelectedAlly.name, _manager.SelectedEnemy.name), null);
+            ShowMessage(string.Format(msg, attacker.name, defender.name), null);
 
             // Anime l'attaque
 
-            StartCoroutine(PlayAttackAnimationCo(attacker, defender, dmg, criticalHit, isPlayerTurn));
+            StartCoroutine(PlayAttackAnimationCo(attacker, defender, dmg, criticalHit, miss, isPlayerTurn));
         }
 
         /// <summary>
@@ -962,6 +997,16 @@ namespace Assets.Scripts.Views.Combat
         private void ProcessOpponentTurn()
         {
 
+        }
+
+        /// <summary>
+        /// Annule le changement de formation et revient au menu des actions
+        /// </summary>
+        private void CancelChangeFormation()
+        {
+            _isChangingFormation = false;
+            _instructionsCanvas.enabled = false;
+            _actionMenuCanvas.enabled = true;
         }
 
         #endregion
@@ -1072,8 +1117,9 @@ namespace Assets.Scripts.Views.Combat
         /// <param name="defender">Le défenseur</param>
         /// <param name="dmg">Les dégâts infligés</param>
         /// <param name="criticalHit">true s'il s'agit d'un coup critique</param>
+        /// <param name="miss">true si l'attaque a échoué</param>
         /// <param name="isPlayerTurn">true si c'est le tour du joueur</param>
-        private IEnumerator PlayAttackAnimationCo(LustosaurSO attacker, LustosaurSO defender, int dmg, bool criticalHit, bool isPlayerTurn)
+        private IEnumerator PlayAttackAnimationCo(LustosaurSO attacker, LustosaurSO defender, int dmg, bool criticalHit, bool miss, bool isPlayerTurn)
         {
             // Modifie le compteur de FP correspondant
 
@@ -1108,7 +1154,17 @@ namespace Assets.Scripts.Views.Combat
 
             // Affiche le montant de dégâts
 
-            if (criticalHit)
+            if (miss)
+            {
+                _missHitIcon.DOFade(1f, _hitIconFadeDuration).OnComplete(() =>
+                {
+                    _missHitLabel.StartCoroutine(WaitCo(_hitIconDuration, () =>
+                    {
+                        _missHitIcon.DOFade(0f, _hitIconFadeDuration);
+                    }));
+                });
+            }
+            else if (criticalHit)
             {
                 _criticalHitDmgLabel.SetText(dmg.ToString());
 

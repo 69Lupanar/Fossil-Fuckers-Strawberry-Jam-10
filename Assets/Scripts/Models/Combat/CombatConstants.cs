@@ -11,6 +11,16 @@ namespace Assets.Scripts.Models.Combat
         public const int NB_PARTICIPATING_LUSTOSAURS = 3;
 
         /// <summary>
+        /// Bonus de dégâts d'un coup critique
+        /// </summary>
+        public const float CRITICAL_HIT_DMG_BONUS = 1.5f;
+
+        /// <summary>
+        /// Réduction de dégâts si l'attaquant ou le défenseur sont dans la zone de soutien
+        /// </summary>
+        public const int SUPPORT_ZONE_DMG_REDUCTION = 2;
+
+        /// <summary>
         /// Message d'attaque sur un ennemi
         /// </summary>
         public const string ALLY_ATTACK_MSG = "{0} attacks the opposing {1}!";

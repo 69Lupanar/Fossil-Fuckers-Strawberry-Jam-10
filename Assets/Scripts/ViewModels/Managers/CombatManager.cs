@@ -112,16 +112,6 @@ namespace Assets.Scripts.ViewModels.Managers
         public int PlayerHeatLevel => _playerStatsManager.LastHeatLevel;
 
         /// <summary>
-        /// true si le joueur a terminé son tour
-        /// </summary>
-        public bool PlayerHasEndedHisTurn { get; private set; }
-
-        /// <summary>
-        /// true si l'ennemi a terminé tour
-        /// </summary>
-        public bool EnemyHasEndedHisTurn { get; private set; }
-
-        /// <summary>
         /// true si le joueur a changé de formation ce tour
         /// </summary>
         public bool PlayerHasChangedFormationThisTurn { get; private set; }
@@ -173,6 +163,20 @@ namespace Assets.Scripts.ViewModels.Managers
 
         #endregion
 
+        #region Variables d'instance
+
+        /// <summary>
+        /// Le nombre de luxurosaures du joueur encore en vie
+        /// </summary>
+        public int _activePlayerLustosaurs;
+
+        /// <summary>
+        /// Le nombre de luxurosaures de l'adversaire encore en vie
+        /// </summary>
+        public int _activeEnemyLustosaurs;
+
+        #endregion
+
         #region Méthodes publiques
 
         /// <summary>
@@ -185,6 +189,7 @@ namespace Assets.Scripts.ViewModels.Managers
 
             BattleState = BattleState.Ongoing;
             PlayerSupportStats = EnemySupportStats = FightingStats.Zero;
+            _activePlayerLustosaurs = _activeEnemyLustosaurs = 0;
 
             switch (PlayerHeatLevel)
             {
@@ -206,6 +211,7 @@ namespace Assets.Scripts.ViewModels.Managers
             for (int i = 0; i < Mathf.Min(CombatConstants.NB_PARTICIPATING_LUSTOSAURS, _teamMenuManager.PlayerTeam.Count); ++i)
             {
                 PlayerTeam[i] = _teamMenuManager.PlayerTeam[i].Clone();
+                ++_activePlayerLustosaurs;
             }
 
             // Pour l'ennemi, on les mélange avant de les cloner.
@@ -227,6 +233,7 @@ namespace Assets.Scripts.ViewModels.Managers
             for (int i = 0; i < Mathf.Min(CombatConstants.NB_PARTICIPATING_LUSTOSAURS, shuffled.Count); ++i)
             {
                 EnemyTeam[i] = shuffled[i].Clone();
+                ++_activeEnemyLustosaurs;
             }
 
             OnCombatStarted?.Invoke();
@@ -269,7 +276,7 @@ namespace Assets.Scripts.ViewModels.Managers
             EnemySupportStats = (EnemyTeam[1] == null ? FightingStats.Zero : EnemyTeam[1].SupportStats) +
                                               (EnemyTeam[2] == null ? FightingStats.Zero : EnemyTeam[2].SupportStats);
 
-            PlayerHasEndedHisTurn = PlayerHasChangedFormationThisTurn = EnemyHasEndedHisTurn = EnemyHasChangedFormationThisTurn = false;
+            PlayerHasChangedFormationThisTurn = EnemyHasChangedFormationThisTurn = false;
         }
 
         /// <summary>
@@ -348,10 +355,17 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <param name="attacker">L'attaquant</param>
         /// <param name="defender">Le défenseur</param>
         /// <param name="attack">L'attaque</param>
+        /// <param name="isPlayerTurn">true si c'est le tour du joueur</param>
         /// <param name="dmg">Les dégâts infligés</param>
         /// <param name="criticalHit">true s'il s'agit d'un coup critique</param>
-        public void ConductAttack(LustosaurSO attacker, LustosaurSO defender, AttackSO attack, out int dmg, out bool criticalHit, bool isPlayerTurn)
+        /// <param name="miss">true si l'attaque rate</param>
+        public void ConductAttack(LustosaurSO attacker, LustosaurSO defender, AttackSO attack, bool isPlayerTurn, out int dmg, out bool criticalHit, out bool miss)
         {
+            FightingStats attackingPlayerStats = isPlayerTurn ? PlayerSupportStats + HornySupportStats : EnemySupportStats;
+            FightingStats defendingPlayerStats = isPlayerTurn ? EnemySupportStats : PlayerSupportStats + HornySupportStats;
+            bool attackerIsSupport = isPlayerTurn ? SelectedAllyIndex != 0 : SelectedEnemyIndex != 0;
+            bool defenderIsSupport = isPlayerTurn ? SelectedEnemyIndex != 0 : SelectedAllyIndex != 0;
+
             if (isPlayerTurn)
             {
                 PlayerFP -= SelectedAttack.Cost;
@@ -361,8 +375,60 @@ namespace Assets.Scripts.ViewModels.Managers
                 EnemyFP -= SelectedAttack.Cost;
             }
 
-            dmg = 0;
-            criticalHit = false;
+            // On calcule le % de chance que l'attaque touche sa cible
+
+            int hitChance = (attack.Accuracy + attacker.CurFightingStats.Accuracy) / 2 + attackingPlayerStats.Accuracy;
+            int dodgeChance = defender.CurFightingStats.Evasion + defendingPlayerStats.Evasion;
+            int substract = hitChance - dodgeChance;
+            int rand = UnityEngine.Random.Range(0, 101);
+            miss = rand < substract;
+
+            // On calcule les dégaâts et la chance d'un coup critique
+
+            if (miss)
+            {
+                dmg = 0;
+                criticalHit = false;
+                return;
+            }
+
+            int totalAttack = (attack.Damage + attacker.CurFightingStats.Attack) / 2 + attackingPlayerStats.Attack;
+            int totalDefense = defender.CurFightingStats.Defense + defendingPlayerStats.Defense;
+            rand = UnityEngine.Random.Range(0, 101);
+
+            criticalHit = rand < attacker.CurFightingStats.CriticalHitRate + attackingPlayerStats.CriticalHitRate;
+            dmg = Mathf.Max(0, Mathf.RoundToInt((totalAttack - totalDefense) * (criticalHit ? CombatConstants.CRITICAL_HIT_DMG_BONUS : 1f)));
+            dmg /= attackerIsSupport || defenderIsSupport ? CombatConstants.SUPPORT_ZONE_DMG_REDUCTION : 1;
+
+            // Inflige les dégâts au luxurosaure et le retire du combat si ses PV atteignent 0.
+            // Puis on calcule les conditions de victoire
+
+            defender.CurHealth -= dmg;
+            defender.CurHealth = Mathf.Max(0, defender.CurHealth);
+
+            if (defender.CurHealth == 0)
+            {
+                if (isPlayerTurn)
+                {
+                    EnemyTeam[SelectedEnemyIndex] = null;
+                    --_activeEnemyLustosaurs;
+
+                    if (_activeEnemyLustosaurs == 0)
+                    {
+                        BattleState = BattleState.Victory;
+                    }
+                }
+                else
+                {
+                    PlayerTeam[SelectedAllyIndex] = null;
+                    --_activePlayerLustosaurs;
+
+                    if (_activePlayerLustosaurs == 0)
+                    {
+                        BattleState = BattleState.Defeat;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -435,7 +501,21 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <returns>true s'il peut toujours attaquer</returns>
         public bool ActiveFighterHasEnoughFPToAttack(bool isPlayerTurn)
         {
-            return true;
+            LustosaurSO[] activeTeam = isPlayerTurn ? PlayerTeam : EnemyTeam;
+            int remainingFP = isPlayerTurn ? PlayerFP : EnemyFP;
+
+            foreach (LustosaurSO lustosaur in activeTeam)
+            {
+                foreach (AttackSO attack in lustosaur.LearnedAttacks)
+                {
+                    if (attack.Cost <= remainingFP)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         #endregion
