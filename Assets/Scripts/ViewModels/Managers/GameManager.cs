@@ -171,7 +171,6 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         public void OnQuitCombatScreen()
         {
-            EnableController();
             _tempNPCFighter.ReturnToPool();
             _tempNPCFighter = null;
         }

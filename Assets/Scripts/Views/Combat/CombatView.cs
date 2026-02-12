@@ -4,6 +4,7 @@ using Assets.Scripts.Models;
 using Assets.Scripts.Models.Combat;
 using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.ViewModels.Managers;
+using Assets.Scripts.Views.Base;
 using Assets.Scripts.Views.UI;
 using DG.Tweening;
 using TMPro;
@@ -21,6 +22,12 @@ namespace Assets.Scripts.Views.Combat
 
         [Header("General")]
         [Space(10)]
+
+        /// <summary>
+        /// Le BaseMenuView
+        /// </summary>
+        [SerializeField]
+        private BaseMenuView _baseMenuView;
 
         /// <summary>
         /// Le GameManagerView
@@ -370,6 +377,12 @@ namespace Assets.Scripts.Views.Combat
         /// Vitesse d'animation
         /// </summary>
         [SerializeField]
+        private float _EXPChangeSpeed = 2f;
+
+        /// <summary>
+        /// Vitesse d'animation
+        /// </summary>
+        [SerializeField]
         private float _lustosaurSupportAnimDuration = .25f;
 
         /// <summary>
@@ -552,7 +565,8 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         public void OnSubmitBtnClick()
         {
-
+            _manager.Submit();
+            ShowDefeatScreen();
         }
 
         /// <summary>
@@ -560,7 +574,11 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         public void OnYesBtnClick()
         {
-
+            _defeatCanvas.enabled = false;
+            _selectionLockLevel = CombatSelectionLockLevel.Enemy;
+            _manager.SelectEnemyLustosaur(0);
+            ShowArrowTarget(_enemyLustosaursHandlers, 0);
+            ShowInstruction(3);
         }
 
         /// <summary>
@@ -568,7 +586,7 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         public void OnNoBtnClick()
         {
-
+            QuitCombatScreen(BattleState.Victory);
         }
 
         /// <summary>
@@ -576,7 +594,7 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         public void OnNextBtnClick()
         {
-
+            QuitCombatScreen(BattleState.Defeat, _manager.SelectedEnemy);
         }
 
         /// <summary>
@@ -630,10 +648,30 @@ namespace Assets.Scripts.Views.Combat
                             break;
 
                         case BattleState.Victory:
-                            // TAF : Lancer scène adulte
+                            QuitCombatScreen(BattleState.Victory);
                             break;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Quitte l'écran de combat
+        /// </summary>
+        /// <param name="battleState">Issue de la victoire</param>
+        /// <param name="enemyLustosaur">Le luxurosaure ennemi</param>
+        private void QuitCombatScreen(BattleState battleState, LustosaurSO enemyLustosaur = null)
+        {
+            _gameManager.OnQuitCombatScreen();
+
+            switch (battleState)
+            {
+                case BattleState.Victory:
+                    _baseMenuView.OpenSexMenu(ReasonForSex.Victory, SexEnvironment.CombatVictory, null);
+                    break;
+                case BattleState.Defeat:
+                    _baseMenuView.OpenSexMenu(ReasonForSex.Defeat, SexEnvironment.CombatDefeat, enemyLustosaur);
+                    break;
             }
         }
 
@@ -904,7 +942,8 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         private void ShowVictoryScreen()
         {
-
+            _victoryCanvas.enabled = true;
+            StartCoroutine(IncreaseExpGainedCo());
         }
 
         /// <summary>
@@ -912,7 +951,9 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         private void ShowDefeatScreen()
         {
-
+            _actionMenuCanvas.enabled = false;
+            _defeatCanvas.enabled = true;
+            StartCoroutine(IncreaseExpGainedCo());
         }
 
         #endregion
@@ -1299,6 +1340,29 @@ namespace Assets.Scripts.Views.Combat
 
             _playerTotalHPLabel.SetText(_manager.PlayerTotalHP.ToString());
             _enemyTotalHPLabel.SetText(_manager.EnemyTotalHP.ToString());
+        }
+
+        /// <summary>
+        /// Augmente les compteurs d'EXP
+        /// </summary>
+        private IEnumerator IncreaseExpGainedCo()
+        {
+            _defeatExpGainedLabel.SetText("0");
+            _victoryExpGainedLabel.SetText("0");
+            float t = 0f;
+
+            while (t < 1f)
+            {
+                t += Time.deltaTime * _EXPChangeSpeed;
+
+                _defeatExpGainedLabel.SetText(Mathf.RoundToInt(Mathf.Lerp(0, _manager.EXPGained, t)).ToString());
+                _victoryExpGainedLabel.SetText(Mathf.RoundToInt(Mathf.Lerp(0, _manager.EXPGained, t)).ToString());
+
+                yield return null;
+            }
+
+            _defeatExpGainedLabel.SetText(_manager.EXPGained.ToString());
+            _victoryExpGainedLabel.SetText(_manager.EXPGained.ToString());
         }
 
         /// <summary>

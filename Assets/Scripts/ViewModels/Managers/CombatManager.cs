@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Models;
 using Assets.Scripts.Models.Combat;
 using Assets.Scripts.Models.Dinos;
@@ -86,6 +87,11 @@ namespace Assets.Scripts.ViewModels.Managers
         public int EnemyFP { get; private set; }
 
         /// <summary>
+        /// Le total d'EXP gagné à la fin de la partie
+        /// </summary>
+        public int EXPGained { get; private set; }
+
+        /// <summary>
         /// Le total des stats de soutien apportées au luxurosaure du joueur
         /// </summary>
         public FightingStats PlayerSupportStats { get; private set; } = FightingStats.Zero;
@@ -168,12 +174,17 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <summary>
         /// Le nombre de luxurosaures du joueur encore en vie
         /// </summary>
-        public int _activePlayerLustosaurs;
+        private int _activePlayerLustosaurs;
 
         /// <summary>
         /// Le nombre de luxurosaures de l'adversaire encore en vie
         /// </summary>
-        public int _activeEnemyLustosaurs;
+        private int _activeEnemyLustosaurs;
+
+        /// <summary>
+        /// Moyenne de différence de niveau entre le joueur et l'ennemi
+        /// </summary>
+        private int _avgLevelDifference;
 
         #endregion
 
@@ -190,6 +201,7 @@ namespace Assets.Scripts.ViewModels.Managers
             BattleState = BattleState.Ongoing;
             PlayerSupportStats = EnemySupportStats = FightingStats.Zero;
             _activePlayerLustosaurs = _activeEnemyLustosaurs = 0;
+            EXPGained = 0;
 
             switch (PlayerHeatLevel)
             {
@@ -208,11 +220,22 @@ namespace Assets.Scripts.ViewModels.Managers
             PlayerTeam = new LustosaurSO[CombatConstants.NB_PARTICIPATING_LUSTOSAURS];
             EnemyTeam = new LustosaurSO[CombatConstants.NB_PARTICIPATING_LUSTOSAURS];
 
+            int avgPlayerLevels = 0;
+            int avgEnemyLevels = 0;
+            int count = 0;
+
             for (int i = 0; i < Mathf.Min(CombatConstants.NB_PARTICIPATING_LUSTOSAURS, _teamMenuManager.PlayerTeam.Count); ++i)
             {
-                PlayerTeam[i] = _teamMenuManager.PlayerTeam[i].Clone();
+                LustosaurSO lustosaur = _teamMenuManager.PlayerTeam[i];
+                PlayerTeam[i] = lustosaur.Clone();
                 ++_activePlayerLustosaurs;
+
+                avgPlayerLevels += lustosaur.CurLevel;
+                ++count;
             }
+
+            avgPlayerLevels /= count;
+            count = 0;
 
             // Pour l'ennemi, on les mélange avant de les cloner.
             // Ca nous permet d'avoir une chance d'utiliser les luxurosaures
@@ -232,9 +255,21 @@ namespace Assets.Scripts.ViewModels.Managers
 
             for (int i = 0; i < Mathf.Min(CombatConstants.NB_PARTICIPATING_LUSTOSAURS, shuffled.Count); ++i)
             {
-                EnemyTeam[i] = shuffled[i].Clone();
+                LustosaurSO lustosaur = shuffled[i];
+                EnemyTeam[i] = lustosaur.Clone();
                 ++_activeEnemyLustosaurs;
+
+                avgEnemyLevels += lustosaur.CurLevel;
+                ++count;
             }
+
+            avgEnemyLevels /= count;
+
+            // On récupère la différence de niveau moyen entre le joueur et l'ennemi
+            // pour le calcul de l'exp.
+            // Si le joueur est plus fort que l'ennemi, il n'y aura pas de gain.
+
+            _avgLevelDifference = Mathf.Max(0, avgEnemyLevels - avgPlayerLevels);
 
             OnCombatStarted?.Invoke();
         }
@@ -565,6 +600,44 @@ namespace Assets.Scripts.ViewModels.Managers
             }
 
             SelectedAlly = validTargets[UnityEngine.Random.Range(0, validTargets.Count)];
+        }
+
+        /// <summary>
+        /// Abandonne la partie
+        /// </summary>
+        public void Submit()
+        {
+            // On sélectionne un luxurosaure au hasard
+            // parmi ceux de l'ennemi
+
+            List<LustosaurSO> validTargets = new();
+
+            foreach (LustosaurSO lustosaur in EnemyTeam)
+            {
+                if (lustosaur != null)
+                {
+                    validTargets.Add(lustosaur);
+                }
+            }
+
+            SelectedEnemy = validTargets[UnityEngine.Random.Range(0, validTargets.Count)];
+
+            // On calcule l'EXP gagnée
+
+            CalculateExpGained(BattleState);
+        }
+
+        /// <summary>
+        /// Calcule l'exp gagnée
+        /// </summary>
+        /// <param name="battleState">Issue de la partie</param>
+        private void CalculateExpGained(BattleState battleState)
+        {
+            int expPerEnemyDefeated = CombatConstants.EXP_GAINED_PER_DEFEATED_ENEMY * EnemyTeam.Count(lustosaur => lustosaur == null);
+            int expPerLevelDifference = CombatConstants.EXP_GAINED_PER_LEVEL_DIFFERENCE * _avgLevelDifference;
+
+            EXPGained = expPerEnemyDefeated + expPerLevelDifference;
+            EXPGained /= battleState == BattleState.Defeat ? CombatConstants.EXP_REDUCTION_COEF_IF_DEFEATED : 1;
         }
 
         #endregion

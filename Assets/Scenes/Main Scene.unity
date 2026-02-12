@@ -7003,6 +7003,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assets.Scripts.Views::GameManagerView
   _baseMenuView: {fileID: 574469022}
+  _teamMenuManager: {fileID: 1946102866}
   _manager: {fileID: 485394136}
   _statsManager: {fileID: 852986446}
   _playerTrigger: {fileID: 8622508510301249960}
@@ -7333,8 +7334,6 @@ MonoBehaviour:
     <CriticalHitRate>k__BackingField: 20
     <Accuracy>k__BackingField: -15
     <Evasion>k__BackingField: -15
-  _activePlayerLustosaurs: 0
-  _activeEnemyLustosaurs: 0
 --- !u!114 &510056680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7347,6 +7346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 404175bc46a1776418575cce17b4be90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets.Scripts.Views::Assets.Scripts.Views.Combat.CombatView
+  _baseMenuView: {fileID: 574469022}
   _gameManager: {fileID: 485394136}
   _manager: {fileID: 510056679}
   _combatCanvas: {fileID: 1510475651}
@@ -7430,6 +7430,7 @@ MonoBehaviour:
   _messageFadeDuration: 0.5
   _messageDuration: 5
   _FPChangeSpeed: 2
+  _EXPChangeSpeed: 2
   _lustosaurSupportAnimDuration: 0.25
   _lustosaurAttackAnimDuration: 0.5
   _lustosaurAttackStunDuration: 0.5
@@ -8721,6 +8722,7 @@ MonoBehaviour:
   _teamMenuCanvas: {fileID: 1959092545}
   _sleepMenuCanvas: {fileID: 332430822}
   _sexMenuCanvas: {fileID: 957076146}
+  _combatCanvas: {fileID: 0}
   _baseMenuBtnsParent: {fileID: 702140586}
   _blackFadeImg: {fileID: 804549117}
   _fadeSpeed: 0.5
@@ -19689,7 +19691,7 @@ MonoBehaviour:
   m_CellSize: {x: 230, y: 130}
   m_Spacing: {x: 5, y: 5}
   m_Constraint: 1
-  m_ConstraintCount: 2
+  m_ConstraintCount: 3
 --- !u!114 &1187995077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22496,26 +22498,106 @@ MonoBehaviour:
       Value: {r: 0, g: 0, b: 0.2679245, a: 1}
     - Key: 1
       Value: {r: 0.5921569, g: 0.27450982, b: 0, a: 1}
+    - Key: 2
+      Value: {r: 0.39215687, g: 0, b: 0, a: 1}
+    - Key: 3
+      Value: {r: 0.79622644, g: 0.48710325, b: 0, a: 1}
   ScenesInGallery:
     _serializedList:
     - Key: null
       Value: {fileID: 11400000, guid: b508e123ee5e34242968f83c87444a61, type: 2}
     - Key: Water 1
       Value: {fileID: 11400000, guid: 8fe5e013ddfb82745af94bdddf9fe5bc, type: 2}
+    - Key: Water 2
+      Value: {fileID: 11400000, guid: 8fe5e013ddfb82745af94bdddf9fe5bc, type: 2}
     - Key: Fire 1
+      Value: {fileID: 11400000, guid: cdfa0207547ac3b409a89784aa06bd24, type: 2}
+    - Key: Fire 2
       Value: {fileID: 11400000, guid: cdfa0207547ac3b409a89784aa06bd24, type: 2}
     - Key: Wind 1
       Value: {fileID: 11400000, guid: 0b4e2bfbc311b05408e017c12fe13470, type: 2}
+    - Key: Wind 2
+      Value: {fileID: 11400000, guid: 0b4e2bfbc311b05408e017c12fe13470, type: 2}
     - Key: Earth 1
+      Value: {fileID: 11400000, guid: 0d50b68d2db2975458b6d47e3f546372, type: 2}
+    - Key: Earth 2
       Value: {fileID: 11400000, guid: 0d50b68d2db2975458b6d47e3f546372, type: 2}
     - Key: Neutral 1
       Value: {fileID: 11400000, guid: f140e3371f7e6554aba98ec2a2bc5e3b, type: 2}
+    - Key: Neutral 2
+      Value: {fileID: 11400000, guid: f140e3371f7e6554aba98ec2a2bc5e3b, type: 2}
   ScenesOnDefeat:
-    _serializedList: []
+    _serializedList:
+    - Key: null
+      Value: {fileID: 11400000, guid: f6a6145cd720d8a4183c53d588380d18, type: 2}
+    - Key: Water 1
+      Value: {fileID: 11400000, guid: 4ac62139c137e14489d0f66cfa048977, type: 2}
+    - Key: Water 2
+      Value: {fileID: 11400000, guid: 4ac62139c137e14489d0f66cfa048977, type: 2}
+    - Key: Fire 1
+      Value: {fileID: 11400000, guid: ed475011af76f8f42a6e4f8e87652ac7, type: 2}
+    - Key: Fire 2
+      Value: {fileID: 11400000, guid: ed475011af76f8f42a6e4f8e87652ac7, type: 2}
+    - Key: Wind 1
+      Value: {fileID: 11400000, guid: fd500f7eff073cb43a088cd16a9e1d99, type: 2}
+    - Key: Wind 2
+      Value: {fileID: 11400000, guid: fd500f7eff073cb43a088cd16a9e1d99, type: 2}
+    - Key: Earth 1
+      Value: {fileID: 11400000, guid: 3a4707f2924653f47b620f46091cddbb, type: 2}
+    - Key: Earth 2
+      Value: {fileID: 11400000, guid: 3a4707f2924653f47b620f46091cddbb, type: 2}
+    - Key: Neutral 1
+      Value: {fileID: 11400000, guid: a14fa91f2495ba54cb042d9483c5a267, type: 2}
+    - Key: Neutral 2
+      Value: {fileID: 11400000, guid: a14fa91f2495ba54cb042d9483c5a267, type: 2}
   ScenesOnStatDepleted:
-    _serializedList: []
+    _serializedList:
+    - Key: null
+      Value: {fileID: 11400000, guid: b0a932e96e26da94da7a439a890e0b84, type: 2}
+    - Key: Water 1
+      Value: {fileID: 11400000, guid: aba02d370cebff94882935fe7807cc5b, type: 2}
+    - Key: Water 2
+      Value: {fileID: 11400000, guid: aba02d370cebff94882935fe7807cc5b, type: 2}
+    - Key: Fire 1
+      Value: {fileID: 11400000, guid: 610f51ced1730474da6b56f6f8dac066, type: 2}
+    - Key: Fire 2
+      Value: {fileID: 11400000, guid: 610f51ced1730474da6b56f6f8dac066, type: 2}
+    - Key: Wind 1
+      Value: {fileID: 11400000, guid: 56d759710acaa644a97e00822c298fa5, type: 2}
+    - Key: Wind 2
+      Value: {fileID: 11400000, guid: 56d759710acaa644a97e00822c298fa5, type: 2}
+    - Key: Earth 1
+      Value: {fileID: 11400000, guid: 6ae94553773a535479766c7676590abc, type: 2}
+    - Key: Earth 2
+      Value: {fileID: 11400000, guid: 6ae94553773a535479766c7676590abc, type: 2}
+    - Key: Neutral 1
+      Value: {fileID: 11400000, guid: 9690b330f93ab2d44a93f5ca106bb526, type: 2}
+    - Key: Neutral 2
+      Value: {fileID: 11400000, guid: 9690b330f93ab2d44a93f5ca106bb526, type: 2}
   ScenesOnVictory:
-    _serializedList: []
+    _serializedList:
+    - Key: null
+      Value: {fileID: 11400000, guid: 4933c29500255454b8ac5aa5fff689ae, type: 2}
+    - Key: Water 1
+      Value: {fileID: 11400000, guid: 6dad64105b1977c46bf910b84949fcb3, type: 2}
+    - Key: Water 2
+      Value: {fileID: 11400000, guid: 6dad64105b1977c46bf910b84949fcb3, type: 2}
+    - Key: Fire 1
+      Value: {fileID: 11400000, guid: b8ee00221cfa6514b9b962d07ed67425, type: 2}
+    - Key: Fire 2
+      Value: {fileID: 11400000, guid: b8ee00221cfa6514b9b962d07ed67425, type: 2}
+    - Key: Wind 1
+      Value: {fileID: 11400000, guid: 8996bad6fab09ac45959339fb4b96517, type: 2}
+    - Key: Wind 2
+      Value: {fileID: 11400000, guid: 8996bad6fab09ac45959339fb4b96517, type: 2}
+    - Key: Earth 1
+      Value: {fileID: 11400000, guid: aaaba4de4291c3845b9082ff14b5b1c2, type: 2}
+    - Key: Earth 2
+      Value: {fileID: 11400000, guid: aaaba4de4291c3845b9082ff14b5b1c2, type: 2}
+    - Key: Neutral 1
+      Value: {fileID: 11400000, guid: e1cda48a399e2094c98770372771b645, type: 2}
+    - Key: Neutral 2
+      Value: {fileID: 11400000, guid: e1cda48a399e2094c98770372771b645, type: 2}
 --- !u!114 &1369499350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25450,7 +25532,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1510475647}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -33327,11 +33409,11 @@ RectTransform:
   - {fileID: 1187995075}
   m_Father: {fileID: 1510475648}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -710, y: 50}
-  m_SizeDelta: {x: 500, y: 300}
-  m_Pivot: {x: 1, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -400}
+  m_SizeDelta: {x: 740, y: 170}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2011704307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33356,7 +33438,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2011704305}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}

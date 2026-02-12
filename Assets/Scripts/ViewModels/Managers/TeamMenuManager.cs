@@ -151,6 +151,15 @@ namespace Assets.Scripts.ViewModels.Managers
             OnLustosaurDiscardedFromStandby?.Invoke(lustosaur);
         }
 
+        /// <summary>
+        /// Obtient un luxurosaure au hasard de l'équipe
+        /// </summary>
+        /// <returns>Un luxurosaure au hasard de l'équipe</returns>
+        public LustosaurSO GetRandomActiveLustosaur()
+        {
+            return PlayerTeam[UnityEngine.Random.Range(0, PlayerTeam.Count)];
+        }
+
         #endregion
     }
 }

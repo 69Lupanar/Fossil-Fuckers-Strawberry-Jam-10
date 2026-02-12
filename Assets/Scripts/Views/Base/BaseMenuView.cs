@@ -94,6 +94,12 @@ namespace Assets.Scripts.Views.Base
         private Canvas _sexMenuCanvas;
 
         /// <summary>
+        /// Le canvas de la scène de combat
+        /// </summary>
+        [SerializeField]
+        private Canvas _combatCanvas;
+
+        /// <summary>
         /// Le conteneur des btns du menu de la base
         /// </summary>
         [SerializeField]
@@ -230,6 +236,7 @@ namespace Assets.Scripts.Views.Base
         {
             _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
             {
+                _combatCanvas.enabled = false;
                 _baseMenuCanvas.enabled = true;
                 _sexMenuCanvas.enabled = true;
                 _sexView.OnSexMenuOpen(reasonForSex, sexEnvironment, selectedLustosaur);

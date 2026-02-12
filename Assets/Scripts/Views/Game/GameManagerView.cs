@@ -1,3 +1,5 @@
+using Assets.Scripts.Models;
+using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.ViewModels.Managers;
 using Assets.Scripts.ViewModels.Player;
 using Assets.Scripts.Views.Base;
@@ -19,6 +21,12 @@ namespace Assets.Scripts.Views.Game
         /// </summary>
         [SerializeField]
         private BaseMenuView _baseMenuView;
+
+        /// <summary>
+        /// Le TeamMenuManager
+        /// </summary>
+        [SerializeField]
+        private TeamMenuManager _teamMenuManager;
 
         /// <summary>
         /// Le GameManager
@@ -100,11 +108,25 @@ namespace Assets.Scripts.Views.Game
         private void OnDeath()
         {
             _manager.DisableController();
-            _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
+
+            // On a une chance sur deux de lancer une scène de sexe avec l'un de nos luxurosaures
+            // si le perso s'évanouit
+
+            float rand = Random.Range(0f, 100f);
+
+            if (rand > 50f)
             {
-                _manager.ResetPlayer();
-                _blackFadeImg.DOFade(0f, _fadeSpeed);
-            });
+                LustosaurSO randomLustosaur = _teamMenuManager.GetRandomActiveLustosaur();
+                _baseMenuView.OpenSexMenu(ReasonForSex.StatDepleted, SexEnvironment.Mine, randomLustosaur);
+            }
+            else
+            {
+                _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
+                {
+                    _manager.ResetPlayer();
+                    _blackFadeImg.DOFade(0f, _fadeSpeed);
+                });
+            }
         }
 
         #endregion

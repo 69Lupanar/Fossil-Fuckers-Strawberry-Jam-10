@@ -23,7 +23,9 @@ namespace Assets.Scripts.Models
     public enum SexEnvironment
     {
         Base,
-        Mine
+        Mine,
+        CombatDefeat,
+        CombatVictory
     }
 
     /// <summary>
