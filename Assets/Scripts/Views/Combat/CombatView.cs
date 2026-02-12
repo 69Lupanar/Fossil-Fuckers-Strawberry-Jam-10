@@ -996,18 +996,41 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         private void ProcessOpponentTurn()
         {
+            // Si on n'a pas assez de PP pour attaquer,
+            // on passe au tour du joueur
 
+            if (!_manager.ActiveFighterHasEnoughFPToAttack(false))
+            {
+                if (_manager.PlayerHasInitiative)
+                {
+                    StartCoroutine(StartNewTurnCo());
+                }
+                else
+                {
+                    ShowActionMenu();
+                }
+
+                return;
+            }
+
+            // On sélectionne des combattants au hasard
+
+            _manager.ProcessOpponentTurn();
+
+            // On conduit l'attaque
+
+            ConductAttack(_manager.SelectedEnemy, _manager.SelectedAlly, _manager.SelectedAttack, false);
         }
 
-        /// <summary>
-        /// Annule le changement de formation et revient au menu des actions
-        /// </summary>
-        private void CancelChangeFormation()
-        {
-            _isChangingFormation = false;
-            _instructionsCanvas.enabled = false;
-            _actionMenuCanvas.enabled = true;
-        }
+        ///// <summary>
+        ///// Annule le changement de formation et revient au menu des actions
+        ///// </summary>
+        //private void CancelChangeFormation()
+        //{
+        //    _isChangingFormation = false;
+        //    _instructionsCanvas.enabled = false;
+        //    _actionMenuCanvas.enabled = true;
+        //}
 
         #endregion
 

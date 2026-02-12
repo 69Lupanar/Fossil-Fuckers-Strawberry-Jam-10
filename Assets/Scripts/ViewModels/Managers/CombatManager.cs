@@ -506,16 +506,65 @@ namespace Assets.Scripts.ViewModels.Managers
 
             foreach (LustosaurSO lustosaur in activeTeam)
             {
-                foreach (AttackSO attack in lustosaur.LearnedAttacks)
+                if (lustosaur != null)
                 {
-                    if (attack.Cost <= remainingFP)
+                    foreach (AttackSO attack in lustosaur.LearnedAttacks)
                     {
-                        return true;
+                        if (attack.Cost <= remainingFP)
+                        {
+                            return true;
+                        }
                     }
                 }
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Exécute un tour pour l'adversaire
+        /// </summary>
+        public void ProcessOpponentTurn()
+        {
+            // On sélectionne un luxurosaure au hasard
+            // parmi ceux de l'ennemi qui ont assez de PP pour attaquer
+
+            List<LustosaurSO> validTargets = new();
+
+            foreach (LustosaurSO lustosaur in EnemyTeam)
+            {
+                if (lustosaur != null)
+                {
+                    foreach (AttackSO attack in lustosaur.LearnedAttacks)
+                    {
+                        if (attack.Cost <= EnemyFP)
+                        {
+                            validTargets.Add(lustosaur);
+                        }
+                    }
+                }
+            }
+
+            // On sélectionne un luxurosaure au hasard pour attaquer,
+            // et on choisit une attaque au hasard
+
+            SelectedEnemy = validTargets[UnityEngine.Random.Range(0, validTargets.Count)];
+            SelectedAttack = SelectedEnemy.LearnedAttacks[UnityEngine.Random.Range(0, SelectedEnemy.LearnedAttacks.Count)];
+
+            // On sélectionne une cible au hasard
+            // parmi les luxurosaures du joueur
+
+            validTargets.Clear();
+
+            foreach (LustosaurSO lustosaur in EnemyTeam)
+            {
+                if (lustosaur != null)
+                {
+                    validTargets.Add(lustosaur);
+                }
+            }
+
+            SelectedAlly = validTargets[UnityEngine.Random.Range(0, validTargets.Count)];
         }
 
         #endregion
