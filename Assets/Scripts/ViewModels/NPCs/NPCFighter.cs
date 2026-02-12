@@ -18,6 +18,11 @@ namespace Assets.Scripts.ViewModels.NPCs
         public Action<NPCFighter> OnInteracted { get; set; }
 
         /// <summary>
+        /// Appelée quand ce PNJ doit retourner à son ObjectPool
+        /// </summary>
+        public Action<NPCFighter> OnReturnToPoolRequested { get; set; }
+
+        /// <summary>
         /// L'équipe de luxurosaures du PNJ, 
         /// générés aléatoirement en fonction de sa profondeur
         /// </summary>
@@ -119,6 +124,17 @@ namespace Assets.Scripts.ViewModels.NPCs
             DialogueLines = dialogueLines;
         }
 
+        /// <summary>
+        /// Renvoie ce PNJ à son ObjectPool
+        /// </summary>
+        public void ReturnToPool()
+        {
+            OnReturnToPoolRequested?.Invoke(this);
+        }
+
+        #endregion
+
+        #region Méthodes privées
 
         /// <summary>
         /// Appelée quand un objet entre le trigger

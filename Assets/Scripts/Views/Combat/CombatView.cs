@@ -591,7 +591,7 @@ namespace Assets.Scripts.Views.Combat
                             _instructionsCanvas.enabled = false;
                             HideEnemyResistances();
 
-                            ConductAttack(_manager.SelectedAlly, _manager.SelectedEnemy, true);
+                            ConductAttack(_manager.SelectedAlly, _manager.SelectedEnemy, _manager.SelectedAttack, true);
                             break;
 
                         case BattleState.Victory:
@@ -740,6 +740,7 @@ namespace Assets.Scripts.Views.Combat
                 }
 
                 instance.SetData(attack, OnAttackBtnClick);
+                instance.SetInteractable(attack.Cost <= _manager.PlayerFP);
             }
         }
 
@@ -891,6 +892,7 @@ namespace Assets.Scripts.Views.Combat
             _manager.StartNewTurn();
 
             StartCoroutine(IncrementFPLabelCo(_playerFPLabel, _manager.PlayerFP, _FPChangeSpeed));
+            StartCoroutine(IncrementFPLabelCo(_enemyFPLabel, _manager.EnemyFP, _FPChangeSpeed));
             UpdateStatHandlers(_playerDisplayStats, _manager.HornySupportStats + _manager.PlayerSupportStats, true);
             UpdateStatHandlers(_enemyDisplayStats, _manager.EnemySupportStats, true);
 
@@ -938,10 +940,11 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         /// <param name="attacker">L'attaquant</param>
         /// <param name="defender">Le défenseur</param>
+        /// <param name="attack">L'attaque</param>
         /// <param name="isPlayerTurn">true si c'est le tour du joueur</param>
-        private void ConductAttack(LustosaurSO attacker, LustosaurSO defender, bool isPlayerTurn)
+        private void ConductAttack(LustosaurSO attacker, LustosaurSO defender, AttackSO attack, bool isPlayerTurn)
         {
-            _manager.ConductAttack(attacker, defender, out int dmg, out bool criticalHit, isPlayerTurn);
+            _manager.ConductAttack(attacker, defender, attack, out int dmg, out bool criticalHit, isPlayerTurn);
 
             // Affiche le message d'attaque
 
@@ -1072,6 +1075,17 @@ namespace Assets.Scripts.Views.Combat
         /// <param name="isPlayerTurn">true si c'est le tour du joueur</param>
         private IEnumerator PlayAttackAnimationCo(LustosaurSO attacker, LustosaurSO defender, int dmg, bool criticalHit, bool isPlayerTurn)
         {
+            // Modifie le compteur de FP correspondant
+
+            if (isPlayerTurn)
+            {
+                StartCoroutine(IncrementFPLabelCo(_playerFPLabel, _manager.PlayerFP, _FPChangeSpeed));
+            }
+            else
+            {
+                StartCoroutine(IncrementFPLabelCo(_enemyFPLabel, _manager.EnemyFP, _FPChangeSpeed));
+            }
+
             // Récupère les bons components
 
             CombatLustosaurHandler attackerHandler = isPlayerTurn ? _playerLustosaursHandlers[_manager.SelectedAllyIndex] : _enemyLustosaursHandlers[_manager.SelectedEnemyIndex];
@@ -1129,6 +1143,7 @@ namespace Assets.Scripts.Views.Combat
 
             if (defender.CurHealth == 0)
             {
+                ShowMessage(string.Format(CombatConstants.LUSTOSAUR_DEFEATED_MSG, defender.name), _deathIcon);
                 defenderHandler.SetAlpha(0f, true);
                 yield return new WaitForSeconds(_lustosaurDeathDuration);
                 defenderHandler.gameObject.SetActive(false);

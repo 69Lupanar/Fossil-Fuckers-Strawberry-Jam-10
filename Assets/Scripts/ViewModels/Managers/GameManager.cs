@@ -172,7 +172,7 @@ namespace Assets.Scripts.ViewModels.Managers
         public void OnQuitCombatScreen()
         {
             EnableController();
-            _mineableSpawner.ReleaseFighter(_tempNPCFighter);
+            _tempNPCFighter.ReturnToPool();
             _tempNPCFighter = null;
         }
 

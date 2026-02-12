@@ -347,9 +347,10 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         /// <param name="attacker">L'attaquant</param>
         /// <param name="defender">Le défenseur</param>
+        /// <param name="attack">L'attaque</param>
         /// <param name="dmg">Les dégâts infligés</param>
         /// <param name="criticalHit">true s'il s'agit d'un coup critique</param>
-        public void ConductAttack(LustosaurSO attacker, LustosaurSO defender, out int dmg, out bool criticalHit, bool isPlayerTurn)
+        public void ConductAttack(LustosaurSO attacker, LustosaurSO defender, AttackSO attack, out int dmg, out bool criticalHit, bool isPlayerTurn)
         {
             if (isPlayerTurn)
             {

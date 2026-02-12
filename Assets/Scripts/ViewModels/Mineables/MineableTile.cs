@@ -15,7 +15,7 @@ namespace Assets.Scripts.ViewModels.Mineables
         /// <summary>
         /// Appelée pour renvoyer cette case dans son ObjectPool
         /// </summary>
-        public Action<MineableTile> ReturnToPool { get; set; }
+        public Action<MineableTile> OnReturnToPoolRequested { get; set; }
 
         #endregion
 
@@ -60,7 +60,7 @@ namespace Assets.Scripts.ViewModels.Mineables
         /// </summary>
         public void ReturnTileToPool()
         {
-            ReturnToPool?.Invoke(this);
+            OnReturnToPoolRequested?.Invoke(this);
         }
 
         #endregion

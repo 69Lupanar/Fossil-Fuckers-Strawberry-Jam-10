@@ -34,6 +34,9 @@ namespace Assets.Scripts.ViewModels.Managers
 
         #region Propriétés
 
+        /// <summary>
+        ///  La liste des combattants actifs dans le niveau
+        /// </summary>
         public List<NPCFighter> ActiveNPCFighters { get => _activeNPCFighters; }
 
         #endregion
@@ -161,15 +164,6 @@ namespace Assets.Scripts.ViewModels.Managers
             {
                 _npcFighterPool.Release(ActiveNPCFighters[0]);
             }
-        }
-
-        /// <summary>
-        /// Désactive un PNJ combattant
-        /// </summary>
-        /// <param name="npc">Le PNJ combattant</param>
-        public void ReleaseFighter(NPCFighter npc)
-        {
-            _npcFighterPool.Release(npc);
         }
 
         #endregion
@@ -366,7 +360,9 @@ namespace Assets.Scripts.ViewModels.Managers
 
         private NPCFighter CreateNPCFighter()
         {
-            return Instantiate(_npcFighterPrefab, _npcFightersParent).GetComponent<NPCFighter>();
+            NPCFighter fighter = Instantiate(_npcFighterPrefab, _npcFightersParent).GetComponent<NPCFighter>();
+            fighter.OnReturnToPoolRequested += npc => _npcFighterPool.Release(npc);
+            return fighter;
         }
 
         private void GetNPCFighter(NPCFighter npc)
@@ -398,7 +394,7 @@ namespace Assets.Scripts.ViewModels.Managers
         private MineableTile CreateTile()
         {
             MineableTile tile = Instantiate(_mineableItemPrefab, _tilesParent).GetComponent<MineableTile>();
-            tile.ReturnToPool += ReleaseTile;
+            tile.OnReturnToPoolRequested += t => _poolsPerID[t.Tile.name].Release(t);
             return tile;
         }
 
