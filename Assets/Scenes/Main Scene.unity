@@ -12456,7 +12456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -117847.37}
+  m_AnchoredPosition: {x: 0, y: -253621.89}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &743267552
@@ -19389,7 +19389,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 381661.22}
+  m_AnchoredPosition: {x: 0, y: 821309.5}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1154122712
@@ -23551,6 +23551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9823dbc3a77b2947bccf3cc4100669f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets.Scripts.ViewModels::Assets.Scripts.ViewModels.Managers.SexMenuManager
+  _inventoryManager: {fileID: 602687407}
   ColorPerEnvironment:
     _serializedList:
     - Key: 0
@@ -23657,6 +23658,30 @@ MonoBehaviour:
       Value: {fileID: 11400000, guid: e1cda48a399e2094c98770372771b645, type: 2}
     - Key: Neutral 2
       Value: {fileID: 11400000, guid: e1cda48a399e2094c98770372771b645, type: 2}
+  SpermLootPerLustosaur:
+    _serializedList:
+    - Key: null
+      Value: {fileID: 0}
+    - Key: Water 1
+      Value: {fileID: 0}
+    - Key: Water 2
+      Value: {fileID: 0}
+    - Key: Fire 1
+      Value: {fileID: 0}
+    - Key: Fire 2
+      Value: {fileID: 0}
+    - Key: Wind 1
+      Value: {fileID: 0}
+    - Key: Wind 2
+      Value: {fileID: 0}
+    - Key: Earth 1
+      Value: {fileID: 0}
+    - Key: Earth 2
+      Value: {fileID: 0}
+    - Key: Neutral 1
+      Value: {fileID: 11400000, guid: 796010f201aad9c428fcba39c4c07404, type: 2}
+    - Key: Neutral 2
+      Value: {fileID: 11400000, guid: f388abf2fcca00b4e8a92a21e677a9f0, type: 2}
 --- !u!114 &1369499350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27913,8 +27938,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1591627177}
-  - component: {fileID: 1591627179}
   - component: {fileID: 1591627178}
+  - component: {fileID: 1591627179}
   m_Layer: 0
   m_Name: CloningMenuManager
   m_TagString: Untagged
@@ -40981,7 +41006,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 768430275783466661, guid: 0b5b7782bffef3449a3e0f258921cc78, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 801247924834149652, guid: 0b5b7782bffef3449a3e0f258921cc78, type: 3}
       propertyPath: _isPercentage
@@ -42301,11 +42326,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8348215629886903198, guid: 0b5b7782bffef3449a3e0f258921cc78, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8348215629886903198, guid: 0b5b7782bffef3449a3e0f258921cc78, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8348215629886903198, guid: 0b5b7782bffef3449a3e0f258921cc78, type: 3}
       propertyPath: m_SizeDelta.x
@@ -42317,11 +42342,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8348215629886903198, guid: 0b5b7782bffef3449a3e0f258921cc78, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 315
       objectReference: {fileID: 0}
     - target: {fileID: 8348215629886903198, guid: 0b5b7782bffef3449a3e0f258921cc78, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -400.33002
       objectReference: {fileID: 0}
     - target: {fileID: 8488927671982933551, guid: 0b5b7782bffef3449a3e0f258921cc78, type: 3}
       propertyPath: m_AnchorMax.y
@@ -42409,7 +42434,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8540223625700000822, guid: 0b5b7782bffef3449a3e0f258921cc78, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8560802675352928835, guid: 0b5b7782bffef3449a3e0f258921cc78, type: 3}
       propertyPath: m_AnchorMax.y
@@ -42767,7 +42792,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 6063519414091713897}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
   m_Name: 
@@ -42778,7 +42803,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 6063519414091713897}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 

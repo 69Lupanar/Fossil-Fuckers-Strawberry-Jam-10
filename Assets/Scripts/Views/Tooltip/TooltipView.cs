@@ -121,8 +121,8 @@ namespace Assets.Scripts.Views.Tooltip
         /// <param name="index">Index du message à afficher</param>
         private void OnStatDisplayPointerEnter(int index)
         {
-            _tooltipText.gameObject.SetActive(true);
             _tooltipText.SetText(_statsTooltipMsgs[index]);
+            _tooltipText.gameObject.SetActive(true);
         }
 
         /// <summary>
@@ -131,8 +131,8 @@ namespace Assets.Scripts.Views.Tooltip
         /// <param name="loot">L'objet à afficher</param>
         private void OnLootSlotPointerEnter(LootSO loot)
         {
-            _tooltipLoot.gameObject.SetActive(true);
             _tooltipLoot.SetData(loot);
+            _tooltipLoot.gameObject.SetActive(true);
         }
 
         /// <summary>
@@ -141,8 +141,8 @@ namespace Assets.Scripts.Views.Tooltip
         /// <param name="lustosaur">Le luxurosaure à afficher</param>
         private void OnLustosaurSlotPointerEnter(LustosaurSO lustosaur)
         {
-            _tooltipLustosaur.gameObject.SetActive(true);
             _tooltipLustosaur.SetData(lustosaur);
+            _tooltipLustosaur.gameObject.SetActive(true);
         }
 
         /// <summary>
@@ -177,8 +177,8 @@ namespace Assets.Scripts.Views.Tooltip
         {
             return new UnityAction(() =>
             {
-                _tooltipNPCFighter.gameObject.SetActive(true);
                 _tooltipNPCFighter.SetData(npc);
+                _tooltipNPCFighter.gameObject.SetActive(true);
             });
         }
 

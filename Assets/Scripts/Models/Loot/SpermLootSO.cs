@@ -32,6 +32,7 @@ namespace Assets.Scripts.Models.Loot
             clone.Sprite = Sprite;
             clone.EXP = EXP;
             clone.Lustosaur = Lustosaur;
+            clone.Description = Description;
             return clone;
         }
 

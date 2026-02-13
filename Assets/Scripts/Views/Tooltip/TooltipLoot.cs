@@ -45,7 +45,7 @@ namespace Assets.Scripts.Views.Tooltip
         /// <param name="loot">L'objet à afficher</param>
         public void SetData(LootSO loot)
         {
-            _lootDescLabel.gameObject.SetActive(string.IsNullOrEmpty(loot.Description));
+            _lootDescLabel.gameObject.SetActive(!string.IsNullOrEmpty(loot.Description));
             _qualityContent.SetActive(loot.Quality > 0);
             _lootNameLabel.SetText(loot.name);
             _lootDescLabel.SetText(loot.Description);

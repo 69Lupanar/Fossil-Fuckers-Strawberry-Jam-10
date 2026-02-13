@@ -293,6 +293,11 @@ namespace Assets.Scripts.Views.Base
                 }
                 else
                 {
+                    if (reasonForSex == ReasonForSex.Gallery)
+                    {
+                        _gameManager.RespawnPlayer();
+                    }
+
                     _gameManager.EnableController();
                 }
 

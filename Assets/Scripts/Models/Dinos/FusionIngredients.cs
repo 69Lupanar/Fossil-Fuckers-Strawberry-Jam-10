@@ -1,5 +1,4 @@
 using System;
-using Assets.Scripts.Models.Loot;
 using UnityEngine;
 
 namespace Assets.Scripts.Models.Dinos
@@ -24,6 +23,6 @@ namespace Assets.Scripts.Models.Dinos
         /// La liste des ingrédients
         /// </summary>
         [field: SerializeField]
-        public LootSO[] Ingredients { get; set; }
+        public LustosaurSO[] Ingredients { get; set; }
     }
 }

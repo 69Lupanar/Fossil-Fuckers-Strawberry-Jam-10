@@ -1,5 +1,6 @@
 using Assets.Scripts.Models;
 using Assets.Scripts.Models.Adult;
+using Assets.Scripts.Models.Loot;
 using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
@@ -30,6 +31,12 @@ namespace Assets.Scripts.ViewModels.Managers
         #endregion
 
         #region Variables Unity
+
+        /// <summary>
+        /// L' InventoryManager
+        /// </summary>
+        [SerializeField]
+        private InventoryManager _inventoryManager;
 
         /// <summary>
         /// La couleur de l'arrière-plan par type d'environnement
@@ -66,6 +73,22 @@ namespace Assets.Scripts.ViewModels.Managers
         [SerializeField]
         public SerializedDictionary<string, AdultSceneSO> ScenesOnVictory;
 
+        /// <summary>
+        /// Le SpermLoot à ajouter à l'inventaire du joueur après une scène adulte
+        /// </summary>
+        [SerializedDictionary("Associated Lustosaur", "Sperm LootS O")]
+        [SerializeField]
+        public SerializedDictionary<string, SpermLootSO> SpermLootPerLustosaur;
+
+        #endregion
+
+        #region Variables d'instance
+
+        /// <summary>
+        /// Le SpermLoot à ajouter à l'inventaire du joueur après une scène adulte
+        /// </summary>
+        private SpermLootSO _spermLootAfterSexScene;
+
         #endregion
 
         #region Méthodes publiques
@@ -88,12 +111,64 @@ namespace Assets.Scripts.ViewModels.Managers
         {
             if (CurIndex == AdultScene.Paragraphs.Length - 1)
             {
+                // Ajoute le SpermLootSO associé au luxurosaure de la scène
+
+                if (_spermLootAfterSexScene != null)
+                {
+                    _inventoryManager.AddLoot(_spermLootAfterSexScene);
+                    _spermLootAfterSexScene = null;
+                }
+
                 return string.Empty;
             }
 
             ++CurIndex;
 
             return AdultScene.Paragraphs[CurIndex];
+        }
+
+        /// <summary>
+        /// Obtient le SpermLoot à ajouter à l'inventaire du joueur après une scène adulte
+        /// </summary>
+        /// <param name="lustosaurName">Le nom du luxurosaure</param>
+        /// <param name="quality">La qualité du sperme à générer</param>
+        public void SetSpermLootFromLustosaur(string lustosaurName, int quality)
+        {
+            _spermLootAfterSexScene = null;
+
+            if (lustosaurName == "null")
+            {
+                return;
+            }
+
+            bool nameExists = false;
+
+            switch (ReasonForSex)
+            {
+                case ReasonForSex.Victory:
+                    nameExists = ScenesOnVictory.ContainsKey(lustosaurName);
+                    break;
+                case ReasonForSex.Defeat:
+                    nameExists = ScenesOnDefeat.ContainsKey(lustosaurName);
+                    break;
+                case ReasonForSex.Gallery:
+                    nameExists = ScenesInGallery.ContainsKey(lustosaurName);
+                    break;
+                case ReasonForSex.StatDepleted:
+                    nameExists = ScenesOnStatDepleted.ContainsKey(lustosaurName);
+                    break;
+            }
+
+            if (nameExists)
+            {
+                _spermLootAfterSexScene = SpermLootPerLustosaur[lustosaurName];
+
+                if (_spermLootAfterSexScene != null)
+                {
+                    _spermLootAfterSexScene = _spermLootAfterSexScene.Clone();
+                    _spermLootAfterSexScene.Quality = quality;
+                }
+            }
         }
 
         #endregion

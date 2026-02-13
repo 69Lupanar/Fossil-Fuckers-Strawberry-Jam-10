@@ -406,7 +406,10 @@ namespace Assets.Scripts.Views.Base
 
                     LootSO draggedLoot = _manager.Inventory[_curHoveredItemID];
 
-                    if (_manager.ItemsInFusionSlots[targetFusionSlotIndex] != draggedLoot)
+                    // Si ce n'est pas un matériel de fusion, on abandonne
+
+                    if (_manager.ItemsInFusionSlots[targetFusionSlotIndex] != draggedLoot &&
+                        draggedLoot is FossilLootSO or SpermLootSO)
                     {
                         // Si oui, on échange leur place.
                         // Sinon, on se contente d'ajouter l'objet déplacé.

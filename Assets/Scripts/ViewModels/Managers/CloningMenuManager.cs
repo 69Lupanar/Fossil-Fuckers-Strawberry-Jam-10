@@ -227,7 +227,20 @@ namespace Assets.Scripts.ViewModels.Managers
 
                 for (int i = 0; i < itemsInFusionSlots.Length; ++i)
                 {
-                    if (!recipe.Ingredients.Any(ingredient => ingredient.name == itemsInFusionSlots[i].name))
+                    string ingredientName = null;
+
+                    switch (itemsInFusionSlots[i])
+                    {
+                        case FossilLootSO fossil:
+                            ingredientName = fossil.Lustosaur.name;
+                            break;
+
+                        case SpermLootSO sperm:
+                            ingredientName = sperm.Lustosaur.name;
+                            break;
+                    }
+
+                    if (!recipe.Ingredients.Any(ingredient => ingredient.name == ingredientName))
                     {
                         return false;
                     }
@@ -243,7 +256,20 @@ namespace Assets.Scripts.ViewModels.Managers
                 {
                     for (int j = 0; j < recipe.Ingredients.Length; ++j)
                     {
-                        if (recipe.Ingredients[j].name == itemsInFusionSlots[i].name &&
+                        string ingredientName = null;
+
+                        switch (itemsInFusionSlots[i])
+                        {
+                            case FossilLootSO fossil:
+                                ingredientName = fossil.Lustosaur.name;
+                                break;
+
+                            case SpermLootSO sperm:
+                                ingredientName = sperm.Lustosaur.name;
+                                break;
+                        }
+
+                        if (recipe.Ingredients[j].name == ingredientName &&
                             !observedItems.Contains(j))
                         {
                             observedItems.Add(j);
@@ -265,7 +291,20 @@ namespace Assets.Scripts.ViewModels.Managers
 
                 for (int i = 0; i < itemsInFusionSlots.Length; ++i)
                 {
-                    if (recipe.Ingredients[i].name != itemsInFusionSlots[i].name)
+                    string ingredientName = null;
+
+                    switch (itemsInFusionSlots[i])
+                    {
+                        case FossilLootSO fossil:
+                            ingredientName = fossil.Lustosaur.name;
+                            break;
+
+                        case SpermLootSO sperm:
+                            ingredientName = sperm.Lustosaur.name;
+                            break;
+                    }
+
+                    if (recipe.Ingredients[i].name != ingredientName)
                     {
                         return false;
                     }
