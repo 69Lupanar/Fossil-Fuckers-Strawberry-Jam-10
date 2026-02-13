@@ -60,6 +60,12 @@ namespace Assets.Scripts.Views.UI
         [SerializeField]
         private float _valueIncrementSpeed = .5f;
 
+        /// <summary>
+        /// true si les icônes doivent afficher un pourcentage
+        /// </summary>
+        [SerializeField]
+        private bool _isPercentage = true;
+
         #endregion
 
         #region Variables d'instance
@@ -85,7 +91,7 @@ namespace Assets.Scripts.Views.UI
             if (animate)
             {
                 StopAllCoroutines();
-                _label.SetText($"{_endValue}%");
+                FormatLabel(_endValue);
                 StartCoroutine(IncrementCurValueCo(value, show));
             }
             else
@@ -97,8 +103,22 @@ namespace Assets.Scripts.Views.UI
                                               value < 0 ? _negativeColor :
                                               _neutralColor;
 
-                _label.SetText($"{value}%");
+                FormatLabel(value);
             }
+        }
+
+        #endregion
+
+        #region Méthodes privées
+
+        /// <summary>
+        /// Formatte le contenu du label
+        /// </summary>
+        /// <param name="value">La valeur à afficher</param>
+        private void FormatLabel(int value)
+        {
+            string txt = _isPercentage ? $"{(Mathf.Sign(value) >= 0 ? '+' : '-')}{Mathf.Abs(_endValue)}%" : $"{value}";
+            _label.SetText(txt);
         }
 
         /// <summary>
@@ -116,7 +136,7 @@ namespace Assets.Scripts.Views.UI
             {
                 t += Time.deltaTime * _valueIncrementSpeed;
                 int val = Mathf.RoundToInt(Mathf.Lerp(curValue, value, t));
-                _label.SetText($"{val}%");
+                FormatLabel(val);
 
                 _border.color = _icon.color = val > 0 ? _positiveColor :
                                               val < 0 ? _negativeColor :
@@ -129,7 +149,7 @@ namespace Assets.Scripts.Views.UI
                                           value < 0 ? _negativeColor :
                                           _neutralColor;
 
-            _label.SetText($"{value}%");
+            FormatLabel(value);
             _border.gameObject.SetActive(showAtEnd);
             _label.gameObject.SetActive(showAtEnd);
 

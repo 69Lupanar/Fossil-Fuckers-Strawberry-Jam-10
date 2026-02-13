@@ -1,3 +1,4 @@
+using System;
 using Assets.Scripts.Models;
 using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.Models.Loot;
@@ -15,6 +16,20 @@ namespace Assets.Scripts.Views.Base
     /// </summary>
     public class CloningMenuView : MonoBehaviour
     {
+        #region Evénéments
+
+        /// <summary>
+        /// Appelée quand le curseur entre sur un des InventorySlotInstances
+        /// </summary>
+        public Action<LootSO> OnLootSlotPointerEnter { get; set; }
+
+        /// <summary>
+        /// Appelée quand le curseur quitte un des InventorySlotInstances
+        /// </summary>
+        public Action OnLootSlotPointerExit { get; set; }
+
+        #endregion
+
         #region Variables Unity
 
         /// <summary>
@@ -332,6 +347,22 @@ namespace Assets.Scripts.Views.Base
                 _curHoveredItemID = index;
                 _curHoveredItemStartPos = pos;
             }
+
+            LootSO loot;
+
+            if (index < _inventoryGrid.childCount)
+            {
+                loot = _manager.Inventory[index];
+            }
+            else
+            {
+                loot = _manager.ItemsInFusionSlots[index - _inventoryGrid.childCount];
+            }
+
+            if (loot != null)
+            {
+                OnLootSlotPointerEnter?.Invoke(loot);
+            }
         }
 
         /// <summary>
@@ -343,6 +374,8 @@ namespace Assets.Scripts.Views.Base
             {
                 _curHoveredItemID = -1;
             }
+
+            OnLootSlotPointerExit?.Invoke();
         }
 
         /// <summary>

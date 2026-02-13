@@ -21,6 +21,16 @@ namespace Assets.Scripts.Views.Base
         /// </summary>
         public Action<LustosaurSO, FightingStats, List<AttackSO>> OnLevelUpAnimPlayed { get; set; }
 
+        /// <summary>
+        /// Appelée quand le curseur entre sur un des LustosaurSlotInstances
+        /// </summary>
+        public Action<LustosaurSO> OnLustosaurSlotPointerEnter { get; set; }
+
+        /// <summary>
+        /// Appelée quand le curseur quitte un des LustosaurSlotInstances
+        /// </summary>
+        public Action OnLustosaurSlotPointerExit { get; set; }
+
         #endregion
 
         #region Variables Unity
@@ -207,6 +217,26 @@ namespace Assets.Scripts.Views.Base
             }
         }
 
+        /// <summary>
+        /// Appelée quand le curseur entre sur un des LustosaurSlotInstances
+        /// </summary>
+        /// <param name="index">index</param>
+        public void OnLustosaurTeamSlotPointerEnter(int index)
+        {
+            if (index < _manager.PlayerTeam.Count)
+            {
+                OnLustosaurSlotPointerEnter?.Invoke(_manager.PlayerTeam[index]);
+            }
+        }
+
+        /// <summary>
+        /// Appelée quand le curseur entre sur un des LustosaurSlotInstances
+        /// </summary>
+        public void OnLustosaurTeamSlotPointerExit()
+        {
+            OnLustosaurSlotPointerExit?.Invoke();
+        }
+
         #endregion
 
         #region Méthodes privées
@@ -296,6 +326,22 @@ namespace Assets.Scripts.Views.Base
                 _curHoveredItemID = index;
                 _curHoveredItemStartPos = pos;
             }
+
+            LustosaurSO loot;
+
+            if (index < _inventoryGrid.childCount)
+            {
+                loot = _manager.StandbyReserve[index];
+            }
+            else
+            {
+                loot = _manager.PlayerTeam[index - _inventoryGrid.childCount];
+            }
+
+            if (loot != null)
+            {
+                OnLustosaurSlotPointerEnter?.Invoke(loot);
+            }
         }
 
         /// <summary>
@@ -307,6 +353,8 @@ namespace Assets.Scripts.Views.Base
             {
                 _curHoveredItemID = -1;
             }
+
+            OnLustosaurSlotPointerExit?.Invoke();
         }
 
         /// <summary>

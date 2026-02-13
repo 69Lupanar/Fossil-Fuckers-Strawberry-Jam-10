@@ -18,6 +18,20 @@ namespace Assets.Scripts.Views.Combat
     /// </summary>
     public class CombatView : MonoBehaviour
     {
+        #region Evénéments
+
+        /// <summary>
+        /// Appelée quand le curseur entre sur un des StatSlotInstances
+        /// </summary>
+        public Action<int> OnStatDisplayPointerEnter { get; set; }
+
+        /// <summary>
+        /// Appelée quand le curseur quitte un des StatSlotInstances
+        /// </summary>
+        public Action OnStatDisplayPointerExit { get; set; }
+
+        #endregion
+
         #region Variables Unity
 
         [Header("General")]
@@ -672,6 +686,22 @@ namespace Assets.Scripts.Views.Combat
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Appelée quand le curseur entre sur un des StatSlotInstances
+        /// </summary>
+        public void OnStatPointerEnter(int index)
+        {
+            OnStatDisplayPointerEnter?.Invoke(index);
+        }
+
+        /// <summary>
+        /// Appelée quand le curseur quitte un des StatSlotInstances
+        /// </summary>
+        public void OnStatPointerExit()
+        {
+            OnStatDisplayPointerExit?.Invoke();
         }
 
         #endregion

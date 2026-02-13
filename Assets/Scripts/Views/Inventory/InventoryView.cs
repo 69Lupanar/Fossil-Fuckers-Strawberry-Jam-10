@@ -12,6 +12,20 @@ namespace Assets.Scripts.Views.Inventory
     /// </summary>
     public class InventoryView : MonoBehaviour
     {
+        #region Evénéments
+
+        /// <summary>
+        /// Appelée quand le curseur entre sur un des InventorySlotInstances
+        /// </summary>
+        public Action<LootSO> OnLootSlotPointerEnter { get; set; }
+
+        /// <summary>
+        /// Appelée quand le curseur quitte un des InventorySlotInstances
+        /// </summary>
+        public Action OnLootSlotPointerExit { get; set; }
+
+        #endregion
+
         #region Variables Unity
 
         /// <summary>
@@ -112,6 +126,26 @@ namespace Assets.Scripts.Views.Inventory
             _nextBtn.interactable = _curTab < _nbTabs - 1;
             _sizeLabel.SetText($"({_curTab + 1}/{_nbTabs})");
             DisplayItemsInCurTab();
+        }
+
+        /// <summary>
+        /// Appelée quand le curseur entre sur un des InventorySlotInstances
+        /// </summary>
+        public void OnInventorySlotPointerEnter(int index)
+        {
+            LootSO loot = _manager.Inventory[index + _curTab * _slotsImgs.Length];
+
+            if (loot != null)
+            {
+                OnLootSlotPointerEnter?.Invoke(loot);
+            }
+        }
+        /// <summary>
+        /// Appelée quand le curseur quitte un des InventorySlotInstances
+        /// </summary>
+        public void OnInventorySlotPointerExit()
+        {
+            OnLootSlotPointerExit?.Invoke();
         }
 
         #endregion

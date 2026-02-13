@@ -26,6 +26,12 @@ namespace Assets.Scripts.Models.Loot
         public Sprite Sprite { get; protected set; }
 
         /// <summary>
+        /// La description de l'objet
+        /// </summary>
+        [field: SerializeField, TextArea(1, 3)]
+        public string Description { get; set; }
+
+        /// <summary>
         /// L'EXP obtenue après minage de la case
         /// </summary>
         [field: SerializeField]

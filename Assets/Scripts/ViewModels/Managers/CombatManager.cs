@@ -430,6 +430,8 @@ namespace Assets.Scripts.ViewModels.Managers
             }
 
             // On calcule le % de chance que l'attaque touche sa cible
+            // TAF : Le calcul n'est pas bon car on ajoute directement le pourcentage comme valeur pleine
+            // au lieu de l'utiliser comme pourcentage. Il faudra le changer.
 
             int accuracy = (attack.Accuracy + attacker.CurFightingStats.Accuracy) / 2 + attackingPlayerStats.Accuracy;
             int evasion = defender.CurFightingStats.Evasion + defendingPlayerStats.Evasion;

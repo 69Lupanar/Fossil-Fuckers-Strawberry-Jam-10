@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 7632856314478347205}
   - component: {fileID: 1679152219981467905}
   - component: {fileID: -6676456163116515052}
+  - component: {fileID: 3003627507726872857}
   m_Layer: 8
   m_Name: NPCFighter
   m_TagString: Player
@@ -206,6 +207,24 @@ MonoBehaviour:
   _renderer: {fileID: 4463477328988611732}
   _playerDetector: {fileID: 6818104525513021088}
   _interactUI: {fileID: 7280697823261822275}
+--- !u!114 &3003627507726872857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698448674851862312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c32cea3393afb224dac253bce1baac99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets.Scripts.Views::Assets.Scripts.Views.UI.MouseHandler
+  OnMouseEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMouseExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4490033617745435556
 GameObject:
   m_ObjectHideFlags: 0
