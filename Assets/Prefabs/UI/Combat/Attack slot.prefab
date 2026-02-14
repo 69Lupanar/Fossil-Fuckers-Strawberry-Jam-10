@@ -724,6 +724,7 @@ GameObject:
   - component: {fileID: 8123160731811134702}
   - component: {fileID: 2375784640457446834}
   - component: {fileID: 2614881368857885547}
+  - component: {fileID: 1778990445510846268}
   m_Layer: 0
   m_Name: Attack slot
   m_TagString: Untagged
@@ -852,6 +853,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1778990445510846268}
+        m_TargetAssemblyTypeName: Assets.Scripts.Views.UI.AudioTrigger, Assets.Scripts.Views
+        m_MethodName: Play
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5d13009275427b046a48daf535fe40c1, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2614881368857885547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -870,6 +883,18 @@ MonoBehaviour:
   _accLabel: {fileID: 8529941000235814425}
   _costLabel: {fileID: 7821933452356746896}
   _btn: {fileID: 2375784640457446834}
+--- !u!114 &1778990445510846268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7504837859563105987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db0aec859f8b33943afd1a521a2c9c8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets.Scripts.Views::Assets.Scripts.Views.UI.AudioTrigger
 --- !u!1 &8585121772604849633
 GameObject:
   m_ObjectHideFlags: 0

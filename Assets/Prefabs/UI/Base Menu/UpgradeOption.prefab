@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2800085560029349257}
   - component: {fileID: 8001106522635864165}
   - component: {fileID: 3031472199257340313}
+  - component: {fileID: 2184074838577009318}
   m_Layer: 5
   m_Name: UpgradeOption
   m_TagString: Untagged
@@ -136,6 +137,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2184074838577009318}
+        m_TargetAssemblyTypeName: Assets.Scripts.Views.UI.AudioTrigger, Assets.Scripts.Views
+        m_MethodName: Play
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: fad85640f482aff49baad20db628a76b, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3031472199257340313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,6 +164,18 @@ MonoBehaviour:
   _icon: {fileID: 3032540502467678954}
   _nameLabel: {fileID: 2393304295533512636}
   _costLabel: {fileID: 8355125693734324944}
+--- !u!114 &2184074838577009318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4308526290713746125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db0aec859f8b33943afd1a521a2c9c8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets.Scripts.Views::Assets.Scripts.Views.UI.AudioTrigger
 --- !u!1 &4770943628961899103
 GameObject:
   m_ObjectHideFlags: 0

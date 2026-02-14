@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 5565536839470258852}
   - component: {fileID: 4533256592275709240}
   - component: {fileID: 1247311104316785376}
+  - component: {fileID: 7085086610139391444}
   m_Layer: 0
   m_Name: MenuBtn
   m_TagString: Untagged
@@ -258,3 +259,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7085086610139391444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3892907528634779026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db0aec859f8b33943afd1a521a2c9c8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets.Scripts.Views::Assets.Scripts.Views.UI.AudioTrigger

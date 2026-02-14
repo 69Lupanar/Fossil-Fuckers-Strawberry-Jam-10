@@ -60,7 +60,12 @@ namespace Assets.Scripts.Views.Base
         {
             string lustosaurName = selectedLustosaur == null ? "null" : selectedLustosaur.name;
             _manager.ReasonForSex = reasonForSex;
-            _manager.SetSpermLootFromLustosaur(lustosaurName, selectedLustosaur.Quality);
+
+            if (selectedLustosaur != null)
+            {
+                _manager.SetSpermLootFromLustosaur(lustosaurName, selectedLustosaur.Quality);
+            }
+
             _bgImg.color = _manager.ColorPerEnvironment[sexEnvironment];
 
             switch (reasonForSex)

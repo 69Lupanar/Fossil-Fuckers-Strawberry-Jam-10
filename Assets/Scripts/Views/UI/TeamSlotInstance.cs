@@ -69,7 +69,7 @@ namespace Assets.Scripts.Views.UI
         {
             _lustosaur = lustosaur;
             _lustosaurImg.enabled = lustosaur != null;
-            ShowLvlMaxLabel(lustosaur.CurLevel == DinoConstants.MAX_LEVEL);
+            ShowLvlMaxLabel(lustosaur != null && lustosaur.CurLevel == DinoConstants.MAX_LEVEL);
 
             if (lustosaur != null)
             {

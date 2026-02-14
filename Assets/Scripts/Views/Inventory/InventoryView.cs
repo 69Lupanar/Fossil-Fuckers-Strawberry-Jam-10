@@ -33,14 +33,7 @@ namespace Assets.Scripts.Views.Inventory
         [Space(10)]
 
         /// <summary>
-        /// Le 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// PlayerController
+        /// Le PlayerController
         /// </summary>
         [SerializeField]
         private PlayerController _playerController;
@@ -235,8 +228,15 @@ namespace Assets.Scripts.Views.Inventory
         /// <summary>
         /// Appelée quand
         /// </summary>
-        private void OnLootAdded(LootSO _)
+        /// <param name="loot">L'objet ajouté</param>
+        private void OnLootAdded(LootSO loot)
         {
+            switch (loot)
+            {
+                case SpermLootSO:
+                    _audioManager.Play(_onItemFoundSFX);
+                    break;
+            }
             DisplayItemsInCurTab();
         }
 
