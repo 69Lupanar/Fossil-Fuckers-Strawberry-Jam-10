@@ -206,12 +206,14 @@ namespace Assets.Scripts.Views.Base
                 FightingStats statsGainedOnLastExpGain = _manager.StatsGainedOnLastExpGain[i];
                 List<AttackSO> attacksGainedOnLastExpGain = _manager.AttacksGainedOnLastExpGain[i];
 
+                TeamSlotInstance instance = _teamSlotsInstances[i];
+                instance.ShowLvlMaxLabel(attacksGainedOnLastExpGain == null);
+
                 // Si la liste n'est pas nulle, alors ce luxurosaure n'était pas déjà au niveau max.
                 // On peut donc animer sa jauge
 
                 if (attacksGainedOnLastExpGain != null)
                 {
-                    TeamSlotInstance instance = _teamSlotsInstances[i];
                     StartCoroutine(PlayEXPGainAnimationCo(instance, lustosaur, levelsGainedOnLastExpGain, statsGainedOnLastExpGain, attacksGainedOnLastExpGain));
                 }
             }

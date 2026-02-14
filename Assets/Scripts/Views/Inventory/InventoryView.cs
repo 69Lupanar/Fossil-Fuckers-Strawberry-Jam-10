@@ -1,6 +1,7 @@
 using System;
 using Assets.Scripts.Models.Loot;
 using Assets.Scripts.ViewModels.Managers;
+using Assets.Scripts.ViewModels.Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +28,22 @@ namespace Assets.Scripts.Views.Inventory
         #endregion
 
         #region Variables Unity
+
+        [Header("Général")]
+        [Space(10)]
+
+        /// <summary>
+        /// Le 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// PlayerController
+        /// </summary>
+        [SerializeField]
+        private PlayerController _playerController;
 
         /// <summary>
         /// L'inventaire
@@ -64,6 +81,28 @@ namespace Assets.Scripts.Views.Inventory
         [SerializeField]
         private Image[] _slotsImgs;
 
+        [Space(10)]
+        [Header("Audio")]
+        [Space(10)]
+
+        /// <summary>
+        /// L'AudioManager
+        /// </summary>
+        [SerializeField]
+        private AudioManager _audioManager;
+
+        /// <summary>
+        /// Le son joué lrosqu'on déterre un objet
+        /// </summary>
+        [SerializeField]
+        private AudioClip _onGemFoundSFX;
+
+        /// <summary>
+        /// Le son joué lrosqu'on déterre un objet
+        /// </summary>
+        [SerializeField]
+        private AudioClip _onItemFoundSFX;
+
         #endregion
 
         #region Variables d'instance
@@ -87,6 +126,7 @@ namespace Assets.Scripts.Views.Inventory
         /// </summary>
         private void Awake()
         {
+            _playerController.OnTileMined += OnTileMined;
             _manager.OnLootAdded += OnLootAdded;
             _manager.OnInventorySizeIncreased += OnInventorySizeIncreased;
             _manager.OnClear += OnClear;
@@ -173,6 +213,23 @@ namespace Assets.Scripts.Views.Inventory
             _nbTabs = newSize / _slotsImgs.Length;
             _nextBtn.interactable = true;
             _sizeLabel.SetText($"({_curTab + 1}/{_nbTabs})");
+        }
+
+        /// <summary>
+        /// Appelée quand une case est minée
+        /// </summary>
+        /// <param name="loot">L'obje déterré</param>
+        private void OnTileMined(LootSO loot, int _)
+        {
+            switch (loot)
+            {
+                case GemLootSO:
+                    _audioManager.Play(_onGemFoundSFX);
+                    break;
+                case FossilLootSO or SpermLootSO:
+                    _audioManager.Play(_onItemFoundSFX);
+                    break;
+            }
         }
 
         /// <summary>

@@ -31,6 +31,12 @@ namespace Assets.Scripts.Views.UI
         private Image _radialGradient;
 
         /// <summary>
+        /// Le label indiquant que le niveau du luxurosaure est au max
+        /// </summary>
+        [SerializeField]
+        private GameObject _lvlMaxLabel;
+
+        /// <summary>
         /// Vitesse d'anim
         /// </summary>
         [SerializeField]
@@ -63,6 +69,7 @@ namespace Assets.Scripts.Views.UI
         {
             _lustosaur = lustosaur;
             _lustosaurImg.enabled = lustosaur != null;
+            ShowLvlMaxLabel(lustosaur.CurLevel == DinoConstants.MAX_LEVEL);
 
             if (lustosaur != null)
             {
@@ -74,6 +81,15 @@ namespace Assets.Scripts.Views.UI
                 SetExpFillAmount(0f);
             }
 
+        }
+
+        /// <summary>
+        /// Affiche ou non le label indiquant le niveau max
+        /// </summary>
+        /// <param name="show">true pour l'afficher</param>
+        public void ShowLvlMaxLabel(bool show)
+        {
+            _lvlMaxLabel.SetActive(show);
         }
 
         /// <summary>

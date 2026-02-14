@@ -1,5 +1,6 @@
 using System;
 using Assets.Scripts.Models.Loot;
+using Assets.Scripts.ViewModels.Managers;
 using Assets.Scripts.ViewModels.Mineables;
 using DG.Tweening;
 using DG.Tweening.Core;
@@ -32,6 +33,9 @@ namespace Assets.Scripts.ViewModels.Player
         #endregion
 
         #region Variables Unity
+
+        [Header("General")]
+        [Space(10)]
 
         /// <summary>
         /// Les stats du joueur
@@ -72,6 +76,22 @@ namespace Assets.Scripts.ViewModels.Player
         /// Le layer des objets minables
         /// </summary>
         [SerializeField] private LayerMask _miningLayerMask;
+
+        [Space(10)]
+        [Header("Audio")]
+        [Space(10)]
+
+        /// <summary>
+        /// L'AudioManager
+        /// </summary>
+        [SerializeField]
+        private AudioManager _audioManager;
+
+        /// <summary>
+        /// Le son joué lors du minage
+        /// </summary>
+        [SerializeField]
+        private AudioClip _miningSFX;
 
         #endregion
 
@@ -177,6 +197,7 @@ namespace Assets.Scripts.ViewModels.Player
                         IsMining = true;
                         _col.isTrigger = true;
 
+                        _audioManager.Play(_miningSFX);
                         _miningTween = transform.DOMove(hit.collider.transform.position, _playerStats.MiningSpeed).OnComplete(() =>
                         {
                             IsMining = false;
