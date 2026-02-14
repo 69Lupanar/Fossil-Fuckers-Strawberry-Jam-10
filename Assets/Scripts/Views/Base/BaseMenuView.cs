@@ -2,6 +2,7 @@ using Assets.Scripts.Models;
 using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.Models.Loot;
 using Assets.Scripts.ViewModels.Managers;
+using Assets.Scripts.Views.Game;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,11 +16,20 @@ namespace Assets.Scripts.Views.Base
     {
         #region Variables Unity
 
+        [Header("General")]
+        [Space(10)]
+
         /// <summary>
         /// Le BaseMenuManager
         /// </summary>
         [SerializeField]
         private BaseMenuManager _manager;
+
+        /// <summary>
+        /// Le GameManagerView
+        /// </summary>
+        [SerializeField]
+        private GameManagerView _gameManagerView;
 
         /// <summary>
         /// Le PlayerUpgradeView
@@ -50,12 +60,6 @@ namespace Assets.Scripts.Views.Base
         /// </summary>
         [SerializeField]
         private SexMenuView _sexView;
-
-        /// <summary>
-        /// Le GameManager
-        /// </summary>
-        [SerializeField]
-        private GameManager _gameManager;
 
         /// <summary>
         /// Le canvas racine du menu de la base
@@ -118,6 +122,34 @@ namespace Assets.Scripts.Views.Base
 
         private float _fadeSpeed = .5f;
 
+        [Space(10)]
+        [Header("Audio")]
+        [Space(10)]
+
+        /// <summary>
+        /// L'AudioManager
+        /// </summary>
+        [SerializeField]
+        private AudioManager _audioManager;
+
+        /// <summary>
+        /// La musique de la base
+        /// </summary>
+        [SerializeField]
+        private AudioClip _baseMenuBGM;
+
+        /// <summary>
+        /// La musique de la scène adulte pour la galerie et une victoire
+        /// </summary>
+        [SerializeField]
+        private AudioClip _goodSexBGM;
+
+        /// <summary>
+        ///  La musique de la scène adulte pour la mort et une défaite
+        /// </summary>
+        [SerializeField]
+        private AudioClip _badSexBGM;
+
         #endregion
 
         #region Variables d'instance
@@ -168,6 +200,7 @@ namespace Assets.Scripts.Views.Base
         /// </summary>
         public void OpenBaseMenu()
         {
+            _audioManager.Play(_baseMenuBGM, 1f);
             _baseMenuCanvas.enabled = true;
             _baseMenuBtnsParent.SetActive(true);
         }
@@ -177,12 +210,12 @@ namespace Assets.Scripts.Views.Base
         /// </summary>
         public void CloseBaseMenu()
         {
+            _audioManager.Stop(_baseMenuBGM, 1f);
+
             _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
             {
                 CloseAll();
-                _gameManager.RespawnPlayer();
-                _gameManager.EnableController();
-                _blackFadeImg.DOFade(0f, _fadeSpeed);
+                _gameManagerView.ReturnToGame();
             });
         }
 
@@ -239,8 +272,27 @@ namespace Assets.Scripts.Views.Base
                 _combatCanvas.enabled = false;
                 _baseMenuCanvas.enabled = true;
                 _sexMenuCanvas.enabled = true;
-                _sexView.OnSexMenuOpen(reasonForSex, sexEnvironment, selectedLustosaur);
                 _blackFadeImg.DOFade(0f, _fadeSpeed);
+
+                _audioManager.Stop(_baseMenuBGM, _fadeSpeed);
+
+                switch (reasonForSex)
+                {
+                    case ReasonForSex.Gallery:
+                        _audioManager.Play(_goodSexBGM, _fadeSpeed);
+                        break;
+                    case ReasonForSex.Defeat:
+                        _audioManager.Play(_badSexBGM, _fadeSpeed);
+                        break;
+                    case ReasonForSex.Victory:
+                        _audioManager.Play(_goodSexBGM, _fadeSpeed);
+                        break;
+                    case ReasonForSex.StatDepleted:
+                        _audioManager.Play(_badSexBGM, _fadeSpeed);
+                        break;
+                }
+
+                _sexView.OnSexMenuOpen(reasonForSex, sexEnvironment, selectedLustosaur);
             });
         }
 
@@ -282,6 +334,22 @@ namespace Assets.Scripts.Views.Base
         /// <param name="reasonForSex">La raison pour laqulle une scène de sexe doit se jouer</param>
         public void EndSexScene(ReasonForSex reasonForSex)
         {
+            switch (reasonForSex)
+            {
+                case ReasonForSex.Gallery:
+                    _audioManager.Stop(_goodSexBGM, _fadeSpeed);
+                    break;
+                case ReasonForSex.Defeat:
+                    _audioManager.Stop(_badSexBGM, _fadeSpeed);
+                    break;
+                case ReasonForSex.Victory:
+                    _audioManager.Stop(_goodSexBGM, _fadeSpeed);
+                    break;
+                case ReasonForSex.StatDepleted:
+                    _audioManager.Stop(_badSexBGM, _fadeSpeed);
+                    break;
+            }
+
             _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
             {
                 CloseAll();
@@ -289,19 +357,12 @@ namespace Assets.Scripts.Views.Base
 
                 if (reasonForSex == ReasonForSex.Defeat || reasonForSex == ReasonForSex.StatDepleted)
                 {
-                    _gameManager.RestartLevel(/*true*/);
+                    _gameManagerView.RestartLevel(/*true*/);
                 }
                 else
                 {
-                    if (reasonForSex == ReasonForSex.Gallery)
-                    {
-                        _gameManager.RespawnPlayer();
-                    }
-
-                    _gameManager.EnableController();
+                    _gameManagerView.ReturnToGame(reasonForSex == ReasonForSex.Gallery);
                 }
-
-                _blackFadeImg.DOFade(0f, _fadeSpeed);
             });
         }
 

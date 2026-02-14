@@ -1,3 +1,4 @@
+using System;
 using Assets.Scripts.Models.EventArgs;
 using Assets.Scripts.ViewModels.NPCs;
 using Assets.Scripts.ViewModels.Player;
@@ -11,6 +12,15 @@ namespace Assets.Scripts.ViewModels.Managers
     /// </summary>
     public class GameManager : MonoBehaviour
     {
+        #region Evénements
+
+        /// <summary>
+        /// Appelée quand un combat commence
+        /// </summary>
+        public Action OnCombatStarted { get; set; }
+
+        #endregion
+
         #region Variables Unity
 
         /// <summary>
@@ -232,8 +242,8 @@ namespace Assets.Scripts.ViewModels.Managers
         /// </summary>
         private void OnDialogueEnded()
         {
-            //EnableController();
             _combatManager.StartCombat(_tempNPCFighter.Team);
+            OnCombatStarted?.Invoke();
             _dialogueManager.OnDialogueEnded -= OnDialogueEnded;
         }
 

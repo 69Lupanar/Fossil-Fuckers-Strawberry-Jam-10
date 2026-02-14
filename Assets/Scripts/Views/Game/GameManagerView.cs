@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using Assets.Scripts.Models;
 using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.ViewModels.Managers;
@@ -15,6 +17,9 @@ namespace Assets.Scripts.Views.Game
     public class GameManagerView : MonoBehaviour
     {
         #region Variables Unity
+
+        [Header("General")]
+        [Space(10)]
 
         /// <summary>
         /// Le BaseMenuView
@@ -47,6 +52,12 @@ namespace Assets.Scripts.Views.Game
         private Collider2DTrigger _playerTrigger;
 
         /// <summary>
+        /// Le canvas du menu ppal
+        /// </summary>
+        [SerializeField]
+        private Canvas _mainMenuCanvas;
+
+        /// <summary>
         /// Fondu en noir
         /// </summary>
         [SerializeField]
@@ -58,6 +69,37 @@ namespace Assets.Scripts.Views.Game
         [SerializeField]
         private float _fadeSpeed = .5f;
 
+        [Space(10)]
+        [Header("Audio")]
+        [Space(10)]
+
+        /// <summary>
+        /// L'AudioManager
+        /// </summary>
+        [SerializeField]
+        private AudioManager _audioManager;
+
+        /// <summary>
+        /// La musique de l'intro
+        /// </summary>
+        [SerializeField]
+        private AudioClip _introBGM;
+
+        /// <summary>
+        /// Les musiques pouvant être jouées durant la partie
+        /// </summary>
+        [SerializeField]
+        private AudioClip[] _mineBgms;
+
+        #endregion
+
+        #region Variables d'instance
+
+        /// <summary>
+        /// La musique en cours pendant la phase d'exploration
+        /// </summary>
+        private AudioClip _curBGM;
+
         #endregion
 
         #region Méthodes Unity
@@ -67,6 +109,7 @@ namespace Assets.Scripts.Views.Game
         /// </summary>
         private void Awake()
         {
+            _manager.OnCombatStarted += OnCombatStarted;
             _playerTrigger.OnTriggerEnter += OnBaseEntered;
             _statsManager.OnDeath += OnDeath;
         }
@@ -76,13 +119,80 @@ namespace Assets.Scripts.Views.Game
         /// </summary>
         private void Start()
         {
+            _manager.DisableController();
+
+            _mainMenuCanvas.enabled = true;
             _blackFadeImg.gameObject.SetActive(true);
             _blackFadeImg.DOFade(0f, _fadeSpeed);
+            _audioManager.Play(_introBGM, _fadeSpeed);
+        }
+
+        #endregion
+
+        #region Méthodes publiques
+
+        /// <summary>
+        /// Appelée par le bouton Play
+        /// </summary>
+        public void OnPlayBtn()
+        {
+            _audioManager.Stop(_introBGM, _fadeSpeed);
+            _blackFadeImg.DOFade(_fadeSpeed, _fadeSpeed).OnComplete(() =>
+            {
+                _manager.StartCoroutine(WaitCo(_fadeSpeed, () =>
+                {
+                    ReturnToGame();
+
+                    _mainMenuCanvas.enabled = false;
+                    _blackFadeImg.DOFade(0f, _fadeSpeed);
+                }));
+            });
+        }
+
+        /// <summary>
+        /// Retourne à la scène ppale
+        /// </summary>
+        /// <param name="respawnPlayer">true si on doit replacer le joueur</param>
+        public void ReturnToGame(bool respawnPlayer = false)
+        {
+            if (respawnPlayer)
+            {
+                _manager.RespawnPlayer();
+            }
+
+            _manager.EnableController();
+
+            _blackFadeImg.DOFade(0f, _fadeSpeed);
+            _curBGM = _mineBgms[UnityEngine.Random.Range(0, _mineBgms.Length)];
+            _audioManager.Play(_curBGM, _fadeSpeed);
+        }
+
+        /// <summary>
+        /// Ramène le joueur au point de départ,
+        /// vide son inventaire
+        /// et régénère la mine
+        /// </summary>
+        /// <param name="loseAllEXP">true si l'exp du joueur doit retomber à 0</param>
+        public void RestartLevel(/*bool loseAllEXP*/)
+        {
+            _manager.RestartLevel(/*loseAllEXP*/);
+
+            _blackFadeImg.DOFade(0f, _fadeSpeed);
+            _curBGM = _mineBgms[UnityEngine.Random.Range(0, _mineBgms.Length)];
+            _audioManager.Play(_curBGM, _fadeSpeed);
         }
 
         #endregion
 
         #region Méthodes privées
+
+        /// <summary>
+        /// Appelée quand un combat commence
+        /// </summary>
+        private void OnCombatStarted()
+        {
+            _audioManager.Stop(_curBGM);
+        }
 
         /// <summary>
         /// Appelée quand le joueur entre dans la base
@@ -93,11 +203,15 @@ namespace Assets.Scripts.Views.Game
             if (obj.CompareTag("Base"))
             {
                 _manager.DisableController();
+                _audioManager.Stop(_curBGM, _fadeSpeed);
 
-                _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
+                _blackFadeImg.DOFade(_fadeSpeed, _fadeSpeed).OnComplete(() =>
                 {
-                    _baseMenuView.OpenBaseMenu();
-                    _blackFadeImg.DOFade(0f, _fadeSpeed);
+                    _manager.StartCoroutine(WaitCo(_fadeSpeed, () =>
+                    {
+                        _baseMenuView.OpenBaseMenu();
+                        _blackFadeImg.DOFade(0f, _fadeSpeed);
+                    }));
                 });
             }
         }
@@ -108,11 +222,12 @@ namespace Assets.Scripts.Views.Game
         private void OnDeath()
         {
             _manager.DisableController();
+            _audioManager.Stop(_curBGM, _fadeSpeed);
 
             // On a une chance sur deux de lancer une scène de sexe avec l'un de nos luxurosaures
             // si le perso s'évanouit
 
-            float rand = Random.Range(0f, 100f);
+            float rand = UnityEngine.Random.Range(0f, 100f);
 
             if (rand > 50f)
             {
@@ -121,12 +236,28 @@ namespace Assets.Scripts.Views.Game
             }
             else
             {
-                _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
+                _blackFadeImg.DOFade(_fadeSpeed, _fadeSpeed).OnComplete(() =>
                 {
-                    _manager.ResetPlayer();
-                    _blackFadeImg.DOFade(0f, _fadeSpeed);
+                    _manager.StartCoroutine(WaitCo(_fadeSpeed, () =>
+                    {
+                        _manager.ResetPlayer();
+
+                        _curBGM = _mineBgms[UnityEngine.Random.Range(0, _mineBgms.Length)];
+                        _audioManager.Play(_curBGM, _fadeSpeed);
+                        _blackFadeImg.DOFade(0f, _fadeSpeed);
+                    }));
                 });
             }
+        }
+
+        /// <summary>
+        /// Délai
+        /// </summary>
+        /// <param name="duration">délai</param>
+        private IEnumerator WaitCo(float duration, Action onComplete)
+        {
+            yield return new WaitForSeconds(duration);
+            onComplete?.Invoke();
         }
 
         #endregion

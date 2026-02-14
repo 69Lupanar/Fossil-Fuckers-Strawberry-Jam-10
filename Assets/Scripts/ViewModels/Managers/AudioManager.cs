@@ -102,6 +102,14 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <summary>
         /// Plays an AudioClip, even if not registered in the AudioManager
         /// </summary>
+        public void Play(AudioClip clip, float tweenVolumeSpeed)
+        {
+            Play(clip, null, null, tweenVolumeSpeed);
+        }
+
+        /// <summary>
+        /// Plays an AudioClip, even if not registered in the AudioManager
+        /// </summary>
         public void Play(AudioClip clip, float? volume = null, bool? loop = null, float tweenVolumeSpeed = 0f)
         {
             if (clip == null)
@@ -141,6 +149,7 @@ namespace Assets.Scripts.ViewModels.Managers
             }
             else
             {
+                source.volume = 0f;
                 source.DOKill();
                 source.DOFade(newData.DefaultVolume, tweenVolumeSpeed);
             }

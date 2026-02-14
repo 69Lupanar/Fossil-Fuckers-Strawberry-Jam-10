@@ -5,6 +5,7 @@ using Assets.Scripts.Models.Combat;
 using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.ViewModels.Managers;
 using Assets.Scripts.Views.Base;
+using Assets.Scripts.Views.Game;
 using Assets.Scripts.Views.UI;
 using DG.Tweening;
 using TMPro;
@@ -48,6 +49,12 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         [SerializeField]
         private TeamMenuView _teamMenuView;
+
+        /// <summary>
+        /// Le GameManagerView
+        /// </summary>
+        [SerializeField]
+        private GameManagerView _gameManagerView;
 
         /// <summary>
         /// Le GameManagerView
@@ -490,6 +497,28 @@ namespace Assets.Scripts.Views.Combat
         [SerializeField]
         private AnimationCurve _bounceCurve;
 
+        [Space(10)]
+        [Header("Audio")]
+        [Space(10)]
+
+        /// <summary>
+        /// L'AudioManager
+        /// </summary>
+        [SerializeField]
+        private AudioManager _audioManager;
+
+        /// <summary>
+        /// Effets sonores joués lors du combat
+        /// </summary>
+        [SerializeField]
+        private AudioClip[] _sfxs;
+
+        /// <summary>
+        /// Les musiques pouvant être jouées durant la partie
+        /// </summary>
+        [SerializeField]
+        private AudioClip[] _combatBgms;
+
         #endregion
 
         #region Variables d'instance
@@ -503,6 +532,11 @@ namespace Assets.Scripts.Views.Combat
         /// true si le joueur est en train de changer la formation de ses luxurosaures
         /// </summary>
         private bool _isChangingFormation;
+
+        /// <summary>
+        /// La musique en cours pendant la phase d'exploration
+        /// </summary>
+        private AudioClip _curBGM;
 
         #endregion
 
@@ -545,7 +579,7 @@ namespace Assets.Scripts.Views.Combat
             _selectionLockLevel = CombatSelectionLockLevel.Player;
             _manager.SelectAllyLustosaur(0);
             PopulateAttacksList();
-            ShowArrowTarget(_playerLustosaursHandlers, 0);
+            ShowArrowTarget(_playerLustosaursHandlers, _manager.SelectedAllyIndex);
             ShowInstruction(0);
         }
 
@@ -588,6 +622,8 @@ namespace Assets.Scripts.Views.Combat
         public void OnSubmitBtnClick()
         {
             _manager.Submit();
+
+            _audioManager.Stop(_curBGM);
             ShowDefeatScreen();
         }
 
@@ -632,20 +668,20 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         public void OnLustosaurBtnHover(int index)
         {
-            //if (index > 0)
-            //{
-            //    if (_selectionLockLevel == CombatSelectionLockLevel.Player || _selectionLockLevel == CombatSelectionLockLevel.Both)
-            //    {
-            //        ShowArrowTarget(_playerLustosaursHandlers, index - 1);
-            //    }
-            //}
-            //else
-            //{
-            //    if (_selectionLockLevel == CombatSelectionLockLevel.Enemy || _selectionLockLevel == CombatSelectionLockLevel.Both)
-            //    {
-            //        ShowArrowTarget(_enemyLustosaursHandlers, -index - 1);
-            //    }
-            //}
+            if (index > 0)
+            {
+                //if (_selectionLockLevel == CombatSelectionLockLevel.Player || _selectionLockLevel == CombatSelectionLockLevel.Both)
+                //{
+                //    ShowArrowTarget(_playerLustosaursHandlers, index - 1);
+                //}
+            }
+            else
+            {
+                if (_selectionLockLevel == CombatSelectionLockLevel.Enemy || _selectionLockLevel == CombatSelectionLockLevel.Both)
+                {
+                    ShowArrowTarget(_enemyLustosaursHandlers, -index - 1);
+                }
+            }
         }
 
         /// <summary>
@@ -667,7 +703,6 @@ namespace Assets.Scripts.Views.Combat
                 if (_selectionLockLevel == CombatSelectionLockLevel.Enemy || _selectionLockLevel == CombatSelectionLockLevel.Both)
                 {
                     _selectionLockLevel = CombatSelectionLockLevel.None;
-                    ShowArrowTarget(_enemyLustosaursHandlers, -index - 1);
                     _manager.SelectEnemyLustosaur(-index - 1);
 
                     switch (_manager.BattleState)
@@ -715,8 +750,12 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         private void OnCombatStarted()
         {
-            InitComponents();
             _manager.CalculateInitiative();
+
+            _curBGM = _combatBgms[UnityEngine.Random.Range(0, _combatBgms.Length)];
+            _audioManager.Play(_curBGM, _blackFadeDuration);
+
+            InitComponents();
             StartCoroutine(PlayIntroAnimationsCo());
         }
 
@@ -977,8 +1016,15 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         private void ShowVictoryScreen()
         {
+            PlaySFX(7);
+
             _victoryCanvas.enabled = true;
-            StartCoroutine(IncreaseExpGainedCo());
+
+            if (_manager.EXPGained > 0)
+            {
+                PlaySFX(10);
+                StartCoroutine(IncreaseExpGainedCo());
+            }
         }
 
         /// <summary>
@@ -986,9 +1032,18 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         private void ShowDefeatScreen()
         {
+            _manager.CalculateExpGained(BattleState.Defeat);
+
+            PlaySFX(3);
+
             _actionMenuCanvas.enabled = false;
             _defeatCanvas.enabled = true;
-            StartCoroutine(IncreaseExpGainedCo());
+
+            if (_manager.EXPGained > 0)
+            {
+                PlaySFX(10);
+                StartCoroutine(IncreaseExpGainedCo());
+            }
         }
 
         /// <summary>
@@ -999,6 +1054,7 @@ namespace Assets.Scripts.Views.Combat
         private void QuitCombatScreen(BattleState battleState, LustosaurSO enemyLustosaur = null)
         {
             _gameManager.OnQuitCombatScreen();
+            _audioManager.StopAll(_blackFadeDuration);
 
             switch (battleState)
             {
@@ -1013,8 +1069,7 @@ namespace Assets.Scripts.Views.Combat
                         {
                             _baseMenuView.CloseAll();
                             _teamMenuView.UpdateExpGauges();
-                            _gameManager.EnableController();
-                            _blackFadeImg.DOFade(0f, _blackFadeDuration);
+                            _gameManagerView.ReturnToGame(false);
                         });
                     }
                     break;
@@ -1022,6 +1077,15 @@ namespace Assets.Scripts.Views.Combat
                     _baseMenuView.OpenSexMenu(ReasonForSex.Defeat, SexEnvironment.CombatDefeat, enemyLustosaur);
                     break;
             }
+        }
+
+        /// <summary>
+        /// Jour l'effet sonore sélectionné
+        /// </summary>
+        /// <param name="index">index</param>
+        private void PlaySFX(int index)
+        {
+            _audioManager.Play(_sfxs[index], null, false, 0f);
         }
 
         #endregion
@@ -1042,12 +1106,15 @@ namespace Assets.Scripts.Views.Combat
 
             if (_manager.PlayerHasInitiative)
             {
+                PlaySFX(5);
                 yield return PlaySupportAnimationCo(_playerLustosaursHandlers);
                 yield return PlaySupportAnimationCo(_enemyLustosaursHandlers);
+                PlaySFX(8);
                 ShowActionMenu();
             }
             else
             {
+                PlaySFX(5);
                 yield return PlaySupportAnimationCo(_enemyLustosaursHandlers);
                 yield return PlaySupportAnimationCo(_playerLustosaursHandlers);
                 ProcessOpponentTurn();
@@ -1116,6 +1183,7 @@ namespace Assets.Scripts.Views.Combat
                 }
                 else
                 {
+                    PlaySFX(8);
                     ShowActionMenu();
                 }
 
@@ -1152,6 +1220,7 @@ namespace Assets.Scripts.Views.Combat
         private IEnumerator PlayIntroAnimationsCo()
         {
             _animator.enabled = true;
+            PlaySFX(9);
 
             // Joue l'intro
 
@@ -1166,10 +1235,12 @@ namespace Assets.Scripts.Views.Combat
             _introCanvas.enabled = false;
             _animator.Play(_healthComparisonAnim.name);
             yield return new WaitForSeconds(.5f);
+            PlaySFX(10);
             yield return IncrementTotalHPLabelsCo(1f);
 
             // Affiche qui gagne l'initiative
 
+            PlaySFX(8);
             _playerInitiativeContent.gameObject.SetActive(_manager.PlayerHasInitiative);
             _enemyInitiativeContent.gameObject.SetActive(!_manager.PlayerHasInitiative);
 
@@ -1293,6 +1364,7 @@ namespace Assets.Scripts.Views.Combat
 
             if (miss)
             {
+                PlaySFX(0);
                 _missHitIcon.transform.DOMove(_missHitIcon.transform.position + _arrowTargetOffset, _hitIconFadeDuration);
                 _missHitIcon.DOFade(1f, _hitIconFadeDuration).OnComplete(() =>
                 {
@@ -1304,6 +1376,7 @@ namespace Assets.Scripts.Views.Combat
             }
             else if (criticalHit)
             {
+                PlaySFX(1);
                 _criticalHitIcon.transform.DOMove(_criticalHitIcon.transform.position + _arrowTargetOffset, _hitIconFadeDuration);
                 _criticalHitDmgLabel.SetText(dmg.ToString());
 
@@ -1317,6 +1390,7 @@ namespace Assets.Scripts.Views.Combat
             }
             else
             {
+                PlaySFX(2);
                 _normalHitIcon.transform.DOMove(_normalHitIcon.transform.position + _arrowTargetOffset, _hitIconFadeDuration);
                 _normalHitDmgLabel.SetText(dmg.ToString());
 
@@ -1350,8 +1424,10 @@ namespace Assets.Scripts.Views.Combat
                     StartCoroutine(IncrementFPLabelCo(_playerFPLabel, _manager.PlayerFP, _FPChangeSpeed));
                 }
 
+                PlaySFX(4);
                 ShowMessage(string.Format(CombatConstants.LUSTOSAUR_DEFEATED_MSG, defender.name), _deathIcon);
                 defenderHandler.SetAlpha(0f, true);
+
                 yield return new WaitForSeconds(_lustosaurDeathDuration);
                 defenderHandler.gameObject.SetActive(false);
             }
@@ -1362,6 +1438,7 @@ namespace Assets.Scripts.Views.Combat
             {
                 if (_manager.BattleState == BattleState.Victory)
                 {
+                    _audioManager.Stop(_curBGM, _lustosaurDeathDuration);
                     ShowVictoryScreen();
                 }
                 else
@@ -1373,6 +1450,7 @@ namespace Assets.Scripts.Views.Combat
             {
                 if (_manager.BattleState == BattleState.Defeat)
                 {
+                    _audioManager.Stop(_curBGM, _lustosaurDeathDuration);
                     ShowDefeatScreen();
                 }
                 else

@@ -763,15 +763,11 @@ namespace Assets.Scripts.ViewModels.Managers
             }
         }
 
-        #endregion
-
-        #region Méthodes privées
-
         /// <summary>
         /// Calcule l'exp gagnée
         /// </summary>
         /// <param name="battleState">Issue de la partie</param>
-        private void CalculateExpGained(BattleState battleState)
+        public void CalculateExpGained(BattleState battleState)
         {
             int expPerEnemyDefeated = CombatConstants.EXP_GAINED_PER_DEFEATED_ENEMY * _nbDefeatedEnemyLustosaurs;
             int expPerAllyDefeated = CombatConstants.EXP_LOST_PER_DEFEATED_ALLY * _nbDefeatedAllyLustosaurs;

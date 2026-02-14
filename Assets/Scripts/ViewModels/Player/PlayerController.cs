@@ -99,7 +99,7 @@ namespace Assets.Scripts.ViewModels.Player
         /// <summary>
         /// Init
         /// </summary>
-        private void Start()
+        private void Awake()
         {
             _col = GetComponent<Collider2D>();
             _input.EnablePlayerInput(true);

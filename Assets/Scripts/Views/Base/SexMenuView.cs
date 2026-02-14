@@ -13,6 +13,9 @@ namespace Assets.Scripts.Views.Base
     {
         #region Variables Unity
 
+        [Header("General")]
+        [Space(10)]
+
         /// <summary>
         /// Le SexMenuManager
         /// </summary>
