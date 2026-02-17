@@ -18,6 +18,6 @@ MonoBehaviour:
 
     (Just
     don''t look at the expiration date...)'
-  <Cost>k__BackingField: 50
+  <Cost>k__BackingField: 600
   <UpgradeIndex>k__BackingField: 6
   <NextUpgrade>k__BackingField: {fileID: 0}

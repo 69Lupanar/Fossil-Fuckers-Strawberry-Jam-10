@@ -7,6 +7,7 @@ namespace Assets.Scripts.Models.Logs
     {
         // Items
 
+        public const string EXTRACTED_SPERM_MSG = "Extracted a sperm sample from the {0}!";
         public const string FOUND_ITEM_MSG = "Found a {0}! +{1} EXP!";
         public const string INVENTORY_ITEM_DISCARDED_MSG = "Inventory full, {0} discarded.";
         public const string FOUND_GEM_MSG = "Found a {0}! +{1} EXP!";

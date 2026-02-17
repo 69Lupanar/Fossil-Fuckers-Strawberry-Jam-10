@@ -75,6 +75,13 @@ namespace Assets.Scripts.Models.Mineables
         public DialoguesPerHeatThreshold[] DialoguesPerHeatThreshold { get; private set; }
 
         /// <summary>
+        /// Listes des sprites disponibles en fonction
+        /// du palier de chaleur d'un PNJ
+        /// </summary>
+        [field: SerializeField]
+        public AnimIdlesPerHeatThreshold[] AnimIdlesPerHeatThreshold { get; private set; }
+
+        /// <summary>
         /// Luxurosaures utilisables par les PNJs combattants,
         /// sélectionnés au hasard lors de la génération
         /// </summary>

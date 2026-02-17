@@ -33,6 +33,21 @@ namespace Assets.Scripts.ViewModels.Managers
         [SerializeField] private Transform _boundsBottom;
 
         /// <summary>
+        /// Le sprite du mur de gauche
+        /// </summary>
+        [SerializeField] private SpriteRenderer _boundsSpriteLeft;
+
+        /// <summary>
+        /// Le sprite du mur de droite
+        /// </summary>
+        [SerializeField] private SpriteRenderer _boundsSpriteRight;
+
+        /// <summary>
+        /// Le sprite du fond de la mine
+        /// </summary>
+        [SerializeField] private SpriteRenderer _boundsSpriteBottom;
+
+        /// <summary>
         /// Le spawner des cases
         /// </summary>
         [SerializeField] private MineableSpawner _mineableSpawner;
@@ -86,6 +101,29 @@ namespace Assets.Scripts.ViewModels.Managers
         {
             _gridSize = e.GridSize;
             _spawnSpacing = e.SpawnSpacing;
+
+            Vector3 pos = _boundsSpriteLeft.transform.position;
+            pos.y = -_gridSize.y * _spawnSpacing + 1f;
+            _boundsSpriteLeft.transform.position = pos;
+            _boundsSpriteLeft.size = new Vector2(_boundsSpriteLeft.size.x, e.GridSize.y * e.SpawnSpacing);
+
+            pos = _boundsSpriteRight.transform.parent.transform.position;
+            pos.x = _gridSize.x * _spawnSpacing - 1f;
+            _boundsSpriteRight.transform.parent.transform.position = pos;
+
+            pos = _boundsSpriteRight.transform.position;
+            pos.y = -_gridSize.y * _spawnSpacing + 1f;
+            _boundsSpriteRight.transform.position = pos;
+            _boundsSpriteRight.size = new Vector2(_boundsSpriteLeft.size.x, e.GridSize.y * e.SpawnSpacing);
+
+            pos = _boundsSpriteBottom.transform.parent.transform.position;
+            pos.y = -_gridSize.y * _spawnSpacing + 1f;
+            _boundsSpriteBottom.transform.parent.transform.position = pos;
+
+            pos = _boundsSpriteBottom.transform.position;
+            pos.x = _gridSize.x * _spawnSpacing / 2f - 1f;
+            _boundsSpriteBottom.transform.position = pos;
+            _boundsSpriteBottom.size = new Vector2(e.GridSize.x * e.SpawnSpacing, _boundsSpriteBottom.size.y);
         }
 
         #endregion

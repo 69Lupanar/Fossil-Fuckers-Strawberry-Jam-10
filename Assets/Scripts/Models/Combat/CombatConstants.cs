@@ -16,9 +16,9 @@ namespace Assets.Scripts.Models.Combat
         public const float CRITICAL_HIT_DMG_BONUS = 1.5f;
 
         /// <summary>
-        /// Réduction de dégâts si l'attaquant ou le défenseur sont dans la zone de soutien
+        /// % de réduction de dégâts si l'attaquant ou le défenseur sont dans la zone de soutien
         /// </summary>
-        public const int SUPPORT_ZONE_DMG_REDUCTION = 2;
+        public const int SUPPORT_ZONE_DMG_REDUCTION_PERCENTAGE = 50;
 
         /// <summary>
         /// EXP gagnée par ennemi vainu

@@ -19,6 +19,6 @@ MonoBehaviour:
 
     Increases your heat resistance by an
     additional 25%!'
-  <Cost>k__BackingField: 50
+  <Cost>k__BackingField: 600
   <UpgradeIndex>k__BackingField: 7
   <NextUpgrade>k__BackingField: {fileID: 0}

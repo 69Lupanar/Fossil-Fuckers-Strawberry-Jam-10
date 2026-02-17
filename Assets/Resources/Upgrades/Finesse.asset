@@ -19,6 +19,6 @@ MonoBehaviour:
 
     (Also includes any sperm you extract after
     a fight)'
-  <Cost>k__BackingField: 30
+  <Cost>k__BackingField: 300
   <UpgradeIndex>k__BackingField: 4
   <NextUpgrade>k__BackingField: {fileID: 11400000, guid: 0c35acb345975ec429421c5b444e4f47, type: 2}

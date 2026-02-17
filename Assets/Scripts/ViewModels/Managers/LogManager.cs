@@ -164,7 +164,16 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <param name="loot">L'objet ajouté</param>
         private void OnLootAdded(LootSO loot)
         {
-            AddLog(loot.Sprite, string.Format(LogConstants.FOUND_ITEM_MSG, loot.name, loot.EXP));
+            switch (loot)
+            {
+                case SpermLootSO sperm:
+                    AddLog(sperm.Sprite, string.Format(LogConstants.EXTRACTED_SPERM_MSG, sperm.Lustosaur.name));
+                    break;
+
+                default:
+                    AddLog(loot.Sprite, string.Format(LogConstants.FOUND_ITEM_MSG, loot.name, loot.EXP));
+                    break;
+            }
         }
 
         /// <summary>

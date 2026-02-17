@@ -96,7 +96,7 @@ namespace Assets.Scripts.ViewModels.Managers
         /// L'équipe de départ du joueur (optionnel)
         /// </summary>
         [SerializeField]
-        private LustosaurSO[] StartingTeam;
+        private LustosaurSO[] PossibleStartingLustosaurs;
 
         #endregion
 
@@ -130,11 +130,10 @@ namespace Assets.Scripts.ViewModels.Managers
             PlayerTeam = new List<LustosaurSO>(_playerTeamCapacity);
             ResizeExpGainTrackers();
 
-            for (int i = 0; i < StartingTeam.Length; ++i)
-            {
-                PlayerTeam.Add(LustosaurSO.CreateFrom(StartingTeam[i], 100));
-                StandbyReserve.Add(LustosaurSO.CreateFrom(StartingTeam[i], 100));
-            }
+            // Crée un luxurosaure au hasard comme dino de départ du joueur
+
+            int randNbInTeam = UnityEngine.Random.Range(1, _playerTeamCapacity);
+            PlayerTeam.Add(LustosaurSO.CreateFrom(PossibleStartingLustosaurs[UnityEngine.Random.Range(0, PossibleStartingLustosaurs.Length)], 100));
 
             OnStart?.Invoke();
         }

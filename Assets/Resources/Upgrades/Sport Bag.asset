@@ -19,6 +19,6 @@ MonoBehaviour:
 
     Doubles your
     original carrying capacity!'
-  <Cost>k__BackingField: 30
+  <Cost>k__BackingField: 300
   <UpgradeIndex>k__BackingField: 8
   <NextUpgrade>k__BackingField: {fileID: 11400000, guid: d4250d88de3875449bba0bacde5a323f, type: 2}

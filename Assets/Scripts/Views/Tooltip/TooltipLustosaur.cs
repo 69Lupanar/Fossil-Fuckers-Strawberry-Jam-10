@@ -21,6 +21,12 @@ namespace Assets.Scripts.Views.Tooltip
         private TextMeshProUGUI _lustosaurNameLabel;
 
         /// <summary>
+        /// Le label de la description du luxurosaure
+        /// </summary>
+        [SerializeField]
+        private TextMeshProUGUI _lustosaurDescriptionLabel;
+
+        /// <summary>
         /// Le label du niveau du luxurosaure
         /// </summary>
         [SerializeField]
@@ -68,6 +74,10 @@ namespace Assets.Scripts.Views.Tooltip
         {
             _lustosaurNameLabel.SetText(lustosaur.name);
             _lustosaurNameLabel.color = _nameLabelColors[lustosaur.Attribute];
+
+            _lustosaurDescriptionLabel.gameObject.SetActive(!string.IsNullOrEmpty(lustosaur.Description));
+            _lustosaurDescriptionLabel.SetText(lustosaur.Description);
+
             _lustosaurLevelLabel.SetText(lustosaur.CurLevel.ToString());
             _lustosaurCurEXPLabel.SetText(lustosaur.CurEXP.ToString());
             _lustosaurNextLevelEXPLabel.SetText(lustosaur.ExpUntilNextLevel.ToString());

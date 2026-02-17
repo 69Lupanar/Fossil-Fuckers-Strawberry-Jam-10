@@ -18,6 +18,6 @@ MonoBehaviour:
 
 
     Increass your heat resistance by 50%!'
-  <Cost>k__BackingField: 30
+  <Cost>k__BackingField: 300
   <UpgradeIndex>k__BackingField: 7
   <NextUpgrade>k__BackingField: {fileID: 11400000, guid: 864f32bd6849776458a45663b770d2a3, type: 2}

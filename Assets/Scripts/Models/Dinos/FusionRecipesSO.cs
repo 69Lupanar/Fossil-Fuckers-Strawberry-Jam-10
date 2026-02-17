@@ -12,9 +12,10 @@ namespace Assets.Scripts.Models.Dinos
         /// <summary>
         /// Liste de luxurosaures créables à partir de listes d'ingrédients.
         /// Plusieurs listes d'ingrédients peuvent donner le même résultat.
+        /// Liste réservée aux luxurosaures hybrides.
         /// </summary>
         [field: SerializedDictionary("Ingredients", "Lustosaur")]
         [field: SerializeField]
-        public SerializedDictionary<FusionIngredients, FusionResult[]> FusionRecipes { get; private set; }
+        public SerializedDictionary<FusionAttributeIngredients, FusionResult[]> HybridFusionRecipes { get; private set; }
     }
 }

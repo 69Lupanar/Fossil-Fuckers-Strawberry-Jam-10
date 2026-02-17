@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Rock
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Mineables.MineableItemSO
   <Sprites>k__BackingField:
-  - {fileID: 626580964, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  - {fileID: 21300000, guid: 5bc395eeec6671442b79565e17cc6c9d, type: 3}
+  - {fileID: 21300000, guid: ab524d95eb858124996364e704dab17b, type: 3}
   <Indesctructible>k__BackingField: 1
+  <PossibleLoots>k__BackingField: []

@@ -77,6 +77,13 @@ namespace Assets.Scripts.Models.Dinos
         public Sprite HornySprite { get; private set; }
 
         /// <summary>
+        /// La description du luxurosaure, pour aider le joueur 
+        /// à comprendre son apparence et son utilité en combat
+        /// </summary>
+        [field: SerializeField]
+        public string Description { get; private set; }
+
+        /// <summary>
         /// Les stats de combat du luxurosaure à une qualité maximale
         /// </summary>
         [field: SerializeField]
@@ -183,6 +190,7 @@ namespace Assets.Scripts.Models.Dinos
         {
             LustosaurSO clone = ScriptableObject.CreateInstance<LustosaurSO>();
             clone.name = name;
+            clone.Description = Description;
             clone.Attribute = Attribute;
             clone.AttributeSprite = AttributeSprite;
             clone.NormalSprite = NormalSprite;

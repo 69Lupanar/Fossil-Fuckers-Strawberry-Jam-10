@@ -12,95 +12,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55969f11b8346be45a9c58936405a518, type: 3}
   m_Name: Fusion Recipes List
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Dinos.FusionRecipesSO
-  <FusionRecipes>k__BackingField:
+  <HybridFusionRecipes>k__BackingField:
     _serializedList:
     - Key:
-        <Interchangeable>k__BackingField: 0
-        <Ingredients>k__BackingField:
-        - {fileID: 11400000, guid: aab525f8b1f7d894e92861222596565f, type: 2}
-        - {fileID: 11400000, guid: aab525f8b1f7d894e92861222596565f, type: 2}
-        - {fileID: 11400000, guid: aab525f8b1f7d894e92861222596565f, type: 2}
+        <Ingredients>k__BackingField: 040000000200000004000000
       Value:
-      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: aab525f8b1f7d894e92861222596565f, type: 2}
-        <ChancePercentage>k__BackingField: 0
+      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: cef3851788a66ed448287d19981eb12a, type: 2}
+        <ChancePercentage>k__BackingField: 50
     - Key:
-        <Interchangeable>k__BackingField: 0
-        <Ingredients>k__BackingField:
-        - {fileID: 11400000, guid: aab525f8b1f7d894e92861222596565f, type: 2}
-        - {fileID: 11400000, guid: aab525f8b1f7d894e92861222596565f, type: 2}
-        - {fileID: 11400000, guid: aab525f8b1f7d894e92861222596565f, type: 2}
+        <Ingredients>k__BackingField: 040000000100000004000000
       Value:
-      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: aab525f8b1f7d894e92861222596565f, type: 2}
-        <ChancePercentage>k__BackingField: 0
+      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: 2276ff3b1da5a0e448c5d9567f9cdc1d, type: 2}
+        <ChancePercentage>k__BackingField: 50
     - Key:
-        <Interchangeable>k__BackingField: 0
-        <Ingredients>k__BackingField:
-        - {fileID: 11400000, guid: aab525f8b1f7d894e92861222596565f, type: 2}
-        - {fileID: 11400000, guid: aab525f8b1f7d894e92861222596565f, type: 2}
-        - {fileID: 11400000, guid: aab525f8b1f7d894e92861222596565f, type: 2}
+        <Ingredients>k__BackingField: 040000000300000004000000
       Value:
-      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: aab525f8b1f7d894e92861222596565f, type: 2}
-        <ChancePercentage>k__BackingField: 0
+      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: d5d4b5a85f5085548ac514312a4a28ef, type: 2}
+        <ChancePercentage>k__BackingField: 50
     - Key:
-        <Interchangeable>k__BackingField: 0
-        <Ingredients>k__BackingField:
-        - {fileID: 11400000, guid: ef514f52b6b859e439178fade5d32a3f, type: 2}
-        - {fileID: 11400000, guid: ef514f52b6b859e439178fade5d32a3f, type: 2}
-        - {fileID: 11400000, guid: ef514f52b6b859e439178fade5d32a3f, type: 2}
+        <Ingredients>k__BackingField: 020000000400000002000000
       Value:
-      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: ef514f52b6b859e439178fade5d32a3f, type: 2}
-        <ChancePercentage>k__BackingField: 0
+      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: 391cf91eb928968468cd0bca2edec242, type: 2}
+        <ChancePercentage>k__BackingField: 50
     - Key:
-        <Interchangeable>k__BackingField: 0
-        <Ingredients>k__BackingField:
-        - {fileID: 11400000, guid: 4f86263c3f2e07e44b0739d525ae4426, type: 2}
-        - {fileID: 11400000, guid: 4f86263c3f2e07e44b0739d525ae4426, type: 2}
-        - {fileID: 11400000, guid: 4f86263c3f2e07e44b0739d525ae4426, type: 2}
+        <Ingredients>k__BackingField: 020000000100000002000000
       Value:
-      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: 4f86263c3f2e07e44b0739d525ae4426, type: 2}
-        <ChancePercentage>k__BackingField: 0
+      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: 9cdb5943986968549b3b4efa8cff306a, type: 2}
+        <ChancePercentage>k__BackingField: 50
     - Key:
-        <Interchangeable>k__BackingField: 0
-        <Ingredients>k__BackingField:
-        - {fileID: 11400000, guid: 1f409ad547af04d4b9f6855c2cef61b3, type: 2}
-        - {fileID: 11400000, guid: 1f409ad547af04d4b9f6855c2cef61b3, type: 2}
-        - {fileID: 11400000, guid: 1f409ad547af04d4b9f6855c2cef61b3, type: 2}
+        <Ingredients>k__BackingField: 020000000300000002000000
       Value:
-      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: 1f409ad547af04d4b9f6855c2cef61b3, type: 2}
-        <ChancePercentage>k__BackingField: 0
+      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: 348ad231555e0744cac02eec2b1a1bcd, type: 2}
+        <ChancePercentage>k__BackingField: 50
     - Key:
-        <Interchangeable>k__BackingField: 0
-        <Ingredients>k__BackingField:
-        - {fileID: 11400000, guid: 153de2c45b180af41a34e252dbba7b3c, type: 2}
-        - {fileID: 11400000, guid: 153de2c45b180af41a34e252dbba7b3c, type: 2}
-        - {fileID: 11400000, guid: 153de2c45b180af41a34e252dbba7b3c, type: 2}
+        <Ingredients>k__BackingField: 010000000400000001000000
       Value:
-      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: 153de2c45b180af41a34e252dbba7b3c, type: 2}
-        <ChancePercentage>k__BackingField: 0
+      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: f9850c4d0f75cc643b098491bc137891, type: 2}
+        <ChancePercentage>k__BackingField: 50
     - Key:
-        <Interchangeable>k__BackingField: 0
-        <Ingredients>k__BackingField:
-        - {fileID: 11400000, guid: 50ba6203d066ff1428f54e6e78b96202, type: 2}
-        - {fileID: 11400000, guid: 50ba6203d066ff1428f54e6e78b96202, type: 2}
-        - {fileID: 11400000, guid: 50ba6203d066ff1428f54e6e78b96202, type: 2}
+        <Ingredients>k__BackingField: 010000000200000001000000
       Value:
-      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: 50ba6203d066ff1428f54e6e78b96202, type: 2}
-        <ChancePercentage>k__BackingField: 0
+      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: af4567fabdec2d04485b019993298ec8, type: 2}
+        <ChancePercentage>k__BackingField: 50
     - Key:
-        <Interchangeable>k__BackingField: 0
-        <Ingredients>k__BackingField:
-        - {fileID: 11400000, guid: 423a682727e2f414a9336025aab0c2e0, type: 2}
-        - {fileID: 11400000, guid: 423a682727e2f414a9336025aab0c2e0, type: 2}
-        - {fileID: 11400000, guid: 423a682727e2f414a9336025aab0c2e0, type: 2}
+        <Ingredients>k__BackingField: 010000000300000001000000
       Value:
-      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: 423a682727e2f414a9336025aab0c2e0, type: 2}
-        <ChancePercentage>k__BackingField: 0
+      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: d783e8055df94aa4db02d6e328c58a95, type: 2}
+        <ChancePercentage>k__BackingField: 50
     - Key:
-        <Interchangeable>k__BackingField: 0
-        <Ingredients>k__BackingField:
-        - {fileID: 11400000, guid: a2d188c1fc9af6f42b07af10e39f3ca7, type: 2}
-        - {fileID: 11400000, guid: a2d188c1fc9af6f42b07af10e39f3ca7, type: 2}
-        - {fileID: 11400000, guid: a2d188c1fc9af6f42b07af10e39f3ca7, type: 2}
+        <Ingredients>k__BackingField: 030000000400000003000000
       Value:
-      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: a2d188c1fc9af6f42b07af10e39f3ca7, type: 2}
-        <ChancePercentage>k__BackingField: 0
+      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: bc7ff883468c99a4d9c0215eb2b12d5b, type: 2}
+        <ChancePercentage>k__BackingField: 50
+    - Key:
+        <Ingredients>k__BackingField: 030000000200000003000000
+      Value:
+      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: a455bd9650ba5a444860585abca06858, type: 2}
+        <ChancePercentage>k__BackingField: 50
+    - Key:
+        <Ingredients>k__BackingField: 030000000100000003000000
+      Value:
+      - <Lustosaur>k__BackingField: {fileID: 11400000, guid: ae35af7aa540cce41be6ebfb19f5c7a5, type: 2}
+        <ChancePercentage>k__BackingField: 50

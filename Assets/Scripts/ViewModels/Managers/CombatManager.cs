@@ -146,13 +146,13 @@ namespace Assets.Scripts.ViewModels.Managers
         /// Le gain de PP au début de chaque tour
         /// </summary>
         [SerializeField]
-        private int _FPIncreaseOnTurnStart = 50;
+        private Vector2Int _minMaxFPIncreaseOnTurnStart = new(50, 90);
 
         /// <summary>
         /// Le gain de PP à la perte d'un allié
         /// </summary>
         [SerializeField]
-        private int _FPIncreaseOnAllyDeath = 100;
+        private Vector2Int _minMaxFPIncreaseOnAllyDeath = new(100, 200);
 
         /// <summary>
         /// Le gain de stats des luxurosaures du joueur si celui-ci a perdu des vêtements
@@ -169,6 +169,16 @@ namespace Assets.Scripts.ViewModels.Managers
         #endregion
 
         #region Variables d'instance
+
+        /// <summary>
+        /// Le gain de PP au début de chaque tour
+        /// </summary>
+        private int _FPIncreaseOnTurnStart;
+
+        /// <summary>
+        /// Le gain de PP à la perte d'un allié
+        /// </summary>
+        private int _FPIncreaseOnAllyDeath;
 
         /// <summary>
         /// Le nombre de luxurosaures du joueur encore en vie
@@ -289,6 +299,9 @@ namespace Assets.Scripts.ViewModels.Managers
             // Si le joueur est plus fort que l'ennemi, il n'y aura pas de gain.
 
             _avgLevelDifference = Mathf.Max(0, avgEnemyLevels - avgPlayerLevels);
+
+            _FPIncreaseOnTurnStart = Mathf.RoundToInt(Mathf.Lerp(_minMaxFPIncreaseOnTurnStart.x, _minMaxFPIncreaseOnTurnStart.y, avgEnemyLevels / DinoConstants.MAX_LEVEL));
+            _FPIncreaseOnAllyDeath = Mathf.RoundToInt(Mathf.Lerp(_minMaxFPIncreaseOnAllyDeath.x, _minMaxFPIncreaseOnAllyDeath.y, avgEnemyLevels / DinoConstants.MAX_LEVEL));
 
             OnCombatStarted?.Invoke();
         }
@@ -415,8 +428,8 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <param name="miss">true si l'attaque rate</param>
         public void ConductAttack(LustosaurSO attacker, LustosaurSO defender, AttackSO attack, bool isPlayerTurn, out int dmg, out bool criticalHit, out bool miss)
         {
-            FightingStats attackingPlayerStats = isPlayerTurn ? PlayerSupportStats + HornySupportStats : EnemySupportStats;
-            FightingStats defendingPlayerStats = isPlayerTurn ? EnemySupportStats : PlayerSupportStats + HornySupportStats;
+            FightingStats attackingSupportStats = isPlayerTurn ? PlayerSupportStats + HornySupportStats : EnemySupportStats;
+            FightingStats defendingSupportStats = isPlayerTurn ? EnemySupportStats : PlayerSupportStats + HornySupportStats;
             bool attackerIsSupport = isPlayerTurn ? SelectedAllyIndex != 0 : SelectedEnemyIndex != 0;
             bool defenderIsSupport = isPlayerTurn ? SelectedEnemyIndex != 0 : SelectedAllyIndex != 0;
 
@@ -430,12 +443,13 @@ namespace Assets.Scripts.ViewModels.Managers
             }
 
             // On calcule le % de chance que l'attaque touche sa cible
-            // TAF : Le calcul n'est pas bon car on ajoute directement le pourcentage comme valeur pleine
-            // au lieu de l'utiliser comme pourcentage. Il faudra le changer.
 
-            int accuracy = (attack.Accuracy + attacker.CurFightingStats.Accuracy) / 2 + attackingPlayerStats.Accuracy;
-            int evasion = defender.CurFightingStats.Evasion + defendingPlayerStats.Evasion;
-            int hitChance = accuracy - evasion;
+            int acc = (attack.Accuracy + attacker.CurFightingStats.Accuracy) / 2;
+            int supportAcc = acc * attackingSupportStats.Accuracy / 100;
+            int ev = defender.CurFightingStats.Evasion;
+            int supportEV = ev * defendingSupportStats.Evasion / 100;
+
+            int hitChance = acc + supportAcc - ev - supportEV;
             int rand = UnityEngine.Random.Range(0, 101);
             miss = rand > hitChance;
 
@@ -449,13 +463,17 @@ namespace Assets.Scripts.ViewModels.Managers
             }
 
             float resistanceMultiplier = GetResistanceMultiplier(attacker.Attribute, defender.Attribute, attack.Attribute);
-            int totalAttack = (attack.Damage + attacker.CurFightingStats.Attack) / 2 + attackingPlayerStats.Attack;
-            int totalDefense = defender.CurFightingStats.Defense + defendingPlayerStats.Defense;
+            int atk = (attack.Damage + attacker.CurFightingStats.Attack) / 2;
+            int supportAtk = atk * attackingSupportStats.Attack / 100;
+            int def = defender.CurFightingStats.Defense;
+            int supportDef = def * defendingSupportStats.Defense / 100;
+            int crit = attacker.CurFightingStats.CriticalHitRate;
+            int supportCrit = crit * attackingSupportStats.CriticalHitRate / 100;
             rand = UnityEngine.Random.Range(0, 101);
 
-            criticalHit = rand < attacker.CurFightingStats.CriticalHitRate + attackingPlayerStats.CriticalHitRate;
-            dmg = Mathf.Max(0, Mathf.RoundToInt((totalAttack - totalDefense) * (criticalHit ? CombatConstants.CRITICAL_HIT_DMG_BONUS : 1f)));
-            dmg /= attackerIsSupport || defenderIsSupport ? CombatConstants.SUPPORT_ZONE_DMG_REDUCTION : 1;
+            criticalHit = rand < crit + supportCrit;
+            dmg = Mathf.Max(0, Mathf.RoundToInt((atk + supportAtk - def - supportDef) * (criticalHit ? CombatConstants.CRITICAL_HIT_DMG_BONUS : 1f)));
+            dmg *= attackerIsSupport || defenderIsSupport ? CombatConstants.SUPPORT_ZONE_DMG_REDUCTION_PERCENTAGE / 100 : 1;
             dmg = Mathf.RoundToInt(dmg * resistanceMultiplier);
 
             // Inflige les dégâts au luxurosaure et le retire du combat si ses PV atteignent 0.

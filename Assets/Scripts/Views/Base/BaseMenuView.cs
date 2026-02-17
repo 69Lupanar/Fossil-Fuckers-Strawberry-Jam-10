@@ -324,6 +324,7 @@ namespace Assets.Scripts.Views.Base
             _sexMenuCanvas.enabled = false;
             _combatCanvas.enabled = false;
 
+            _teamView.CleanupOnWindowClosed();
             _cloningView.CleanupOnWindowClosed();
             _sleepView.CleanupOnWindowClosed();
         }

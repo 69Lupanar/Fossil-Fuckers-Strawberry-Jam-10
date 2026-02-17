@@ -312,8 +312,9 @@ namespace Assets.Scripts.ViewModels.Managers
                 int depth = -(int)(randomPos.y / _spawnSpacing);
                 LustosaurSO[] team = CreateTeam(settings.LustosaursUsableByNPCFighters, settings.NbMaxLustosaursPerNPC, depth, _gridSize.y);
                 string[] lines = SelectDialogueLines(settings.DialoguesPerHeatThreshold, depth, _gridSize.y);
+                AnimationClip idle = SelectIdle(settings.AnimIdlesPerHeatThreshold, depth, _gridSize.x);
 
-                npcFighter.SetData(team, lines);
+                npcFighter.SetData(team, lines, idle);
             }
         }
 
@@ -356,6 +357,20 @@ namespace Assets.Scripts.ViewModels.Managers
             DialoguesPerHeatThreshold dialogue = dialogues[Mathf.Clamp(dialogueIndex, 0, dialogues.Length - 1)];
             DialogueLinesPerHeatThreshold lines = dialogue.Lines[Random.Range(0, dialogue.Lines.Length)];
             return lines.Lines;
+        }
+
+        /// <summary>
+        /// Sélectionne l'idle du PNJ
+        /// </summary>
+        /// <param name="animIdlesPerHeatThreshold">Les anims d'idle possible</param>
+        /// <param name="depth">La profondeur du PNJ</param>
+        /// <param name="maxPossibleDepth">La profondeur max possible</param>
+        /// <returns>Une idle au hasard en fonction de la profondeur du PNJ</returns>
+        private AnimationClip SelectIdle(AnimIdlesPerHeatThreshold[] animIdlesPerHeatThreshold, int depth, int maxPossibleDepth)
+        {
+            int depthIndex = Mathf.Clamp(depth / maxPossibleDepth, 0, 3);
+            AnimIdlesPerHeatThreshold idles = animIdlesPerHeatThreshold[Random.Range(0, animIdlesPerHeatThreshold.Length)];
+            return idles.Value[depthIndex];
         }
 
         private NPCFighter CreateNPCFighter()

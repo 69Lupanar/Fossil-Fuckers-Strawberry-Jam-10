@@ -12,35 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6926eb99a9dcd4c81059cf8d6ad1e3, type: 3}
   m_Name: Generation Settings
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Mineables.GenerationSettingsSO
-  <MinMaxGridLength>k__BackingField: {x: 50, y: 100}
-  <MinMaxGridDepth>k__BackingField: {x: 50, y: 100}
+  <MinMaxGridLength>k__BackingField: {x: 30, y: 50}
+  <MinMaxGridDepth>k__BackingField: {x: 30, y: 50}
   <BaseGroundTile>k__BackingField: {fileID: 11400000, guid: 1c4e3c56e2e610e4fa356fbab832fbfa, type: 2}
   <BaseGroundLength>k__BackingField: 9
   <MineablesPrefabs>k__BackingField:
     _serializedList:
     - Key: {fileID: 11400000, guid: c16c13f2dc74be643ae1db96a7fb84e9, type: 2}
       Value:
-        <MinMaxDepth>k__BackingField: {x: 0, y: 100}
+        <MinMaxDepth>k__BackingField: {x: 0, y: 50}
         <Rarity>k__BackingField: 85
     - Key: {fileID: 11400000, guid: e820c34ddbcb8c94198ad11b18b59828, type: 2}
       Value:
-        <MinMaxDepth>k__BackingField: {x: 10, y: 100}
+        <MinMaxDepth>k__BackingField: {x: 7, y: 50}
         <Rarity>k__BackingField: 0.5
     - Key: {fileID: 11400000, guid: f3a28c3bad3edd147a369e2f3d2364bf, type: 2}
       Value:
-        <MinMaxDepth>k__BackingField: {x: 10, y: 100}
+        <MinMaxDepth>k__BackingField: {x: 7, y: 50}
         <Rarity>k__BackingField: 0.5
     - Key: {fileID: 11400000, guid: 400a50db0e939c74bb3bd53a9598f4d2, type: 2}
       Value:
-        <MinMaxDepth>k__BackingField: {x: 10, y: 100}
+        <MinMaxDepth>k__BackingField: {x: 7, y: 50}
         <Rarity>k__BackingField: 0.5
     - Key: {fileID: 11400000, guid: 7ebe4e146c2197540aa45adc6951b116, type: 2}
       Value:
-        <MinMaxDepth>k__BackingField: {x: 10, y: 100}
+        <MinMaxDepth>k__BackingField: {x: 7, y: 50}
         <Rarity>k__BackingField: 0.5
     - Key: {fileID: 11400000, guid: cb0a69f811e82c1448acf27fa6760b7b, type: 2}
       Value:
-        <MinMaxDepth>k__BackingField: {x: 10, y: 100}
+        <MinMaxDepth>k__BackingField: {x: 7, y: 50}
         <Rarity>k__BackingField: 0.5
     - Key: {fileID: 11400000, guid: a830560846d40b44981f7552fad70120, type: 2}
       Value:
@@ -48,16 +48,16 @@ MonoBehaviour:
         <Rarity>k__BackingField: 1
     - Key: {fileID: 11400000, guid: fd782dd80c4fadc4996d64f81fa74fa5, type: 2}
       Value:
-        <MinMaxDepth>k__BackingField: {x: 25, y: 50}
+        <MinMaxDepth>k__BackingField: {x: 20, y: 35}
         <Rarity>k__BackingField: 1
     - Key: {fileID: 11400000, guid: e00a5746a34e74942949cc959d70c2a9, type: 2}
       Value:
-        <MinMaxDepth>k__BackingField: {x: 50, y: 100}
+        <MinMaxDepth>k__BackingField: {x: 35, y: 50}
         <Rarity>k__BackingField: 1
     - Key: {fileID: 11400000, guid: 1c4e3c56e2e610e4fa356fbab832fbfa, type: 2}
       Value:
-        <MinMaxDepth>k__BackingField: {x: 15, y: 100}
-        <Rarity>k__BackingField: 2
+        <MinMaxDepth>k__BackingField: {x: 15, y: 50}
+        <Rarity>k__BackingField: 4
   <NbMaxLustosaursPerNPC>k__BackingField: 5
   <MinMaxNbNPCFighters>k__BackingField: {x: 10, y: 20}
   <DialoguesPerHeatThreshold>k__BackingField:
@@ -120,14 +120,36 @@ MonoBehaviour:
         Oh, unless you want to
         let our little friends settle this for us? I''ll even let you have your way
         with one of them if you win~'
+  <AnimIdlesPerHeatThreshold>k__BackingField:
+  - <Value>k__BackingField:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   <LustosaursUsableByNPCFighters>k__BackingField:
-  - {fileID: 11400000, guid: 420631c40b818694aa161b0eb590c3c1, type: 2}
-  - {fileID: 11400000, guid: 7f0fe807b015bec46a5f9548b5db538e, type: 2}
-  - {fileID: 11400000, guid: 4f86263c3f2e07e44b0739d525ae4426, type: 2}
-  - {fileID: 11400000, guid: 1f409ad547af04d4b9f6855c2cef61b3, type: 2}
-  - {fileID: 11400000, guid: 423a682727e2f414a9336025aab0c2e0, type: 2}
-  - {fileID: 11400000, guid: a2d188c1fc9af6f42b07af10e39f3ca7, type: 2}
-  - {fileID: 11400000, guid: aab525f8b1f7d894e92861222596565f, type: 2}
-  - {fileID: 11400000, guid: ef514f52b6b859e439178fade5d32a3f, type: 2}
-  - {fileID: 11400000, guid: 153de2c45b180af41a34e252dbba7b3c, type: 2}
-  - {fileID: 11400000, guid: 50ba6203d066ff1428f54e6e78b96202, type: 2}
+  - {fileID: 11400000, guid: 73d793eaea46c8b46ab62caaabc8e012, type: 2}
+  - {fileID: 11400000, guid: 35c0664c496faec47b462d0bdac50de0, type: 2}
+  - {fileID: 11400000, guid: 9d778e96f7cbcf14cad9321068267cb6, type: 2}
+  - {fileID: 11400000, guid: c976cbec7257e72438396404ae62d917, type: 2}
+  - {fileID: 11400000, guid: 61fb2a2f180434f4f9f49769bcc9a186, type: 2}
+  - {fileID: 11400000, guid: f879101eb4ed0cc44b7bb7a2984e626d, type: 2}
+  - {fileID: 11400000, guid: d5d4b5a85f5085548ac514312a4a28ef, type: 2}
+  - {fileID: 11400000, guid: cef3851788a66ed448287d19981eb12a, type: 2}
+  - {fileID: 11400000, guid: 2276ff3b1da5a0e448c5d9567f9cdc1d, type: 2}
+  - {fileID: 11400000, guid: 348ad231555e0744cac02eec2b1a1bcd, type: 2}
+  - {fileID: 11400000, guid: 9cdb5943986968549b3b4efa8cff306a, type: 2}
+  - {fileID: 11400000, guid: 391cf91eb928968468cd0bca2edec242, type: 2}
+  - {fileID: 11400000, guid: af4567fabdec2d04485b019993298ec8, type: 2}
+  - {fileID: 11400000, guid: d783e8055df94aa4db02d6e328c58a95, type: 2}
+  - {fileID: 11400000, guid: f9850c4d0f75cc643b098491bc137891, type: 2}
+  - {fileID: 11400000, guid: bc7ff883468c99a4d9c0215eb2b12d5b, type: 2}
+  - {fileID: 11400000, guid: ae35af7aa540cce41be6ebfb19f5c7a5, type: 2}
+  - {fileID: 11400000, guid: a455bd9650ba5a444860585abca06858, type: 2}
+  - {fileID: 11400000, guid: 1c99c2ce505cfa641bd6e9200b101449, type: 2}
+  - {fileID: 11400000, guid: 5226100bc5030bf4b87dd08abf077baf, type: 2}
+  - {fileID: 11400000, guid: 18ed809a6659f83438eafc39e644f5f1, type: 2}
+  - {fileID: 11400000, guid: 942b3b5a1231059458b98bfe62ebf6d2, type: 2}
+  - {fileID: 11400000, guid: a3740eabb181007448935bb7acb3fb7a, type: 2}
+  - {fileID: 11400000, guid: 2687fec6ae05afe4bb9abf95b2dcd268, type: 2}
+  - {fileID: 11400000, guid: de225e44b242b2a4788f5f48f41787fe, type: 2}
+  - {fileID: 11400000, guid: eb8dac55a1dba7b49bf288fc2067474c, type: 2}
+  - {fileID: 11400000, guid: 751650f4e306dd742b3ba8d2b8627e3c, type: 2}

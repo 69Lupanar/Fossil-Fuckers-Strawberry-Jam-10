@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Models;
 using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.Models.Logs;
 using Assets.Scripts.Models.Loot;
@@ -118,7 +119,9 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <returns>true si la fusion a réussi</returns>
         public bool TryFusion(out LustosaurSO lustosaur, out string errorMsg)
         {
+            lustosaur = null;
             CreatedLustosaur = null;
+
 
             // Arrête l'opération s'il manque des ingrédients
 
@@ -127,18 +130,37 @@ namespace Assets.Scripts.ViewModels.Managers
                 if (ItemsInFusionSlots[i] == null)
                 {
                     errorMsg = LogConstants.FUSION_NOT_ENOUGH_MATERIALS_MSG;
-                    lustosaur = null;
                     return false;
                 }
             }
 
+            if (TryHybridFusion(out lustosaur, out errorMsg) ||
+               TryNormalFusion(out lustosaur, out errorMsg))
+            {
+                CreatedLustosaur = lustosaur;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Lance une tentative de fusion à partir des ingrédients renseignés
+        /// </summary>
+        /// <param name="lustosaur">Le luxurosaure créé si fusion réussie</param>
+        /// <param name="errorMsg">Le message d'erreur à afficher</param>
+        /// <returns>true si la fusion a réussi</returns>
+        private bool TryHybridFusion(out LustosaurSO lustosaur, out string errorMsg)
+        {
             // On récupère les recettes correspondant aux objets renseignés par le joueur
 
-            List<FusionIngredients> validRecipes = new(_fusionRecipes.FusionRecipes.Count);
+            List<FusionAttributeIngredients> validRecipes = new(_fusionRecipes.HybridFusionRecipes.Count);
 
-            foreach (var pair in _fusionRecipes.FusionRecipes)
+            foreach (var pair in _fusionRecipes.HybridFusionRecipes)
             {
-                FusionIngredients recipe = pair.Key;
+                FusionAttributeIngredients recipe = pair.Key;
 
                 if (IngredientsMatch(recipe, ItemsInFusionSlots))
                 {
@@ -155,41 +177,41 @@ namespace Assets.Scripts.ViewModels.Managers
                 return false;
             }
 
-            // On trie les recettes pour avoir celles non-interchangeables en premier,
-            // vu qu'elles référencent le plus souvent un luxurosaure hybride.
+            // On prend la 1è recette et on crée son luxurosaure hybride associé
 
-            validRecipes.OrderBy(recipe => !recipe.Interchangeable);
+            FusionResult[] possibleResults = _fusionRecipes.HybridFusionRecipes[validRecipes[0]];
+            int index = -1;
 
-            // On prend la 1è recette et on crée son luxurosaure associé
+            // On le sélectionne en fonction de leur chance d'apparition.
 
-            FusionResult[] possibleResults = _fusionRecipes.FusionRecipes[validRecipes[0]];
-            int index = 0;
+            float maxAlea = 0;
+            NativeArray<Vector2> chanceIntervals = new(possibleResults.Length, Allocator.Temp);
 
-            if (possibleResults.Length > 1)
+            for (int i = 0; i < possibleResults.Length; ++i)
             {
-                // S'il y a plusieurs Luxurosaures possibles, on le sélectionne
-                // en fonction de leur chance d'apparition.
-                // Si maxAlea n'atteint pas 100%, ce n'est pas grave, on prendra l'index 0 par défaut.
+                chanceIntervals[i] = new Vector2(maxAlea, maxAlea + possibleResults[i].ChancePercentage);
+                maxAlea += possibleResults[i].ChancePercentage;
+            }
 
-                float maxAlea = 0;
-                NativeArray<Vector2> chanceIntervals = new(possibleResults.Length, Allocator.Temp);
+            float rand = UnityEngine.Random.Range(0f, 100f);
 
-                for (int i = 0; i < possibleResults.Length; ++i)
+            for (int i = 0; i < chanceIntervals.Length; ++i)
+            {
+                if (chanceIntervals[i].x < rand && rand < chanceIntervals[i].y)
                 {
-                    chanceIntervals[i] = new Vector2(maxAlea, maxAlea + possibleResults[i].ChancePercentage);
-                    maxAlea += possibleResults[i].ChancePercentage;
+                    index = i;
+                    break;
                 }
+            }
 
-                float rand = UnityEngine.Random.Range(0f, 100f);
+            // Arrête l'opération si on n'a pas eu assez de chance pour obtenir un hybride.
+            // On passera dans la méthode de fusion normale.
 
-                for (int i = 0; i < chanceIntervals.Length; ++i)
-                {
-                    if (chanceIntervals[i].x < rand && rand < chanceIntervals[i].y)
-                    {
-                        index = i;
-                        break;
-                    }
-                }
+            if (index == -1)
+            {
+                lustosaur = null;
+                errorMsg = string.Empty;
+                return false;
             }
 
             // On calcule la qualité moyenne du luxurosaure à créer
@@ -205,11 +227,35 @@ namespace Assets.Scripts.ViewModels.Managers
 
             // On crée le luxurosaure
 
-            CreatedLustosaur = LustosaurSO.CreateFrom(possibleResults[index].Lustosaur, avgQuality);
-
-            lustosaur = CreatedLustosaur;
+            lustosaur = LustosaurSO.CreateFrom(possibleResults[index].Lustosaur, avgQuality);
             errorMsg = string.Empty;
             return true;
+        }
+
+        /// <summary>
+        /// Lance une tentative de fusion à partir des ingrédients renseignés
+        /// </summary>
+        /// <param name="lustosaur">Le luxurosaure créé si fusion réussie</param>
+        /// <param name="errorMsg">Le message d'erreur à afficher</param>
+        /// <returns>true si la fusion a réussi</returns>
+        private bool TryNormalFusion(out LustosaurSO lustosaur, out string errorMsg)
+        {
+            // Au lieu d'arrêter l'opération si aucune recette n'est valide,
+            // on prend un des ingrédients au hasard et on clone son luxurosaure associé
+
+            int rand = UnityEngine.Random.Range(0, ItemsInFusionSlots.Length);
+
+            // On crée le luxurosaure
+
+            lustosaur = ItemsInFusionSlots[rand] switch
+            {
+                FossilLootSO fossil => LustosaurSO.CreateFrom(fossil.Lustosaur, fossil.Quality),
+                SpermLootSO sperm => LustosaurSO.CreateFrom(sperm.Lustosaur, sperm.Quality),
+                _ => null
+            };
+
+            errorMsg = lustosaur != null ? string.Empty : LogConstants.FUSION_INCOMPATIBLE_MATERIALS_MSG;
+            return lustosaur != null;
         }
 
         /// <summary>
@@ -218,97 +264,67 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <param name="recipe">La recette à suivre</param>
         /// <param name="itemsInFusionSlots">Les ingrédients renseignés</param>
         /// <returns>true si les ingrédients renseignés correspondent à la recette</returns>
-        private bool IngredientsMatch(FusionIngredients recipe, LootSO[] itemsInFusionSlots)
+        private bool IngredientsMatch(FusionAttributeIngredients recipe, LootSO[] itemsInFusionSlots)
         {
-            if (recipe.Interchangeable)
+            // S'ils sont interchangeables,
+            // on regarde d'abord si le nom de chaque objet est bien présent dans la recette
+
+            for (int i = 0; i < itemsInFusionSlots.Length; ++i)
             {
-                // S'ils sont interchangeables,
-                // on regarde d'abord si le nom de chaque objet est bien présent dans la recette
+                ElementalAttribute ingredientAttribute = ElementalAttribute.Neutral;
 
-                for (int i = 0; i < itemsInFusionSlots.Length; ++i)
+                switch (itemsInFusionSlots[i])
                 {
-                    string ingredientName = null;
+                    case FossilLootSO fossil:
+                        ingredientAttribute = fossil.Lustosaur.Attribute;
+                        break;
 
-                    switch (itemsInFusionSlots[i])
-                    {
-                        case FossilLootSO fossil:
-                            ingredientName = fossil.Lustosaur.name;
-                            break;
-
-                        case SpermLootSO sperm:
-                            ingredientName = sperm.Lustosaur.name;
-                            break;
-                    }
-
-                    if (!recipe.Ingredients.Any(ingredient => ingredient.name == ingredientName))
-                    {
-                        return false;
-                    }
+                    case SpermLootSO sperm:
+                        ingredientAttribute = sperm.Lustosaur.Attribute;
+                        break;
                 }
 
-                // Ensuite, on procède par élimination, traversant la recette pour chaque ingrédient
-                // et notant son index s'il est présent.
-                // S'ils sont tous présents, la recette est valide.
-
-                NativeList<int> observedItems = new(recipe.Ingredients.Length, Allocator.Temp);
-
-                for (int i = 0; i < itemsInFusionSlots.Length; ++i)
-                {
-                    for (int j = 0; j < recipe.Ingredients.Length; ++j)
-                    {
-                        string ingredientName = null;
-
-                        switch (itemsInFusionSlots[i])
-                        {
-                            case FossilLootSO fossil:
-                                ingredientName = fossil.Lustosaur.name;
-                                break;
-
-                            case SpermLootSO sperm:
-                                ingredientName = sperm.Lustosaur.name;
-                                break;
-                        }
-
-                        if (recipe.Ingredients[j].name == ingredientName &&
-                            !observedItems.Contains(j))
-                        {
-                            observedItems.Add(j);
-                            break;
-                        }
-                    }
-                }
-
-                if (observedItems.Length < recipe.Ingredients.Length)
+                if (!recipe.Ingredients.Any(ingredient => ingredient == ingredientAttribute))
                 {
                     return false;
                 }
             }
-            else
-            {
-                // Si les ingrédients ne sont pas interchangeables,
-                // on regarde simplement s'ils partagent le même nom
-                // dans le bon ordre
 
-                for (int i = 0; i < itemsInFusionSlots.Length; ++i)
+            // Ensuite, on procède par élimination, traversant la recette pour chaque ingrédient
+            // et notant son index s'il est présent.
+            // S'ils sont tous présents, la recette est valide.
+
+            NativeList<int> observedItems = new(recipe.Ingredients.Length, Allocator.Temp);
+
+            for (int i = 0; i < itemsInFusionSlots.Length; ++i)
+            {
+                for (int j = 0; j < recipe.Ingredients.Length; ++j)
                 {
-                    string ingredientName = null;
+                    ElementalAttribute ingredientAttribute = ElementalAttribute.Neutral;
 
                     switch (itemsInFusionSlots[i])
                     {
                         case FossilLootSO fossil:
-                            ingredientName = fossil.Lustosaur.name;
+                            ingredientAttribute = fossil.Lustosaur.Attribute;
                             break;
 
                         case SpermLootSO sperm:
-                            ingredientName = sperm.Lustosaur.name;
+                            ingredientAttribute = sperm.Lustosaur.Attribute;
                             break;
                     }
 
-                    if (recipe.Ingredients[i].name != ingredientName)
+                    if (recipe.Ingredients[j] == ingredientAttribute &&
+                        !observedItems.Contains(j))
                     {
-                        return false;
+                        observedItems.Add(j);
+                        break;
                     }
                 }
+            }
+
+            if (observedItems.Length < recipe.Ingredients.Length)
+            {
+                return false;
             }
 
             return true;

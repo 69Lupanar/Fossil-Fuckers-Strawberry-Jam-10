@@ -36,10 +36,6 @@ namespace Assets.Scripts.ViewModels.NPCs
 
         #endregion
 
-        #region Propriétés
-
-        #endregion
-
         #region Variables Unity
 
         /// <summary>
@@ -53,6 +49,12 @@ namespace Assets.Scripts.ViewModels.NPCs
         /// </summary>
         [SerializeField]
         private Collider2DTrigger _playerDetector;
+
+        /// <summary>
+        /// L'animator du PNJ
+        /// </summary>
+        [SerializeField]
+        private Animator _animator;
 
         /// <summary>
         /// UI d'interaction
@@ -118,10 +120,16 @@ namespace Assets.Scripts.ViewModels.NPCs
         /// </summary>
         /// <param name="team">L'équipe de luxurosaures du PNJ, générés aléatoirement en fonction de sa profondeur</param>
         /// <param name="dialogueLines">Lignes de dialogue d'un PNJ, choisies aléatoirement en fonction de son palier de chaleur</param>
-        public void SetData(LustosaurSO[] team, string[] dialogueLines)
+        /// <param name="idle">L'animation du PNJ</param>
+        public void SetData(LustosaurSO[] team, string[] dialogueLines, AnimationClip idle)
         {
             Team = team;
             DialogueLines = dialogueLines;
+
+            if (idle != null)
+            {
+                _animator.Play(idle.name);
+            }
         }
 
         /// <summary>

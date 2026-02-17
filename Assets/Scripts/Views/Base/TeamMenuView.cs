@@ -242,6 +242,14 @@ namespace Assets.Scripts.Views.Base
             OnLustosaurSlotPointerExit?.Invoke();
         }
 
+        /// <summary>
+        /// Nettoyage
+        /// </summary>
+        public void CleanupOnWindowClosed()
+        {
+            DisplayLustosaurs();
+        }
+
         #endregion
 
         #region Méthodes privées
