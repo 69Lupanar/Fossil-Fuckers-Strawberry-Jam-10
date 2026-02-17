@@ -169,16 +169,16 @@ namespace Assets.Scripts.ViewModels.Managers
         /// et régénère la mine
         /// </summary>
         /// <param name="loseAllEXP">true si l'exp du joueur doit retomber à 0</param>
-        public void RestartLevel(/*bool loseAllEXP*/)
+        public void RestartLevel(bool loseAllEXP)
         {
             _mineableSpawner.Generate();
             EnableController();
             RespawnPlayer();
 
-            //if (loseAllEXP)
-            //{
-            //    _statsManager.LoseEXP(_statsManager.CurEXPPoints);
-            //}
+            if (loseAllEXP)
+            {
+                _statsManager.LoseEXP(_statsManager.CurEXPPoints);
+            }
 
             _statsManager.RestoreStats();
             _inventoryManager.Clear();

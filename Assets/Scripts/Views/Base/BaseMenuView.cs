@@ -356,13 +356,13 @@ namespace Assets.Scripts.Views.Base
                 CloseAll();
                 _teamView.UpdateExpGauges();
 
-                if (reasonForSex == ReasonForSex.Defeat || reasonForSex == ReasonForSex.StatDepleted)
+                if (reasonForSex != ReasonForSex.Victory)
                 {
-                    _gameManagerView.RestartLevel(/*true*/);
+                    _gameManagerView.RestartLevel(reasonForSex == ReasonForSex.Defeat || reasonForSex == ReasonForSex.StatDepleted);
                 }
                 else
                 {
-                    _gameManagerView.ReturnToGame(reasonForSex == ReasonForSex.Gallery);
+                    _gameManagerView.ReturnToGame(false);
                 }
             });
         }

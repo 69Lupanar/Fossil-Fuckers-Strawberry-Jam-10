@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using Assets.Scripts.Models;
-using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.ViewModels.Managers;
 using Assets.Scripts.ViewModels.Player;
 using Assets.Scripts.Views.Base;
@@ -173,9 +171,9 @@ namespace Assets.Scripts.Views.Game
         /// et régénère la mine
         /// </summary>
         /// <param name="loseAllEXP">true si l'exp du joueur doit retomber à 0</param>
-        public void RestartLevel(/*bool loseAllEXP*/)
+        public void RestartLevel(bool loseAllEXP)
         {
-            _manager.RestartLevel(/*loseAllEXP*/);
+            _manager.RestartLevel(loseAllEXP);
 
             _blackFadeImg.DOFade(0f, _fadeSpeed);
             _curBGM = _mineBgms[UnityEngine.Random.Range(0, _mineBgms.Length)];
@@ -227,20 +225,20 @@ namespace Assets.Scripts.Views.Game
             // On a une chance sur deux de lancer une scène de sexe avec l'un de nos luxurosaures
             // si le perso s'évanouit
 
-            float rand = UnityEngine.Random.Range(0f, 100f);
+            //float rand = UnityEngine.Random.Range(0f, 100f);
 
-            if (rand > 50f)
-            {
-                LustosaurSO randomLustosaur = _teamMenuManager.GetRandomActiveLustosaur();
-                _baseMenuView.OpenSexMenu(ReasonForSex.StatDepleted, SexEnvironment.Mine, randomLustosaur);
-            }
-            else
+            //if (rand > 50f)
+            //{
+            //    LustosaurSO randomLustosaur = _teamMenuManager.GetRandomActiveLustosaur();
+            //    _baseMenuView.OpenSexMenu(ReasonForSex.StatDepleted, SexEnvironment.Mine, randomLustosaur);
+            //}
+            //else
             {
                 _blackFadeImg.DOFade(_fadeSpeed, _fadeSpeed).OnComplete(() =>
                 {
                     _manager.StartCoroutine(WaitCo(_fadeSpeed, () =>
                     {
-                        _manager.ResetPlayer();
+                        _manager.RestartLevel(true);
 
                         _curBGM = _mineBgms[UnityEngine.Random.Range(0, _mineBgms.Length)];
                         _audioManager.Play(_curBGM, _fadeSpeed);
