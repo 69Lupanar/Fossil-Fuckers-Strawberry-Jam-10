@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Ruby Fossil
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Mineables.MineableItemSO
   <Sprites>k__BackingField:
-  - {fileID: -1591335095, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  - {fileID: 21300000, guid: b73d70739564eb144aff8926e47e441c, type: 3}
+  - {fileID: 21300000, guid: 04bd1bd5f32cb2945b7a03db46448536, type: 3}
+  - {fileID: 21300000, guid: fa2005a2e26879247978d2a9b061cefc, type: 3}
   <Indesctructible>k__BackingField: 0
   <PossibleLoots>k__BackingField:
   - {fileID: 11400000, guid: 17828b27b5240724ca64679226b945d5, type: 2}

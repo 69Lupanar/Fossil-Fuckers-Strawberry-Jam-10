@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Marble Fossil
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Mineables.MineableItemSO
   <Sprites>k__BackingField:
-  - {fileID: 8020143640844766479, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  - {fileID: 21300000, guid: f1771dae2b2b06a4ea4767080b26dd0e, type: 3}
+  - {fileID: 21300000, guid: 624a56a4781a17848bd43a0d4f470e97, type: 3}
+  - {fileID: 21300000, guid: 68d069bd5bfb3b246b57a1fec92969fe, type: 3}
   <Indesctructible>k__BackingField: 0
   <PossibleLoots>k__BackingField:
   - {fileID: 11400000, guid: 2a6d6ef722cc71744bcd9c37206a1c42, type: 2}

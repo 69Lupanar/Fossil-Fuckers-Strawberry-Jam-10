@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Sapphire Fossil
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Mineables.MineableItemSO
   <Sprites>k__BackingField:
-  - {fileID: -1612220210, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  - {fileID: 21300000, guid: 9921aa256265f3e47ac9793f9a140eb8, type: 3}
+  - {fileID: 21300000, guid: 6aa47bfde98330c4ca1cea10ed6a4907, type: 3}
+  - {fileID: 21300000, guid: 7d8a4925aa9f48749b7633f74b8b9b61, type: 3}
   <Indesctructible>k__BackingField: 0
   <PossibleLoots>k__BackingField:
   - {fileID: 11400000, guid: 6a5c3d46bc0502644b5ca208376b63f3, type: 2}

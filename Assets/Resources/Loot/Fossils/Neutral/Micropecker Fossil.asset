@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 664e7892315345a40981e594b9ba55fb, type: 3}
   m_Name: Micropecker Fossil
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Loot.FossilLootSO
-  <Sprite>k__BackingField: {fileID: 8020143640844766479, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: c7de60e4edf09b846a1e8b3fded79d0d, type: 3}
   <Description>k__BackingField: Can be used in the cloning menu at your base to revive
     the Lustosaur of the same name.
   <EXP>k__BackingField: 15

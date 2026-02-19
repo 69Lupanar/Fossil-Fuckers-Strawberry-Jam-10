@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Jade Fossil
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Mineables.MineableItemSO
   <Sprites>k__BackingField:
-  - {fileID: -722192776, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  - {fileID: 21300000, guid: 9d9a836353ad5214bbc82d2c20a57a1e, type: 3}
+  - {fileID: 21300000, guid: d60b72bd64e997f4baee9fcbff2a4865, type: 3}
+  - {fileID: 21300000, guid: 093377a6677a54943ab8ee12f3ae3727, type: 3}
   <Indesctructible>k__BackingField: 0
   <PossibleLoots>k__BackingField:
   - {fileID: 11400000, guid: 89b5434995de1634fad648c0c7e9b2d7, type: 2}

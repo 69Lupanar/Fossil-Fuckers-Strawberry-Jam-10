@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8a416b6fa3493c4599eabc436533fb3, type: 3}
   m_Name: Small Gem
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Loot.GemLootSO
-  <Sprite>k__BackingField: {fileID: -1404828795, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: da16ac1d181832f4fad93d200cce3f3d, type: 3}
+  <Description>k__BackingField: 
   <EXP>k__BackingField: 100
