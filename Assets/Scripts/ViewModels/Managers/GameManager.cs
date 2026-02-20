@@ -169,7 +169,8 @@ namespace Assets.Scripts.ViewModels.Managers
         /// et régénère la mine
         /// </summary>
         /// <param name="loseAllEXP">true si l'exp du joueur doit retomber à 0</param>
-        public void RestartLevel(bool loseAllEXP)
+        /// <param name="clearInventory">true pour vider l'inventaire</param>
+        public void RestartLevel(bool loseAllEXP, bool clearInventory)
         {
             _mineableSpawner.Generate();
             EnableController();
@@ -181,7 +182,11 @@ namespace Assets.Scripts.ViewModels.Managers
             }
 
             _statsManager.RestoreStats();
-            _inventoryManager.Clear();
+
+            if (clearInventory)
+            {
+                _inventoryManager.Clear();
+            }
         }
 
         /// <summary>

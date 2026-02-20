@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fe0514334e3454bbb81ffe0a81867a, type: 3}
   m_Name: Pterodactit
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Adult.AdultSceneSO
-  <Sprite>k__BackingField: {fileID: -722192776, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: d3b8093757271dd47bd2e855fd5128d3, type: 3}
   <Paragraphs>k__BackingField:
   - 'You''re not completely certain on how you want to go with this. The Pterodactit
     is <i>huge</i>, and you don''t exactly have the wings to take him where he likes

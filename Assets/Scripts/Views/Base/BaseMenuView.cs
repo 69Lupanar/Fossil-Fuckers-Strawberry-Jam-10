@@ -358,7 +358,7 @@ namespace Assets.Scripts.Views.Base
 
                 if (reasonForSex != ReasonForSex.Victory)
                 {
-                    _gameManagerView.RestartLevel(reasonForSex == ReasonForSex.Defeat || reasonForSex == ReasonForSex.StatDepleted);
+                    _gameManagerView.RestartLevel(reasonForSex == ReasonForSex.Defeat || reasonForSex == ReasonForSex.StatDepleted, reasonForSex == ReasonForSex.StatDepleted);
                 }
                 else
                 {

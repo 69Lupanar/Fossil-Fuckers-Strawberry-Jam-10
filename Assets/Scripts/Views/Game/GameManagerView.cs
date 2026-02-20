@@ -171,9 +171,10 @@ namespace Assets.Scripts.Views.Game
         /// et régénère la mine
         /// </summary>
         /// <param name="loseAllEXP">true si l'exp du joueur doit retomber à 0</param>
-        public void RestartLevel(bool loseAllEXP)
+        /// <param name="clearInventory">true pour vider l'inventaire</param>
+        public void RestartLevel(bool loseAllEXP, bool clearInventory)
         {
-            _manager.RestartLevel(loseAllEXP);
+            _manager.RestartLevel(loseAllEXP, clearInventory);
 
             _blackFadeImg.DOFade(0f, _fadeSpeed);
             _curBGM = _mineBgms[UnityEngine.Random.Range(0, _mineBgms.Length)];
@@ -238,7 +239,7 @@ namespace Assets.Scripts.Views.Game
                 {
                     _manager.StartCoroutine(WaitCo(_fadeSpeed, () =>
                     {
-                        _manager.RestartLevel(true);
+                        _manager.RestartLevel(true, true);
 
                         _curBGM = _mineBgms[UnityEngine.Random.Range(0, _mineBgms.Length)];
                         _audioManager.Play(_curBGM, _fadeSpeed);

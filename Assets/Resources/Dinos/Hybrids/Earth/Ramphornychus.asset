@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Dinos.LustosaurSO
   <Attribute>k__BackingField: 4
   <AttributeSprite>k__BackingField: {fileID: 21300000, guid: 3776ac74fd086ba4e9d80dea7d5391f0, type: 3}
-  <NormalSprite>k__BackingField: {fileID: 1334091500, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
-  <HornySprite>k__BackingField: {fileID: 1334091500, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  <NormalSprite>k__BackingField: {fileID: 21300000, guid: dc8775a2cd69bb74ba52e59c6bf39dcf, type: 3}
+  <HornySprite>k__BackingField: {fileID: 21300000, guid: 71a90406dd9f783449b72fcabb1949cb, type: 3}
   <Description>k__BackingField: 
   <FightingStatsAtMaxQuality>k__BackingField:
     <Health>k__BackingField: 90

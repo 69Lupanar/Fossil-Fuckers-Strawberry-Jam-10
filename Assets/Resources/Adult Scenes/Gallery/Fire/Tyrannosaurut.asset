@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fe0514334e3454bbb81ffe0a81867a, type: 3}
   m_Name: Tyrannosaurut
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Adult.AdultSceneSO
-  <Sprite>k__BackingField: {fileID: -1591335095, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 9d0ee8a670f1fce448e9554c10ee0f1c, type: 3}
   <Paragraphs>k__BackingField:
   - 'Looking down on the lustosaur lying down on the hard rock of the mines, you
     try to come up with a way to make him get up and running again.

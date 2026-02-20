@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fe0514334e3454bbb81ffe0a81867a, type: 3}
   m_Name: Rapetosaurus
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Adult.AdultSceneSO
-  <Sprite>k__BackingField: {fileID: -1591335095, guid: 0aed1ac9f713a5845b67c3d901834ac6, type: 3}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: e2d12ab368752234ab609cdcdc2344e0, type: 3}
   <Paragraphs>k__BackingField:
   - 'You quickly strip off what little remaining clothes you have left, letting the
     breeze brush off your naked body. You breifly shiver from the sudden change in
