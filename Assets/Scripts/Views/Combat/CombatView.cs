@@ -51,6 +51,12 @@ namespace Assets.Scripts.Views.Combat
         private TeamMenuView _teamMenuView;
 
         /// <summary>
+        /// Le FadeManagerView
+        /// </summary>
+        [SerializeField]
+        private FadeManagerView _fadeManagerView;
+
+        /// <summary>
         /// Le GameManagerView
         /// </summary>
         [SerializeField]
@@ -121,12 +127,6 @@ namespace Assets.Scripts.Views.Combat
         /// </summary>
         [SerializeField]
         private Canvas _defeatCanvas;
-
-        /// <summary>
-        /// Fondu en noir
-        /// </summary>
-        [SerializeField]
-        private Image _blackFadeImg;
 
         [Space(10)]
         [Header("Health Comparison")]
@@ -377,10 +377,10 @@ namespace Assets.Scripts.Views.Combat
         [Space(10)]
 
         /// <summary>
-        /// Vitesse du fondu en noir
+        /// Vitesse d'animation
         /// </summary>
         [SerializeField]
-        private float _blackFadeDuration = .5f;
+        private float _audioFadeSpeed = 1f;
 
         /// <summary>
         /// Vitesse d'animation
@@ -753,7 +753,7 @@ namespace Assets.Scripts.Views.Combat
             _manager.CalculateInitiative();
 
             _curBGM = _combatBgms[UnityEngine.Random.Range(0, _combatBgms.Length)];
-            _audioManager.Play(_curBGM, _blackFadeDuration);
+            _audioManager.Play(_curBGM, _audioFadeSpeed);
 
             InitComponents();
             StartCoroutine(PlayIntroAnimationsCo());
@@ -1054,7 +1054,7 @@ namespace Assets.Scripts.Views.Combat
         private void QuitCombatScreen(BattleState battleState, LustosaurSO enemyLustosaur = null)
         {
             _gameManager.OnQuitCombatScreen();
-            _audioManager.StopAll(_blackFadeDuration);
+            _audioManager.StopAll(_audioFadeSpeed);
 
             switch (battleState)
             {
@@ -1065,7 +1065,7 @@ namespace Assets.Scripts.Views.Combat
                     }
                     else
                     {
-                        _blackFadeImg.DOFade(1f, _blackFadeDuration).OnComplete(() =>
+                        _fadeManagerView.FadeToBlack(null, () =>
                         {
                             _baseMenuView.CloseAll();
                             _teamMenuView.UpdateExpGauges();

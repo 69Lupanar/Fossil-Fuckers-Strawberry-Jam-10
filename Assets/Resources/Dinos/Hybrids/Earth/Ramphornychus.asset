@@ -19,8 +19,8 @@ MonoBehaviour:
   <Description>k__BackingField: 
   <FightingStatsAtMaxQuality>k__BackingField:
     <Health>k__BackingField: 90
-    <Attack>k__BackingField: 90
-    <Defense>k__BackingField: 60
+    <Attack>k__BackingField: 70
+    <Defense>k__BackingField: 50
     <CriticalHitRate>k__BackingField: 60
     <Accuracy>k__BackingField: 95
     <Evasion>k__BackingField: 10

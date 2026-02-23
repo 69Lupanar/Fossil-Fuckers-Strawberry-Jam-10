@@ -23,7 +23,7 @@ MonoBehaviour:
     <Defense>k__BackingField: 50
     <CriticalHitRate>k__BackingField: 10
     <Accuracy>k__BackingField: 90
-    <Evasion>k__BackingField: 10
+    <Evasion>k__BackingField: 5
   <SupportStats>k__BackingField:
     <Health>k__BackingField: 0
     <Attack>k__BackingField: 0

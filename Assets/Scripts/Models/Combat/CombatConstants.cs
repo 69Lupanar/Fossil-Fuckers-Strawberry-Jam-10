@@ -18,7 +18,7 @@ namespace Assets.Scripts.Models.Combat
         /// <summary>
         /// % de réduction de dégâts si l'attaquant ou le défenseur sont dans la zone de soutien
         /// </summary>
-        public const int SUPPORT_ZONE_DMG_REDUCTION_PERCENTAGE = 50;
+        public const int SUPPORT_ZONE_DMG_REDUCTION_PERCENTAGE = 20;
 
         /// <summary>
         /// EXP gagnée par ennemi vainu
