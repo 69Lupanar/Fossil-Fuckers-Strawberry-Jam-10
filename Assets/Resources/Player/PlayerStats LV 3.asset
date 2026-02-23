@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5cc754b1f3d6ec4c9bc7e23ef7da4aa, type: 3}
   m_Name: PlayerStats LV 3
   m_EditorClassIdentifier: Assets.Scripts.Models::PlayerStatsSO
-  <MoveSpeed>k__BackingField: 7
+  <MoveSpeed>k__BackingField: 10
   <JumpForce>k__BackingField: 7
   <NbMaxJumps>k__BackingField: 2
   <MiningSpeed>k__BackingField: 0.33
