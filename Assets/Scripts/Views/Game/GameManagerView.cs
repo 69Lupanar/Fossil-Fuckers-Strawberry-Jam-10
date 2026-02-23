@@ -3,9 +3,7 @@ using System.Collections;
 using Assets.Scripts.ViewModels.Managers;
 using Assets.Scripts.ViewModels.Player;
 using Assets.Scripts.Views.Base;
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.Views.Game
 {
@@ -24,6 +22,12 @@ namespace Assets.Scripts.Views.Game
         /// </summary>
         [SerializeField]
         private BaseMenuView _baseMenuView;
+
+        /// <summary>
+        /// Le FadeManagerView
+        /// </summary>
+        [SerializeField]
+        private FadeManagerView _fadeManagerView;
 
         /// <summary>
         /// Le TeamMenuManager
@@ -55,21 +59,15 @@ namespace Assets.Scripts.Views.Game
         [SerializeField]
         private Canvas _mainMenuCanvas;
 
-        /// <summary>
-        /// Fondu en noir
-        /// </summary>
-        [SerializeField]
-        private Image _blackFadeImg;
-
-        /// <summary>
-        /// Vitesse du fondu en noir
-        /// </summary>
-        [SerializeField]
-        private float _fadeSpeed = .5f;
-
         [Space(10)]
         [Header("Audio")]
         [Space(10)]
+
+        /// <summary>
+        /// Les musiques pouvant être jouées durant la partie
+        /// </summary>
+        [SerializeField]
+        private float _audioFadeSpeed = 1f;
 
         /// <summary>
         /// L'AudioManager
@@ -120,9 +118,7 @@ namespace Assets.Scripts.Views.Game
             _manager.DisableController();
 
             _mainMenuCanvas.enabled = true;
-            _blackFadeImg.gameObject.SetActive(true);
-            _blackFadeImg.DOFade(0f, _fadeSpeed);
-            _audioManager.Play(_introBGM, _fadeSpeed);
+            _audioManager.Play(_introBGM, _audioFadeSpeed);
         }
 
         #endregion
@@ -134,15 +130,16 @@ namespace Assets.Scripts.Views.Game
         /// </summary>
         public void OnPlayBtn()
         {
-            _audioManager.Stop(_introBGM, _fadeSpeed);
-            _blackFadeImg.DOFade(_fadeSpeed, _fadeSpeed).OnComplete(() =>
+            _audioManager.Stop(_introBGM, _audioFadeSpeed);
+
+            _fadeManagerView.FadeToBlack(null, () =>
             {
-                _manager.StartCoroutine(WaitCo(_fadeSpeed, () =>
+                _manager.StartCoroutine(WaitCo(_audioFadeSpeed, () =>
                 {
                     ReturnToGame();
 
                     _mainMenuCanvas.enabled = false;
-                    _blackFadeImg.DOFade(0f, _fadeSpeed);
+                    _fadeManagerView.FadeToScene(null, null);
                 }));
             });
         }
@@ -160,9 +157,9 @@ namespace Assets.Scripts.Views.Game
 
             _manager.EnableController();
 
-            _blackFadeImg.DOFade(0f, _fadeSpeed);
+            _fadeManagerView.FadeToScene(null, null);
             _curBGM = _mineBgms[UnityEngine.Random.Range(0, _mineBgms.Length)];
-            _audioManager.Play(_curBGM, _fadeSpeed);
+            _audioManager.Play(_curBGM, _audioFadeSpeed);
         }
 
         /// <summary>
@@ -176,9 +173,9 @@ namespace Assets.Scripts.Views.Game
         {
             _manager.RestartLevel(loseAllEXP, clearInventory);
 
-            _blackFadeImg.DOFade(0f, _fadeSpeed);
+            _fadeManagerView.FadeToScene(null, null);
             _curBGM = _mineBgms[UnityEngine.Random.Range(0, _mineBgms.Length)];
-            _audioManager.Play(_curBGM, _fadeSpeed);
+            _audioManager.Play(_curBGM, _audioFadeSpeed);
         }
 
         #endregion
@@ -202,14 +199,14 @@ namespace Assets.Scripts.Views.Game
             if (obj.CompareTag("Base"))
             {
                 _manager.DisableController();
-                _audioManager.Stop(_curBGM, _fadeSpeed);
+                _audioManager.Stop(_curBGM, _audioFadeSpeed);
 
-                _blackFadeImg.DOFade(_fadeSpeed, _fadeSpeed).OnComplete(() =>
+                _fadeManagerView.FadeToBlack(null, () =>
                 {
-                    _manager.StartCoroutine(WaitCo(_fadeSpeed, () =>
+                    _manager.StartCoroutine(WaitCo(_audioFadeSpeed, () =>
                     {
                         _baseMenuView.OpenBaseMenu();
-                        _blackFadeImg.DOFade(0f, _fadeSpeed);
+                        _fadeManagerView.FadeToScene(null, null);
                     }));
                 });
             }
@@ -221,7 +218,7 @@ namespace Assets.Scripts.Views.Game
         private void OnDeath()
         {
             _manager.DisableController();
-            _audioManager.Stop(_curBGM, _fadeSpeed);
+            _audioManager.Stop(_curBGM, _audioFadeSpeed);
 
             // On a une chance sur deux de lancer une scène de sexe avec l'un de nos luxurosaures
             // si le perso s'évanouit
@@ -235,15 +232,15 @@ namespace Assets.Scripts.Views.Game
             //}
             //else
             {
-                _blackFadeImg.DOFade(_fadeSpeed, _fadeSpeed).OnComplete(() =>
+                _fadeManagerView.FadeToBlack(null, () =>
                 {
-                    _manager.StartCoroutine(WaitCo(_fadeSpeed, () =>
+                    _manager.StartCoroutine(WaitCo(_audioFadeSpeed, () =>
                     {
                         _manager.RestartLevel(true, true);
 
                         _curBGM = _mineBgms[UnityEngine.Random.Range(0, _mineBgms.Length)];
-                        _audioManager.Play(_curBGM, _fadeSpeed);
-                        _blackFadeImg.DOFade(0f, _fadeSpeed);
+                        _audioManager.Play(_curBGM, _audioFadeSpeed);
+                        _fadeManagerView.FadeToScene(null, null);
                     }));
                 });
             }

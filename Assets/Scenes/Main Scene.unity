@@ -7892,13 +7892,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assets.Scripts.Views::GameManagerView
   _baseMenuView: {fileID: 574469022}
+  _fadeManagerView: {fileID: 1041466925}
   _teamMenuManager: {fileID: 1946102866}
   _manager: {fileID: 485394136}
   _statsManager: {fileID: 852986446}
   _playerTrigger: {fileID: 8622508510301249960}
   _mainMenuCanvas: {fileID: 1078356029}
-  _blackFadeImg: {fileID: 804549117}
-  _fadeSpeed: 1
+  _audioFadeSpeed: 1
   _audioManager: {fileID: 1685340548}
   _introBGM: {fileID: 8300000, guid: 54112e2a32fd6ff48839bc32d6f8bb50, type: 3}
   _mineBgms:
@@ -9629,6 +9629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assets.Scripts.Views::BaseMenuView
   _manager: {fileID: 574469023}
   _gameManagerView: {fileID: 485394137}
+  _fadeManagerView: {fileID: 1041466925}
   _upgradeView: {fileID: 1714537601}
   _cloningView: {fileID: 1591627178}
   _teamView: {fileID: 1946102867}
@@ -9642,8 +9643,7 @@ MonoBehaviour:
   _sexMenuCanvas: {fileID: 957076146}
   _combatCanvas: {fileID: 1510475651}
   _baseMenuBtnsParent: {fileID: 702140586}
-  _blackFadeImg: {fileID: 804549117}
-  _fadeSpeed: 1
+  _audioFadeSpeed: 1
   _audioManager: {fileID: 1685340548}
   _baseMenuBGM: {fileID: 8300000, guid: 1cc8d9ce4c853b5478850122dcb9ce57, type: 3}
   _goodSexBGM: {fileID: 8300000, guid: b649a4a413a4e3942826bd02562d0b39, type: 3}
@@ -11532,7 +11532,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -11540,7 +11540,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
@@ -11553,7 +11553,7 @@ PrefabInstance:
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1489978989}
+      objectReference: {fileID: 627401406}
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -11576,7 +11576,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: set_enabled
+      value: Play
       objectReference: {fileID: 0}
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
@@ -11588,12 +11588,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: UnityEngine.UI.Button, UnityEngine.UI
+      value: Assets.Scripts.Views.UI.AudioTrigger, Assets.Scripts.Views
       objectReference: {fileID: 0}
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
       value: Assets.Scripts.Views.UI.AudioTrigger, Assets.Scripts.Views
       objectReference: {fileID: 0}
+    - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 8300000, guid: b4324d87d34c02243abf052b0669e3de, type: 3}
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgument
       value: 
@@ -11604,7 +11608,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: UnityEngine.AudioClip, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -13812,7 +13816,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -3733587.5}
+  m_AnchoredPosition: {x: 0, y: -3782275}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &743267552
@@ -15623,7 +15627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -19803,6 +19807,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1029534469}
   m_CullTransparentMesh: 1
+--- !u!1 &1041466923
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1041466924}
+  - component: {fileID: 1041466925}
+  m_Layer: 0
+  m_Name: FadeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1041466924
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041466923}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1480321074}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1041466925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041466923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98dd3f48de8db5d42acd45672356cdd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets.Scripts.Views::Assets.Scripts.Views.Game.FadeManagerView
+  _blackFadeImg: {fileID: 804549117}
+  _fadeSpeed: 1
 --- !u!1 &1045913013
 GameObject:
   m_ObjectHideFlags: 0
@@ -21453,7 +21503,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 18543158}
+  m_AnchoredPosition: {x: 0, y: 18700220}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1154122712
@@ -28309,6 +28359,7 @@ Transform:
   - {fileID: 510056678}
   - {fileID: 352756351}
   - {fileID: 1685340547}
+  - {fileID: 1041466924}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1485084585
@@ -28771,17 +28822,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &1489978989 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1247311104316785376, guid: 6fda01231cb33344eb69ec6d63c7927a, type: 3}
-  m_PrefabInstance: {fileID: 627401404}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1489978984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1001 &1493382740
 PrefabInstance:
   m_ObjectHideFlags: 0

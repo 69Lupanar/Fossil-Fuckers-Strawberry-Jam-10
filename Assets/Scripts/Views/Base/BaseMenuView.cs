@@ -3,9 +3,7 @@ using Assets.Scripts.Models.Dinos;
 using Assets.Scripts.Models.Loot;
 using Assets.Scripts.ViewModels.Managers;
 using Assets.Scripts.Views.Game;
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.Views.Base
 {
@@ -30,6 +28,12 @@ namespace Assets.Scripts.Views.Base
         /// </summary>
         [SerializeField]
         private GameManagerView _gameManagerView;
+
+        /// <summary>
+        /// Le FadeManagerView
+        /// </summary>
+        [SerializeField]
+        private FadeManagerView _fadeManagerView;
 
         /// <summary>
         /// Le PlayerUpgradeView
@@ -109,22 +113,15 @@ namespace Assets.Scripts.Views.Base
         [SerializeField]
         private GameObject _baseMenuBtnsParent;
 
-        /// <summary>
-        /// Fondu en noir
-        /// </summary>
-        [SerializeField]
-        private Image _blackFadeImg;
+        [Space(10)]
+        [Header("Audio")]
+        [Space(10)]
 
         /// <summary>
         /// Vitesse du fondu en noir
         /// </summary>
         [SerializeField]
-
-        private float _fadeSpeed = .5f;
-
-        [Space(10)]
-        [Header("Audio")]
-        [Space(10)]
+        private float _audioFadeSpeed = 1f;
 
         /// <summary>
         /// L'AudioManager
@@ -212,7 +209,7 @@ namespace Assets.Scripts.Views.Base
         {
             _audioManager.Stop(_baseMenuBGM, 1f);
 
-            _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
+            _fadeManagerView.FadeToBlack(null, () =>
             {
                 CloseAll();
                 _gameManagerView.ReturnToGame();
@@ -267,28 +264,28 @@ namespace Assets.Scripts.Views.Base
         /// <param name="selectedLustosaur">Le luxurosaure correspondant à la scène adulte</param>
         public void OpenSexMenu(ReasonForSex reasonForSex, SexEnvironment sexEnvironment, LustosaurSO selectedLustosaur)
         {
-            _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
+            _fadeManagerView.FadeToBlack(null, () =>
             {
                 _combatCanvas.enabled = false;
                 _baseMenuCanvas.enabled = true;
                 _sexMenuCanvas.enabled = true;
-                _blackFadeImg.DOFade(0f, _fadeSpeed);
+                _fadeManagerView.FadeToScene();
 
-                _audioManager.Stop(_baseMenuBGM, _fadeSpeed);
+                _audioManager.Stop(_baseMenuBGM, _audioFadeSpeed);
 
                 switch (reasonForSex)
                 {
                     case ReasonForSex.Gallery:
-                        _audioManager.Play(_goodSexBGM, _fadeSpeed);
+                        _audioManager.Play(_goodSexBGM, _audioFadeSpeed);
                         break;
                     case ReasonForSex.Defeat:
-                        _audioManager.Play(_badSexBGM, _fadeSpeed);
+                        _audioManager.Play(_badSexBGM, _audioFadeSpeed);
                         break;
                     case ReasonForSex.Victory:
-                        _audioManager.Play(_goodSexBGM, _fadeSpeed);
+                        _audioManager.Play(_goodSexBGM, _audioFadeSpeed);
                         break;
                     case ReasonForSex.StatDepleted:
-                        _audioManager.Play(_badSexBGM, _fadeSpeed);
+                        _audioManager.Play(_badSexBGM, _audioFadeSpeed);
                         break;
                 }
 
@@ -338,20 +335,20 @@ namespace Assets.Scripts.Views.Base
             switch (reasonForSex)
             {
                 case ReasonForSex.Gallery:
-                    _audioManager.Stop(_goodSexBGM, _fadeSpeed);
+                    _audioManager.Stop(_goodSexBGM, _audioFadeSpeed);
                     break;
                 case ReasonForSex.Defeat:
-                    _audioManager.Stop(_badSexBGM, _fadeSpeed);
+                    _audioManager.Stop(_badSexBGM, _audioFadeSpeed);
                     break;
                 case ReasonForSex.Victory:
-                    _audioManager.Stop(_goodSexBGM, _fadeSpeed);
+                    _audioManager.Stop(_goodSexBGM, _audioFadeSpeed);
                     break;
                 case ReasonForSex.StatDepleted:
-                    _audioManager.Stop(_badSexBGM, _fadeSpeed);
+                    _audioManager.Stop(_badSexBGM, _audioFadeSpeed);
                     break;
             }
 
-            _blackFadeImg.DOFade(1f, _fadeSpeed).OnComplete(() =>
+            _fadeManagerView.FadeToBlack(null, () =>
             {
                 CloseAll();
                 _teamView.UpdateExpGauges();
