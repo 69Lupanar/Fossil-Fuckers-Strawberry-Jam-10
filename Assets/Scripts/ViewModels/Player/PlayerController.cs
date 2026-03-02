@@ -21,6 +21,11 @@ namespace Assets.Scripts.ViewModels.Player
         /// </summary>
         public Action<LootSO, int> OnTileMined { get; set; }
 
+        /// <summary>
+        /// Appelée quand le contrôleur est activé
+        /// </summary>
+        public Action OnEnabled { get; set; }
+
         #endregion
 
         #region Propriétés
@@ -41,11 +46,6 @@ namespace Assets.Scripts.ViewModels.Player
         /// Les stats du joueur
         /// </summary>
         [SerializeField] private PlayerStatsManager _playerStats;
-
-        /// <summary>
-        /// Le sprite du joueur
-        /// </summary>
-        [SerializeField] private SpriteRenderer _renderer;
 
         /// <summary>
         /// Le Rigidbody
@@ -127,34 +127,6 @@ namespace Assets.Scripts.ViewModels.Player
         }
 
         /// <summary>
-        /// Màj à chaque frame
-        /// </summary>
-        private void Update()
-        {
-            if (_playerStats.IsDead || IsMining)
-            {
-                return;
-            }
-
-            CheckSpriteDirection();
-        }
-
-        /// <summary>
-        /// Vérifie la direction dans laquelle doit se tourner le sprite
-        /// </summary>
-        private void CheckSpriteDirection()
-        {
-            if (_input.HorizontalAxis > 0f)
-            {
-                _renderer.flipX = false;
-            }
-            if (_input.HorizontalAxis < 0f)
-            {
-                _renderer.flipX = true;
-            }
-        }
-
-        /// <summary>
         /// Màj en sync avec la physique
         /// </summary>
         private void FixedUpdate()
@@ -203,7 +175,6 @@ namespace Assets.Scripts.ViewModels.Player
                             IsMining = false;
                             _col.isTrigger = false;
                             _rb.linearVelocityY = 0f;
-                            CheckSpriteDirection();
 
                             // On récupère l'objet miné et on l'ajoute à l'inventaire.
 
@@ -260,7 +231,7 @@ namespace Assets.Scripts.ViewModels.Player
         public void Enable()
         {
             _input.EnablePlayerInput(true);
-            _renderer.flipX = false;
+            OnEnabled?.Invoke();
         }
 
         #endregion

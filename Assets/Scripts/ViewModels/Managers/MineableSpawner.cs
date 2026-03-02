@@ -362,14 +362,14 @@ namespace Assets.Scripts.ViewModels.Managers
         /// <summary>
         /// Sélectionne l'idle du PNJ
         /// </summary>
-        /// <param name="animIdlesPerHeatThreshold">Les anims d'idle possible</param>
+        /// <param name="source">Les anims d'idle possible</param>
         /// <param name="depth">La profondeur du PNJ</param>
         /// <param name="maxPossibleDepth">La profondeur max possible</param>
         /// <returns>Une idle au hasard en fonction de la profondeur du PNJ</returns>
-        private AnimationClip SelectIdle(AnimIdlesPerHeatThreshold[] animIdlesPerHeatThreshold, int depth, int maxPossibleDepth)
+        private AnimationClip SelectIdle(AnimIdlesPerHeatThreshold[] source, int depth, int maxPossibleDepth)
         {
-            int depthIndex = Mathf.Clamp(depth / maxPossibleDepth, 0, 3);
-            AnimIdlesPerHeatThreshold idles = animIdlesPerHeatThreshold[Random.Range(0, animIdlesPerHeatThreshold.Length)];
+            int depthIndex = Mathf.Clamp(Mathf.RoundToInt((float)(depth * source.Length) / (float)maxPossibleDepth), 0, 3);
+            AnimIdlesPerHeatThreshold idles = source[Random.Range(0, source.Length)];
             return idles.Value[depthIndex];
         }
 

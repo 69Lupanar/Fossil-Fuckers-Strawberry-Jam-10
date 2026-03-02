@@ -122,9 +122,25 @@ MonoBehaviour:
         with one of them if you win~'
   <AnimIdlesPerHeatThreshold>k__BackingField:
   - <Value>k__BackingField:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 7400000, guid: 79fff7b087a775d419a161ea0bbe388d, type: 2}
+    - {fileID: 7400000, guid: 3cf8d150f4e3ed247b2de950e5a2ddda, type: 2}
+    - {fileID: 7400000, guid: bdcc60d7452d7884c8f2fb3c02b5e5ce, type: 2}
+    - {fileID: 7400000, guid: ca5b3079622e2994391e68c6f7e0f262, type: 2}
+  - <Value>k__BackingField:
+    - {fileID: 7400000, guid: 80d7788428c418b43aac0775684f0edc, type: 2}
+    - {fileID: 7400000, guid: c993983b21925144b8ef2f291497cb66, type: 2}
+    - {fileID: 7400000, guid: 9c431e575cceaf54e8f01713ecd208de, type: 2}
+    - {fileID: 7400000, guid: 55698141780c9ef42b14f17c1bdad26b, type: 2}
+  - <Value>k__BackingField:
+    - {fileID: 7400000, guid: edfe905a797a59649b5053646d8e291e, type: 2}
+    - {fileID: 7400000, guid: 179d0d674f8b33849a825abac7b7f7f7, type: 2}
+    - {fileID: 7400000, guid: d934a669254770343a1bd98443cb2301, type: 2}
+    - {fileID: 7400000, guid: bf1d0357d3ef4b443a7d1ed15ba030fa, type: 2}
+  - <Value>k__BackingField:
+    - {fileID: 7400000, guid: abb1f30811ef01144bfeba3e75fb4d1c, type: 2}
+    - {fileID: 7400000, guid: f9304576d77ec194991af915c477f33d, type: 2}
+    - {fileID: 7400000, guid: d9c621c8215a5424bb357eb80cce18b1, type: 2}
+    - {fileID: 7400000, guid: 6296df1767e568a4c9b677286b9fe9fb, type: 2}
   <LustosaursUsableByNPCFighters>k__BackingField:
   - {fileID: 11400000, guid: 73d793eaea46c8b46ab62caaabc8e012, type: 2}
   - {fileID: 11400000, guid: 35c0664c496faec47b462d0bdac50de0, type: 2}

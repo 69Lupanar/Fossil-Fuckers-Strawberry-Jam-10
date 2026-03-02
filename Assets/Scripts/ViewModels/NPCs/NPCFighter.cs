@@ -86,16 +86,24 @@ namespace Assets.Scripts.ViewModels.NPCs
         #region Méthodes Unity
 
         /// <summary>
+        /// init
+        /// </summary>
+        private void Awake()
+        {
+            _t = transform;
+            _playerT = FindAnyObjectByType<PlayerController>().transform;
+            _playerInput = _playerT.GetComponent<PlayerInput>();
+            _playerDetector.OnTriggerEnter += OnPlayerTriggerEnter;
+            _playerDetector.OnTriggerExit += OnPlayerTriggerExit;
+        }
+
+        /// <summary>
         /// Init
         /// </summary>
         private void Start()
         {
             _interactUI.SetActive(false);
-            _t = transform;
-            _playerT = GameObject.FindAnyObjectByType<PlayerController>().transform;
-            _playerInput = _playerT.GetComponent<PlayerInput>();
-            _playerDetector.OnTriggerEnter += OnPlayerTriggerEnter;
-            _playerDetector.OnTriggerExit += OnPlayerTriggerExit;
+            _renderer.flipX = UnityEngine.Random.Range(0, 2) == 0;
         }
 
         /// <summary>
@@ -103,10 +111,9 @@ namespace Assets.Scripts.ViewModels.NPCs
         /// </summary>
         private void Update()
         {
-            _renderer.flipX = _playerT.position.x < _t.position.x;
-
             if (_interactUI.activeSelf && _playerInput.Interacted)
             {
+                _renderer.flipX = _playerT.position.x > _t.position.x;
                 OnInteracted?.Invoke(this);
             }
         }

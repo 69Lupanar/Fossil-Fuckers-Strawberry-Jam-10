@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fe0514334e3454bbb81ffe0a81867a, type: 3}
   m_Name: Normal night
   m_EditorClassIdentifier: Assets.Scripts.Models::Assets.Scripts.Models.Adult.AdultSceneSO
-  <Sprite>k__BackingField: {fileID: 21300000, guid: c6f25cb4df529724b95a94ec5414fda9, type: 3}
+  <Sprite>k__BackingField: {fileID: -221045926833620296, guid: 8960d756e7cb68c4587962dc2fd36a05, type: 3}
   <Paragraphs>k__BackingField:
   - You spend a dreamless night...
